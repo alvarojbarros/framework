@@ -1,0 +1,62 @@
+ <div class="row bg-title">
+    <!-- .page title -->
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+       {% block title %}
+       <h4 class="page-title">{{var['Name']}}</h4>
+       {% endblock %}
+    </div>
+    <!-- /.page title -->
+    <!-- .breadcrumb -->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+      <ol class="breadcrumb">
+          <li><a href="#" onClick="getTamplate('container-fluid',{'Template':'dashboard.html'})" >Dashboard</a></li>
+         {% block title2 %}
+          <li class="active">{{var['Name']}}</li>
+         {% endblock %}
+       </ol>
+    </div>
+    <!-- /.breadcrumb -->
+ </div>
+ <!-- .row -->
+ <div class="row">
+    <div class="col-md-12">
+       <div class="white-box">
+         {% block title3 %}
+          <h3 class="box-title">Buscar</h3>
+         {% endblock %}
+          <form>
+             <div class="form-group">
+                <div class="input-group">
+                   <input type="text" id="example-input1-group2" name="example-input1-group2" class="live-search-box form-control" placeholder="Introducir texto para buscar">
+                   <span class="input-group-btn"><button type="button" class="btn waves-effect waves-light btn-info"><i class="fa fa-search"></i></button></span>
+                </div>
+             </div>
+          </form>
+          {% block button_new %}
+          {% if getCanUserCreate(var['Table']) %}
+            <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="newRecord('{{var['Table']}}','recordform.html')" >
+              <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
+          {% endif %}
+          <!--button class="btn btn-success btn-rounded waves-effect waves-light" type="button">
+            <span class="btn-label"><i class="fa fa-refresh"></i></span>Actualizar</button-->
+          {% endblock %}
+          <hr>
+          <ul class="list-group list-group-full">
+            {% block fields_view %}
+            {% for record in getRecordList(var['Table']) %}
+              <li data-search-term="{{record.Name}}" class="list-group-item">
+              <a href="#" onClick="getRecordForm('{{var['Table']}}','recordform.html',id='{{record.id}}',
+              'createRecordForm(\'{{record.id}}\',\'{{var['Table']}}\',\'1\',\'recordFields\')')"
+              >{{record.Name}}</a></li>
+            {% endfor %}
+            {% endblock %}
+          </ul>
+       </div>
+    </div>
+ </div>
+
+<script type=text/javascript>
+  refreshList()
+</script>
+
+

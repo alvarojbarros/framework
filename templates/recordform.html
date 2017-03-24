@@ -1,0 +1,54 @@
+{% block data %}
+ <div class="row bg-title">
+    <!-- .page title -->
+    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+       <h4 class="page-title" id="title1"></h4>
+    </div>
+    <!-- /.page title -->
+    <!-- .breadcrumb -->
+    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+        <ol class="breadcrumb">
+          <li><a href="#">Dashboard</a></li>
+          <li class="active" id="title2"></li>
+       </ol>
+    </div>
+    <!-- /.breadcrumb -->
+ </div>
+
+
+<div id="recordButtons">
+  {% block buttons %}
+    {% if getCanUserEdit(var['Table'],var['id']) %}
+      <button class="btn btn-info btn-rounded waves-effect waves-light m-r-10 m-b-10" onclick="saveRecord('record_form','{{var['Table']}}')" >
+        <span class="btn-label">
+          <i class="fa fa-check">
+          </i>
+        </span>Grabar
+      </button>
+      <!--button class="btn btn-default btn-rounded waves-effect waves-light m-r-10 m-b-10">
+        <span class="btn-label">
+          <i class="fa fa-times">
+          </i>
+        </span>Cancelar
+      </button-->
+    {% endif %}
+    {% if getCanUserDelete(var['Table']) %}
+      <button onclick="deleteRecord('record_form','{{var['Table']}}','recordForm')" class="btn btn-danger btn-rounded waves-effect waves-light m-r-10 m-b-10" >
+        <span class="btn-label">
+          <i class="fa fa-minus">
+          </i>
+        </span>Borrar
+      </button>
+    {% endif %}
+    {% block add_buttons %}
+    {% endblock %}
+  {% endblock %}
+  <div id="error"></div>
+</div>
+  {% block fields %}
+  <div id="recordFields">
+  </div>
+  {% endblock %}
+{% endblock %}
+
+
