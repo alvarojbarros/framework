@@ -123,13 +123,17 @@ function saveRecord(form_id,table) {
 
     $.getJSON($SCRIPT_ROOT + '/_save_record', fields, function(data) {
       	res = data.result['res']
+      	messages.error_msg  = ''
       	if (res){
       		form.elements['id'].value = data.result['id'];
       		form.elements['syncVersion'].value = data.result['syncVersion'];
       		sendFiles(table,data.result['id']);
-			alert('Registro Grabado');
+			//alert('Registro Grabado');
+			//messages.success_msg = 'Registro Grabado';
+			setMessageTimeout('Registro Grabado')
 	  	}else{
-			alert(data.result['Error']);
+			//alert(data.result['Error']);
+			messages.error_msg = data.result['Error'];
 		};
     });
 
@@ -178,9 +182,11 @@ function deleteRecord(id,table,formId) {
 		fields['id'] = _id;
 		$.getJSON($SCRIPT_ROOT + '/_delete_record', fields, function(data) {
 		  if (data.result['res']){
-			  alert('Registro Borrado')
+			  //alert('Registro Borrado')
+			  messages.success_msg = 'Registro Borrado';
 		  }else{
-			  alert(data.result['Error'])
+			  //alert(data.result['Error'])
+			  messages.error_msg = data.result['Error'];
 		  }
 		});
 	}else{
@@ -754,6 +760,7 @@ function createRecordForm(_id,Table,_state,divId,callback){
 	//div.appendChild(formh);
 	//div.appendChild(xml);
 	$(div).html(xml);
+	vue_detail.vue_rows = record.Schedules;
 	if (callback){
 		callback();
 	}
@@ -915,15 +922,30 @@ function recoverPassword(){
   	$.getJSON($SCRIPT_ROOT + '/_recover_password', {'email': e.value},function(data) {
       	res = data.result['res']
       	if (res){
-			alert('Se ha enviado un correo con su nuevo password');
+			//alert('Se ha enviado un correo con su nuevo password');
+			messages.success_msg = 'Se ha enviado un correo con su nuevo password';
 			show_signIn();
 	  	}else{
-			alert(data.result['Error']);
+			//alert(data.result['Error']);
+			messages.error_msg = data.result['Error'];
 		};
     });
 }
 
+
+function cleanMessageText(text){
+	messages.success_msg = '';
+}
+
+
+function setMessageTimeout(text){
+	messages.success_msg = text;
+	setTimeout("cleanMessageText()", 5000);
+}
+
+
 function changePassword(){
+	event.preventDefault()
 	var p = document.getElementById('password');
 	var p1 = document.getElementById('password1');
 	var p2 = document.getElementById('password2');
@@ -931,13 +953,15 @@ function changePassword(){
 		$.getJSON($SCRIPT_ROOT + '/_change_password', {'pwd': p.value,'newpwd': p1.value},function(data) {
 			res = data.result['res']
 			if (res){
-				alert('Se ha modificado el password correctamente');
+				//alert('Se ha modificado el password correctamente');
+				messages.success_msg = 'Se ha modificado el password correctamente';
 			}else{
-				alert(data.result['Error']);
+				//alert(data.result['Error']);
+				messages.error_msg = data.result['Error'];
 			};
 		});
 	}else{
-		alert("Los password no coinciden")
+		messages.error_msg = "Los password no coinciden";
 		return;
 	}
 }
