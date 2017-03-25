@@ -1,4 +1,6 @@
 
+ <script src="{{ url_for('static', filename='js/vuefunctions.js') }}"></script>
+
  <div class="row bg-title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
        <h4 class="page-title" id="title1">Modificar Password</h4>
@@ -10,27 +12,35 @@
     <div class="col-xs-12">
       <div class="white-box">
         <div class="form-group">
-          <label class="col-xs-12" for="password">Current Password</label>
+          <label class="col-xs-12" for="password">Password Actual</label>
           <div class="col-xs-12">
-            <input class="form-control" type="password" required="" placeholder="Current Password" name="password" id="password">
+            <input class="form-control" type="password" required="" placeholder="Password Actual" name="password" id="password">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-xs-12" for="password1">New Password</label>
+          <label class="col-xs-12" for="password1">Nuevo Password</label>
           <div class="col-xs-12">
-            <input class="form-control" type="password" required="" placeholder="New Password" name="password1" id="password1">
+            <input class="form-control" type="password" required="" placeholder="Nuevo Password" name="password1" id="password1">
           </div>
         </div>
         <div class="form-group">
-          <label class="col-xs-12" for="password2">Confirm New Password</label>
+          <label class="col-xs-12" for="password2">Confirmar Nuevo Password</label>
           <div class="col-xs-12">
-            <input class="form-control" type="password" required="" placeholder="Confirm New Password" name="password2" id="password2">
+            <input class="form-control" type="password" required="" placeholder="Confirmar Nuevo Password" name="password2" id="password2">
           </div>
         </div>
         <div class="form-group">
           <div class="col-xs-12">
-            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" onClick="changePassword()">Submit</button>
+            <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" onClick="changePassword()">Aceptar</button>
           </div>
+        </div>
+        <div id='messages'>
+          <p class='alert alert-danger' v-if='error_msg'>
+            {{ error_msg }}
+          </p>
+          <p class='alert alert-danger' v-if='success_msg'>
+            {{ success_msg }}
+          </p>
         </div>
       </div>
     </div>
