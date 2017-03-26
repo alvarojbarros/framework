@@ -14,13 +14,3 @@ var vue_detail = new Vue({
     vue_rows: []
   }
 })
-var app4 = new Vue({
-  el: '#app4',
-  data: {
-    todos: [
-      { text: 'Learn JavaScript' },
-      { text: 'Learn Vue' },
-      { text: 'Build something awesome' }
-    ]
-  }
-})

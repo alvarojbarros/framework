@@ -257,7 +257,7 @@ def createArrayRow(divfg,cnt,row,detailNames,key,notNew,_state):
             #tdi.set(':value',str("row.%s" % dname))
             tdi.set('value',str(row[dname]))
         if (dfield['Input']=='checkbox'):
-            if (tdi.get('value',None)==1):
+            if (row[dname]==1):
                 tdi.set('checked','true')
         tdl = Element('label')
         tdl.text = dfield['Label']
