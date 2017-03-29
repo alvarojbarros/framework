@@ -76,7 +76,7 @@ function sendFiles(table,id){
 }
 
 function saveRecord(form_id,table) {
-	msj = '';
+	/*msj = '';
     form = document.getElementById(form_id);
     var fields = {}
     fields['TableName'] = table;
@@ -119,14 +119,20 @@ function saveRecord(form_id,table) {
 				}
 			}
 		}
-    }
+    }*/
 
+    fields = vue_record.values.record;
+    fields['TableName'] = table;
+  	var _state = document.getElementById('_state');
+    fields['_state'] = _state.value
     $.getJSON($SCRIPT_ROOT + '/_save_record', fields, function(data) {
       	res = data.result['res']
       	messages.error_msg  = ''
       	if (res){
-      		form.elements['id'].value = data.result['id'];
-      		form.elements['syncVersion'].value = data.result['syncVersion'];
+      		vue_record.values.record.id = data.result['id'];
+      		vue_record.values.record.syncVersion = data.result['syncVersion'];
+      		//form.elements['id'].value = data.result['id'];
+      		//form.elements['syncVersion'].value = data.result['syncVersion'];
       		sendFiles(table,data.result['id']);
 			//alert('Registro Grabado');
 			//messages.success_msg = 'Registro Grabado';
@@ -146,29 +152,35 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 		var callback_function = new Function(runFunction);
 		callback_function();
 	}
-
     vars = {Template: TemplateName,Table: Table, id: id}
 	if (callName){
 		var callback_function = new Function(callName);
 		getTemplate('container-fluid',vars,function(){
 			callback_function();
+			getRecord(Table,id,function (data){
+				Vue.set(vue_record,'values', data);
+			})
 		})
 	    //getTemplate('container-fluid',vars,null);
 	}else{
-	    getTemplate('container-fluid',vars,null);
+	    getTemplate('container-fluid',vars,function (){
+			getRecord(Table,id,function (data){
+				Vue.set(vue_record,'values', data);
+			})
+		});
 	}
 }
 
 function getRecord(Table,id,callbalck){
   $.getJSON($SCRIPT_ROOT + '/_get_record', {id: id, TableName: Table}, function(data) {
-    callbalck(data.result.record)
+    callbalck(data.result)
   });
 }
 
 function getRecordBy(Table,filters,callbalck){
   filters.TableName = Table;
   $.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
-    callbalck(data.result.record)
+    callbalck(data.result)
   });
 }
 
@@ -430,6 +442,7 @@ function create_State(_state){
 	e.id = '_state';
 	e.value = _state;
 	e.type = 'hidden';
+	return e;
 }
 
 function createHiddes(fields,formh,record){
@@ -551,14 +564,15 @@ function setReadonly(readonly,_state,e,combo){
 }
 
 
-function createArrayRow(divfg,cnt,details,row,detailNames,key,notNew,_state){
+function createArrayRow(divfg,details,detailNames,key,notNew,_state){
 	var tr = document.createElement('div')
+	tr.setAttribute('v-for','(row,cnt) in vue_rows['+key+']')
 	tr.setAttribute('class','col-xs-12')
 	tr.setAttribute('name',key + 'Rows')
-	tr.setAttribute('id','row' + cnt);
-	tr.setAttribute('rowNr',cnt);
+	//tr.setAttribute('id','row' + cnt);
+	tr.setAttribute(':rowNr','cnt+1');
 	if (notNew){
-		tr.setAttribute('rowId',details[row]['id']);
+		tr.setAttribute('rowId',"row['id']");
 	}
 	divfg.appendChild(tr);
 	var kl = detailNames['__order__'].length;
@@ -583,12 +597,10 @@ function createArrayRow(divfg,cnt,details,row,detailNames,key,notNew,_state){
 		tdi.id = dname;
 		tdi.type = dfield['Input'];
 		if (notNew){
-			tdi.value = details[row][dname];
+			tdi.setAttribute(':value','row['+dname+']');
 		}
 		if (tdi.type=='checkbox'){
-			if (tdi.value==1){
-				tdi.checked = true;
-			}
+			tdi.setAttribute(':checked','row['+dname+']')
 		}
 		tdl = document.createElement('label');
 		tdl.innerHTML = dfield['Label'];
@@ -613,8 +625,8 @@ function createArrayRow(divfg,cnt,details,row,detailNames,key,notNew,_state){
 	var a = document.createElement('button');
 	a.setAttribute('class','btn btn-danger btn-rounded waves-effect waves-light')
 	a.type = 'button';
-	a.id = 'delete' + cnt;
-	a.setAttribute('onclick','deleteRow("'+cnt+'","'+key+'")');
+	//a.id = 'delete' + cnt;
+	//a.setAttribute('onclick','deleteRow("'+cnt+'","'+key+'")');
 	delrow.appendChild(a);
 	a.innerHTML = '<span class="btn-label"><i class="fa fa-times"></i></span>Borrar'
 	tr.appendChild(delrow);
@@ -626,7 +638,8 @@ function createArrayField(rowrecord,divfg ,field,key,_state){
 	var detailNames = field['fieldsDefinition'];
 
 	var details = rowrecord;
-	var cnt = 1;
+	createArrayRow(divfg,details,detailNames,key,true,_state)
+	/*var cnt = 1;
 	for (row in details){
 		createArrayRow(divfg,cnt,details,row,detailNames,key,true,_state)
 		cnt += 1;
@@ -637,7 +650,7 @@ function createArrayField(rowrecord,divfg ,field,key,_state){
 		divfg.setAttribute('has_rows',false);
 	}else{
 		divfg.setAttribute('has_rows',true);
-	}
+	}*/
 
 	var a = document.createElement('button');
 	a.setAttribute('class','btn btn-warning btn-rounded waves-effect waves-light')
@@ -701,13 +714,13 @@ function appendFields(LineFilds,fields,record,mydiv,_state){
 	return cnt;
 }
 
-
 function createFormDiv(_state,fields,record,htmlView){
 
 	var formh = createForm()
 	var statef = create_State(_state);
 	formh.appendChild(statef);
 	createHiddes(fields,formh,record)
+
 	if (htmlView){
 		for (tkey in htmlView){
 			htmlTab = htmlView[tkey]
@@ -745,6 +758,9 @@ function createRecordForm(_id,Table,_state,divId,callback){
     links = data.result.links;
     htmlView = data.result.htmlView;
     xml = data.result.xml;
+
+	Vue.set(vue_record,'values', 'c');
+
     var title1 = document.getElementById('title1')
     var title2 = document.getElementById('title2')
     if (_id){
@@ -760,7 +776,6 @@ function createRecordForm(_id,Table,_state,divId,callback){
 	//div.appendChild(formh);
 	//div.appendChild(xml);
 	$(div).html(xml);
-	vue_detail.vue_rows = record.Schedules;
 	if (callback){
 		callback();
 	}
@@ -773,7 +788,7 @@ function setModified(id){
 	li.setAttribute('has_rows',true);
 }
 
-function addNewRow(key){
+/*function addNewRow(key){
 	var table = document.getElementsByName(key+'Rows');
 	var lastrow = table[ table.length - 1 ];
 	var newrow = lastrow.cloneNode(true);
@@ -794,6 +809,19 @@ function addNewRow(key){
 	a.id = 'delete' + rowNr;
 	a.setAttribute('onclick','deleteRow('+ rowNr +',"'+key+'")');
 	lastrow.parentNode.appendChild(newrow);
+}*/
+
+function addNewRow(field){
+	var row = vue_record.values.record[field][0];
+	var new_row = Object.assign({}, row);
+	fields = vue_record.values.fields[field].fieldsDefinition;
+	for (dfield in fields){
+		if (dfield=='__order__'){
+			continue;
+		}
+		new_row[dfield] = null;
+	}
+	console.log(vue_record.values.record[field].push(new_row))
 }
 
 function deleteRow(id,key){
@@ -905,9 +933,7 @@ window.onpopstate = function (event) {
 }
 
 function OpenCloseMenu(){
-	console.log(1)
 	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-		console.log(2)
 		$(".navbar-toggle i").toggleClass("ti-menu"),$(".navbar-toggle i").addClass("ti-close")
 		e = $(".sidebar-nav").toggleClass("in");
 	}

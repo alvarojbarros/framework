@@ -76,7 +76,6 @@ def signin():
             if password1 != password2:
                 return render_template(settings.templates['loggin_template'],error='Los Password no coinciden',signUp=True,app_name=settings.app_name)
             new_user = User.addNewUser(username1,password1,name)
-            print(new_user)
             if new_user:
                 login_user(new_user)
                 return redirect('/')
@@ -287,18 +286,12 @@ def get_template():
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
 
-@app.route('/_get_record')
-def get_record():
-    table = request.args.get('TableName')
-    _state = request.args.get('_state','')
-    NotFilterFields = request.args.get('NotFilterFields',None)
+
+def getRecordByFilters(table,filters,NotFilterFields=False):
+    NotFilterFields = False
     res = {}
     TableClass = getTableClass(table)
     session = Session()
-    filters = {}
-    for f in request.args:
-        if f not in ['TableName','NotFilterFields','_state']:
-            filters[f] = request.args[f]
     record = None
     if filters:
         record = session.query(TableClass).filter_by(**filters).first()
@@ -354,11 +347,24 @@ def get_record():
                 if value==None:
                     value = ''
                 res[fname] = value
-    from tools.genxml import createFormDiv
-    xml = str(createFormDiv(_state,fields,res,htmlView,links))
-    if xml[:2]=="b'": xml = xml[2:-1]
     session.close()
-    return jsonify(result={'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'xml':xml})
+    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
+
+
+@app.route('/_get_record')
+def get_record():
+    table = request.args.get('TableName')
+    _state = request.args.get('_state','')
+    NotFilterFields = request.args.get('NotFilterFields',None)
+    filters = {}
+    for f in request.args:
+        if f not in ['TableName','NotFilterFields','_state']:
+            filters[f] = request.args[f]
+    res = getRecordByFilters(table,filters,NotFilterFields)
+    #record = res['record']
+    #xml = render_template('recordfields.html',record=record,fields=fields,links=links,htmlView=htmlView)
+    #res['xml'] = xml
+    return jsonify(result=res)
 
 def get_xml(args):
     table = args.get('Table')
@@ -513,6 +519,8 @@ def utility_processor():
         return res
     def getRecordFieldsFromPy(args):
         return get_xml(args)
+    def getRecord(table,id):
+        return getRecordByFilters(table,{'id': id})
     return dict(sortDict=sortDict \
         ,getModules=getModules \
         ,myFunction=myFunction \
@@ -529,6 +537,7 @@ def utility_processor():
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
         ,getRecordFieldsFromPy=getRecordFieldsFromPy \
+        ,getRecord=getRecord \
         )
 
 if __name__ == "__main__":

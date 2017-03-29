@@ -8,9 +8,23 @@ var messages = new  Vue({
 	}
 });
 
-var vue_detail = new Vue({
-  el: '#Schedules',
+var vue_record = new Vue({
+  el: '#recordFields',
   data: {
-    vue_rows: []
+    values: '',
+  },
+
+
+  methods: {
+	removeRow: function (field,index) {
+		console.log(111)
+		this.values.record[field].splice(index,1);
+	},
   }
+
 })
+
+
+function setVueObject(record){
+	console.log(record)
+}

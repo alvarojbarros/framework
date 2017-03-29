@@ -297,6 +297,10 @@ def setValue(record,key,val):
                 if field['Type']=='integer':
                     if not dval or dval=='null':
                         dval = None
+                    elif dval=='false':
+                        dval = 0
+                    elif dval=='true':
+                        dval = 1
                     else:
                         dval = int(dval)
                 if field['Type']=='time':
@@ -310,6 +314,10 @@ def setValue(record,key,val):
             if field['Type']=='integer':
                 if not val or val=='null':
                     val = None
+                elif val=='false':
+                    val = 0
+                elif val=='true':
+                    val = 1
                 else:
                     val = int(val)
             if field['Type'] in ('time','float'):
