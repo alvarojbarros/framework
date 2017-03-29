@@ -224,16 +224,16 @@ def setReadonly(readonly,_state,e,combo):
         if (combo):
             e.set('disabled','true')
 
-def createArrayRow(divfg,cnt,row,detailNames,key,notNew,_state):
+def createArrayRow(divfg,cnt,row_,detailNames,key,notNew,_state):
     tr = Element('div')
-    #tr.set('v-for','row in vue_rows')
+    tr.set('v-for','(row,vue_cnt) in vue_rows')
     tr.set('class','col-xs-12')
     tr.set('name',key + 'Rows')
-    tr.set('id','row' + str(cnt))
-    tr.set('rowNr',str(cnt))
+    #tr.set(':id','row' + '{{vue_cnt+1}}')
+    tr.set(':rowNr','vue_cnt+1')
     if (notNew):
-        #tr.set(':rowId',str("row.id"))
-        tr.set('rowId',str(row['id']))
+        tr.set(':rowId',str("row.id"))
+        #tr.set('rowId',str(row['id']))
     divfg.append(tr)
     kl = len(detailNames['__order__'])
     md = int(12 / kl)
@@ -254,11 +254,10 @@ def createArrayRow(divfg,cnt,row,detailNames,key,notNew,_state):
         tdi.set('id',dname)
         tdi.set('type',dfield['Input'])
         if (notNew):
-            #tdi.set(':value',str("row.%s" % dname))
-            tdi.set('value',str(row[dname]))
+            tdi.set(':value',str("row.%s" % dname))
+            #tdi.set('value',str(row[dname]))
         if (dfield['Input']=='checkbox'):
-            if (row[dname]==1):
-                tdi.set('checked','true')
+            tdi.set(':checked',str("row.%s" % dname))
         tdl = Element('label')
         tdl.text = dfield['Label']
 
@@ -278,8 +277,8 @@ def createArrayRow(divfg,cnt,row,detailNames,key,notNew,_state):
     a = Element('button')
     a.set('class','btn btn-danger btn-rounded waves-effect waves-light')
     a.set('type','button')
-    a.set('id','delete%i' % cnt)
-    a.set('onclick','deleteRow("'+str(cnt)+'","'+key+'")')
+    #a.set('id','delete' + '{{vue_cnt+1}}')
+    #a.set('onclick','deleteRow("{{vue_cnt+1}}","'+key+'")')
     delrow.append(a)
     sp = Element('span')
     sp.set('clas','btn-label')
@@ -297,9 +296,9 @@ def createArrayField(rowrecord,divfg ,field,key,_state):
     detailNames = field['fieldsDefinition']
 
     details = rowrecord
-    #createArrayRow(divfg,1,'',detailNames,key,True,_state)
-    cnt = 1
-    for row in details:
+    createArrayRow(divfg,0,'',detailNames,key,True,_state)
+    #cnt = 1
+    ''' for row in details:
         createArrayRow(divfg,cnt,row,detailNames,key,True,_state)
         cnt += 1
 
@@ -307,7 +306,7 @@ def createArrayField(rowrecord,divfg ,field,key,_state):
         createArrayRow(divfg,cnt,None,detailNames,key,False,_state)
         divfg.set('has_rows','false')
     else:
-        divfg.set('has_rows','true')
+        divfg.set('has_rows','true') '''
 
     a = Element('button')
     a.set('class','btn btn-warning btn-rounded waves-effect waves-light')
@@ -327,6 +326,7 @@ def createArrayField(rowrecord,divfg ,field,key,_state):
 
 
 def appendField(record,fields,LineField,mydiv,_state,links):
+    vue_row_cnt = 0
     if isinstance(fields[LineField]['Type'],list):
         createArrayField(record[LineField],mydiv,fields[LineField],LineField,_state)
     else:
@@ -380,25 +380,12 @@ def creteMessages():
     e.append(p)
     return e
 
-def createList():
-    e = Element('div')
-    e.set('id','app4')
-    ol = Element('ol')
-    e.append(ol)
-    li = Element('li')
-    li.set('v-for','todo in todos')
-    li.text = '{{ todo.text }}'
-    ol.append(li)
-    return e
-
 def createFormDiv(_state,fields,record,htmlView,links):
     formh = createForm()
     script = getScriptVue()
     formh.append(script)
     statef = create_State(_state)
     formh.append(statef)
-    #mylist = createList()
-    #formh.append(mylist)
     createHiddes(fields,formh,record)
     messages = creteMessages()
     formh.append(messages)
