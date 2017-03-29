@@ -69,6 +69,21 @@
                   <input v-if="values.fields[field]['Input'] == 'text'" class="form-control" :id="field"
                     :name="field" :placeholder="values.fields[field]['Label']" type="text" v-model="values.record[field]">
 
+                  <input v-if="values.fields[field]['Input'] == 'number'" class="form-control" :id="field"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="number" v-model="values.record[field]">
+
+                  <input v-if="values.fields[field]['Input'] == 'date'" class="form-control" :id="field"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="date" v-model="values.record[field]">
+
+                  <input v-if="values.fields[field]['Input'] == 'time'" class="form-control" :id="field"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="time" v-model="values.record[field]">
+
+                  <input v-if="values.fields[field]['Input'] == 'datetime'" class="form-control" :id="field"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="datetime" v-model="values.record[field]">
+
+                  <input v-if="values.fields[field]['Input'] == 'password'" class="form-control" :id="field"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="password" v-model="values.record[field]">
+
                   <input v-if="values.fields[field]['Input'] == 'integer'" class="form-control" :id="field"
                     :name="field" :placeholder="values.fields[field]['Label']" type="integer" v-model="values.record[field]"
                     onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
