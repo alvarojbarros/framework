@@ -309,6 +309,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
         field = fields[fn]
         if ('LinkTo' in field):
             links[fn] = get_linkto(field['LinkTo'])
+    print(1,record)
     if record:
         if not NotFilterFields:
             record.filterFields(fields)
@@ -348,6 +349,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     value = ''
                 res[fname] = value
     session.close()
+    print(2)
     return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
 
 
