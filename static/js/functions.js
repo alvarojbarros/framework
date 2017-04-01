@@ -28,7 +28,10 @@ function refreshList() {
 function newRecord(Table,TemplateName) {
     vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate('container-fluid',vars,function(){
-		createRecordForm(null,Table,null,'recordFields');
+		//createRecordForm(null,Table,null,'recordFields');
+		getRecord(Table,{},function (data){
+			Vue.set(vue_record,'values', data);
+		})
 	})
 }
 
@@ -131,6 +134,7 @@ function saveRecord(form_id,table) {
       	if (res){
       		vue_record.values.record.id = data.result['id'];
       		vue_record.values.record.syncVersion = data.result['syncVersion'];
+      		vue_record.values._state = 1
       		//form.elements['id'].value = data.result['id'];
       		//form.elements['syncVersion'].value = data.result['syncVersion'];
       		sendFiles(table,data.result['id']);
@@ -173,6 +177,11 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 
 function getRecord(Table,id,callbalck){
   $.getJSON($SCRIPT_ROOT + '/_get_record', {id: id, TableName: Table}, function(data) {
+    if (data.result.record.id){
+    	data.result['_state'] = 1
+	}else{
+    	data.result['_state'] = 0
+	}
     callbalck(data.result)
   });
 }
@@ -821,7 +830,6 @@ function addNewRow(field){
 		}
 		new_row[dfield] = null;
 	}
-	console.log(vue_record.values.record[field].push(new_row))
 }
 
 function deleteRow(id,key){
