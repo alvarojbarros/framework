@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import sys
 def getSettings():
     ''' settingsfile = sys.argv[1]
