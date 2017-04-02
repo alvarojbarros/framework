@@ -2,17 +2,17 @@
 
 <script src="{{ url_for('static', filename='js/vuefunctions.js') }}"></script>
 
-<div class="row bg-title">
+<div class="row bg-title" id="vue_title">
   <!-- .page title -->
   <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-     <h4 class="page-title" id="title1"></h4>
+     <h4 class="page-title" id="title1">{%raw%}{{Title}}{%endraw%}</h4>
   </div>
   <!-- /.page title -->
   <!-- .breadcrumb -->
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
         <li><a href="#">Dashboard</a></li>
-        <li class="active" id="title2"></li>
+        <li class="active" id="title2">{%raw%}{{Title}}{%endraw%}</li>
      </ol>
   </div>
   <!-- /.breadcrumb -->
@@ -56,9 +56,10 @@
         <div class="white-box">
           <h3 class="box-title"> {% raw %} {{tab.Name}} {% endraw %}</h3>
             <div class="form-group" v-for="tab_fields in tab.Fields">
-              <div class="col-xs-12 col-md-{{md}} p-0" v-for="field in tab_fields[1]"
+              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-0'" v-for="field in tab_fields[1]"
                 v-if="values.fields[field] && !(values.fields[field]['Type'] instanceof Array)">
-                <label class="col-xs-12" :for="field" v-if="values.fields[field]['Input'] != 'checkbox'"  >
+                <label class="col-xs-12" :for="field"
+                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}
                 </label>
                 <div class="col-xs-12">
@@ -153,15 +154,17 @@
                       :onClick="values.fields[field]['onClick']"
                       :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                       >
-                    <label :for="field">{% raw %} {{values.fields[field]['Label']}} {% endraw %}</label>
+                    <label v-if="values.fields[field]['Label']"
+                    :for="field">{% raw %} {{values.fields[field]['Label']}} {% endraw %}</label>
                   </div>
 
                 </div>
               </div>
 
-              <div class="col-xs-12 col-md-{{md}} p-0" v-for="field in tab_fields[1]" :id="field"
+              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-0'" v-for="field in tab_fields[1]" :id="field"
                 v-if="values.fields[field] && (values.fields[field]['Type'] instanceof Array)">
-                <label class="col-xs-12" :for="field" v-if="values.fields[field]['Input'] != 'checkbox'"  >
+                <label class="col-xs-12" :for="field"
+                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}
                 </label>
 
@@ -177,22 +180,33 @@
                     {% raw %} {{values.fields[field].fieldsDefinition[dfield].Label}} {% endraw %}</label>
 
                     <input v-if="values.fields[field].fieldsDefinition[dfield].Input=='time'"
-                    :detail="field" :id="dfield" :name="dfield" :onchange="'setModified(&quot;'+field+'&quot;)'"
-                    :onkeyup="'setModified(&quot;'+field+'&quot;)'" type="time" class="form-control"
-                    v-model="values.record[field][index][dfield]"
+                    :detail="field" :id="dfield" :name="dfield"
+                    type="time" class="form-control" v-model="values.record[field][index][dfield]"
                     :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
                     || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
                     >
 
-                    <div class="col-xs-3 col-md1 checkbox checkbox-primary"
-                      v-if="values.fields[field].fieldsDefinition[dfield].Input=='checkbox'">
-                      <input :detail="field" :id="dfield" :name="field" :onchange="'setModified(&quot;'+field+'&quot;)'"
-                      :onkeyup="'setModified(&quot;'+field+'&quot;)'" type="checkbox" value="0"
-                      v-model="values.record[field][index][dfield]" class="form-control"
+                    <select v-if="values.fields[field].fieldsDefinition[dfield].Input == 'combo'
+                      && values.fields[field].fieldsDefinition[dfield]['LinkTo'] && values.links[dfield] "
+                      :detail="field" :id="dfield" :name="dfield"
+                      class="form-control" v-model="values.record[field][index][dfield]"
                       :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
                       || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
                       >
-                      <label :labelfor="dfield">{% raw %} {{values.fields[field].fieldsDefinition[dfield].Label}} {% endraw %}</label>
+                      <option v-for="(value,key) in values.links[dfield]"  :value="key">
+                        {% raw %} {{value}} {% endraw %}</option>
+                    </select>
+
+
+                    <div class="col-xs-3 col-md1 checkbox checkbox-primary"
+                      v-if="values.fields[field].fieldsDefinition[dfield].Input=='checkbox'">
+                      <input :detail="field" :id="dfield" :name="field"
+                      type="checkbox" value="0" v-model="values.record[field][index][dfield]" class="form-control"
+                      :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
+                      || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
+                      >
+                      <label v-if="values.fields[field].fieldsDefinition[dfield].Label"
+                      :labelfor="dfield">{% raw %} {{values.fields[field].fieldsDefinition[dfield].Label}} {% endraw %}</label>
                     </div>
 
 
