@@ -194,10 +194,9 @@ def save_record():
             fields[key] = request.args.get(key,None)
             if fields[key]=='null': fields[key] = None
     _id = request.args.get('id')
-    _state = request.args.get('_state')
+    _state = int(request.args.get('_state'))
     session = Session()
     session.expire_on_commit = False
-
     if not _state:
         if not _id:
             del fields['id']
@@ -301,7 +300,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
         record = TableClass()
         record.defaults()
     fields = TableClass.getfieldsDefinition(record)
-    htmlView = TableClass.htmlView()
+    htmlView = TableClass.getHtmlView()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = {}
@@ -309,7 +308,6 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
         field = fields[fn]
         if ('LinkTo' in field):
             links[fn] = get_linkto(field['LinkTo'])
-    print(1,record)
     if record:
         if not NotFilterFields:
             record.filterFields(fields)
@@ -349,7 +347,6 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     value = ''
                 res[fname] = value
     session.close()
-    print(2)
     return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
 
 
@@ -388,7 +385,7 @@ def get_xml(args):
         record = TableClass()
         record.defaults()
     fields = TableClass.getfieldsDefinition(record)
-    htmlView = TableClass.htmlView()
+    htmlView = TableClass.getHtmlView()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = {}

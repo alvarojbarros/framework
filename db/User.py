@@ -34,8 +34,8 @@ class User(Base,Record,UserMixin):
     @classmethod
     def htmlView(cls):
         Tabs = {}
-        Tabs[0] = {"Name":"Informacion del Usuario", "Fields": [(0,["id"],["Name"])]}
-        Tabs[1] = {"Name":"Configuracion del Usuario", "Fields": [(0,["id"]),(1,["Password"]),(2,["UserType"]),(3,["Active"])]}
+        Tabs[0] = {"Name":"Información del Usuario", "Fields": [[0,["id"],["Name"]]]}
+        Tabs[1] = {"Name":"Configuración del Usuario", "Fields": [[0,["id"]],[1,["Password"]],[2,["UserType"]],[3,["Active"]]]}
         return Tabs
 
     def filterFields(self,fields):
@@ -80,7 +80,7 @@ class User(Base,Record,UserMixin):
         self.UserType = UserType
 
     def check(self):
-        if hasattr(self,"_new") and not self.id: return Error("Completar Codigo")
+        if hasattr(self,"_new") and not self.id: return Error("Completar Código")
         return True
 
     @classmethod

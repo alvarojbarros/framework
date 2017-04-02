@@ -87,7 +87,24 @@ class Record(object):
 
     @classmethod
     def htmlView(cls):
-        return None
+        Tabs = {}
+        Tabs[0] = {'Fields':[]}
+        FieldsDefinition = cls.fieldsDefinition()
+        for field in cls.fieldsDefinition():
+            if 'Hidde' not in FieldsDefinition[field]:
+                Tabs[0]['Fields'].append([12,[field]])
+        return Tabs
+
+    @classmethod
+    def getHtmlView(cls):
+        Tabs = cls.htmlView()
+        if not Tabs: return Tabs
+        for key in Tabs:
+            fields = Tabs[key]['Fields']
+            for line in fields:
+                indexnr = fields.index(line)
+                Tabs[key]['Fields'][indexnr][0] = int(12 / len(line[1]))
+        return Tabs
 
     @classmethod
     def query(cls):

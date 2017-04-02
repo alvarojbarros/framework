@@ -41,6 +41,16 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 9: [], \
 10: ["ALTER TABLE activity ADD COLUMN Status INTEGER"],\
 11: ["ALTER TABLE user MODIFY id VARCHAR(50)"],\
+12: ["ALTER TABLE activity MODIFY CustId VARCHAR(50)", \
+"ALTER TABLE activity MODIFY CustId VARCHAR(50)", \
+"ALTER TABLE activity MODIFY ProfId VARCHAR(50)", \
+"ALTER TABLE activityusers MODIFY CustId VARCHAR(50)", \
+"ALTER TABLE userfavorite MODIFY UserId VARCHAR(50)", \
+"ALTER TABLE userfavorite MODIFY FavoriteId VARCHAR(50)", \
+"ALTER TABLE usernote MODIFY UserId VARCHAR(50)", \
+"ALTER TABLE usernote MODIFY ProfId VARCHAR(50)", \
+"ALTER TABLE userservice MODIFY UserId VARCHAR(50)", \
+],\
 }
 
 
