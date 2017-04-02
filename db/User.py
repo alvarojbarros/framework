@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from flask_login import UserMixin
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, Time, DateTime
 from tools.dbconnect import engine,MediumText
