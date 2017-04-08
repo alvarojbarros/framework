@@ -131,6 +131,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				}else{
 					vue_title.recordName = data.record['id']
 				}
+				autoCompleteInput()
 			})
 		});
 	}
@@ -397,3 +398,35 @@ function changePassword(){
 
 
 
+function autoCompleteInput(){
+	  var availableTags = [
+		"ActionScript",
+		"AppleScript",
+		"Asp",
+		"BASIC",
+		"C",
+		"C++",
+		"Clojure",
+		"COBOL",
+		"ColdFusion",
+		"Erlang",
+		"Fortran",
+		"Groovy",
+		"Haskell",
+		"Java",
+		"JavaScript",
+		"Lisp",
+		"Perl",
+		"PHP",
+		"Python",
+		"Ruby",
+		"Scala",
+		"Scheme"
+	  ];
+	  $( "#CompanyId" ).autocomplete({
+		source: availableTags
+	  });
+	  $( "#tags3" ).autocomplete({
+		source: availableTags
+	  });
+}

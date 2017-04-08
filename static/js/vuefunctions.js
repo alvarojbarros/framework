@@ -8,18 +8,6 @@ var messages = new  Vue({
 	}
 });
 
-
-Vue.component('vue-input',{
-	template: '#vue_input',
-	props: ['input','field','label','value','readonly','itype','field_values'],
-  	methods: {
-	updateValue: function (value) {
-      this.$emit('input', value)
-	}
-  }
-
-});
-
 var vue_title = new Vue({
   el: '#vue_title',
   data: {
@@ -27,7 +15,6 @@ var vue_title = new Vue({
   },
 
 })
-
 
 var vue_record = new Vue({
   el: '#recordFields',
