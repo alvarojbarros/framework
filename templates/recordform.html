@@ -57,7 +57,7 @@
         <div class="white-box">
           <h3 class="box-title"> {% raw %} {{tab.Name}} {% endraw %}</h3>
             <div class="form-group" v-for="tab_fields in tab.Fields">
-              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-0'" v-for="field in tab_fields[1]"
+              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-b-20'" v-for="field in tab_fields[1]"
                 v-if="values.fields[field] && !(values.fields[field]['Type'] instanceof Array)">
                 <label class="col-xs-12" :for="field"
                   v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
@@ -160,7 +160,7 @@
                 </div>
               </div>
 
-              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-0'" v-for="field in tab_fields[1]" :id="field"
+              <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-b-20'" v-for="field in tab_fields[1]" :id="field"
                 v-if="values.fields[field] && (values.fields[field]['Type'] instanceof Array)">
                 <label class="col-xs-12" :for="field"
                   v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
