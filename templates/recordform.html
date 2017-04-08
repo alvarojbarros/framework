@@ -1,7 +1,6 @@
 {% block data %}
 
 <script src="{{ url_for('static', filename='js/vuefunctions.js') }}"></script>
-<script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
 
 <div class="row bg-title" id="vue_title">
   <!-- .page title -->
@@ -135,18 +134,13 @@
                       {% raw %} {{value}} {% endraw %}</option>
                   </select>
 
-                  <!--select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
+                  <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
                     :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
                     <option v-for="(value,key) in values.links[field]"  :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
-                  </select-->
-
-                  <input v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
-                    class="form-control" :id="field" :name="field" v-model="values.record[field]" autocomplete="off"
-                    :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
-                  >
+                  </select>
 
                   <div v-if="values.fields[field]['Input'] == 'checkbox'"  class="checkbox checkbox-primary">
                     <input class="fxhdr" :id="field" :name="field" type="checkbox" v-model="values.record[field]"
@@ -237,9 +231,6 @@
   </div>
 </div>
 
-<div>
-  <input id="tags3" class="form-control" autocomplete="off">
-</div>
 
 {% endblock %}
 
