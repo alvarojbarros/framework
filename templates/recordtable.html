@@ -18,7 +18,7 @@
     <!-- /.breadcrumb -->
  </div>
  <!-- .row -->
- <div class="row">
+ <div class="row" id="record_list">
     <div class="col-md-12">
        <div class="white-box">
          {% block title3 %}
@@ -43,18 +43,19 @@
           <hr>
           <ul class="list-group list-group-full">
             {% block fields_view %}
-            {% for record in getRecordList(var['Table']) %}
-              <li data-search-term="{{record.Name}}" class="list-group-item">
-              <a href="#" onClick="getRecordForm('{{var['Table']}}','recordform.html',id='{{record.id}}')">{{record.Name}}</a></li>
-            {% endfor %}
+              <li v-for="record in values" :data-search-term="record.Name" class="list-group-item">
+              <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">{%raw%}{{record.Name}}{%endraw%}</a></li>
             {% endblock %}
           </ul>
        </div>
     </div>
  </div>
 
+<script src="{{ url_for('static', filename='js/vuerecordlist.js') }}"></script>
+
 <script type=text/javascript>
-  refreshList()
+  refreshList();
+  getRecordList('{{var['Table']}}','Name,id');
 </script>
 
 

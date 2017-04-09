@@ -397,6 +397,21 @@ def get_linkto(linkto):
     return res
 
 
+@app.route('/_record_list')
+def record_list():
+    res = []
+    table = request.args.get('Table')
+    fields = request.args.get('Fields').split(',')
+    TableClass = getTableClass(table)
+    records = TableClass.getRecordList(TableClass)
+    for record in records:
+        row = {}
+        for field in fields:
+            row[field] = getattr(record,field)
+        res.append(row)
+    return jsonify(result=res)
+
+
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
@@ -414,7 +429,8 @@ def dated_url_for(endpoint, **values):
 def utility_processor():
     def getRecordList(table):
         TableClass = getTableClass(table)
-        return TableClass.getRecordList(TableClass)
+        res = TableClass.getRecordList(TableClass)
+        return res
     def sortDict(myDict):
         return sorted(myDict)
     def getJsonify(f):
