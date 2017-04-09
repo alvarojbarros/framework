@@ -29,6 +29,7 @@
       <link href="{{ url_for('static', filename='css/fullcalendar.print.css') }}" rel='stylesheet' media='print' />
       <link href="{{ url_for('static', filename='css/fullcalendar.1.css') }}" rel='stylesheet'/>
 
+      <script src="https://unpkg.com/vue"></script>
       <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
       <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
       <!--[if lt IE 9]>
@@ -57,7 +58,6 @@
       </div>
       <!-- /#wrapper -->
 
-        <script src="https://unpkg.com/vue"></script>
         <script type=text/javascript>
           $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
         </script>

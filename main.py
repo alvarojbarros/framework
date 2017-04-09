@@ -352,7 +352,6 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     session.close()
     return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
 
-
 @app.route('/_get_record')
 def get_record():
     table = request.args.get('TableName')
@@ -368,73 +367,17 @@ def get_record():
     #res['xml'] = xml
     return jsonify(result=res)
 
-def get_xml(args):
-    table = args.get('Table')
-    _state = args.get('_state','')
-    NotFilterFields = args.get('NotFilterFields',None)
-    res = {}
-    TableClass = getTableClass(table)
-    session = Session()
-    filters = {}
-    for f in args:
-        if f not in ['Table','NotFilterFields','_state','Template']:
-            filters[f] = args[f]
-    record = None
-    if filters:
-        record = session.query(TableClass).filter_by(**filters).first()
-    if filters and not record:
-        return jsonify(result=False)
-    if not filters:
-        record = TableClass()
-        record.defaults()
-    fields = TableClass.getfieldsDefinition(record)
-    htmlView = TableClass.getHtmlView()
-    if not NotFilterFields:
-        filterFiedlsByUserAccess(fields)
-    links = {}
-    for fn in fields:
-        field = fields[fn]
-        if ('LinkTo' in field):
-            links[fn] = get_linkto(field['LinkTo'])
-    if record:
-        if not NotFilterFields:
-            record.filterFields(fields)
-        from datetime import time,date
-        for fname in fields:
-            value = None
-            if not TableClass.isPersistent(fname):
-                if 'Method' in fields[fname]:
-                    value = eval("record.%s" % fields[fname]['Method'])
-            else:
-                value = getattr(record,fname)
-            if isinstance(value,list):
-                res[fname] = []
-                for row in value:
-                    rfields = fields[fname]['fieldsDefinition']
-                    rres = {}
-                    for rfname in rfields:
-                        if rfname=='__order__':
-                            continue
-                        rvalue = getattr(row,rfname)
-                        if isinstance(rvalue,time):
-                            rvalue = str(rvalue)
-                        elif isinstance(rvalue,date):
-                            rvalue = str(rvalue)
-                        rres[rfname] = rvalue
-                    res[fname].append(rres)
-            else:
-                if isinstance(value,time):
-                    value = str(value)
-                elif isinstance(value,datetime):
-                    value = value.strftime("%Y-%m-%dT%H:%M:%S")
-                elif isinstance(value,date):
-                    value = str(value)
-                res[fname] = value
-    from tools.genxml import createFormDiv
-    xml = str(createFormDiv(_state,fields,res,htmlView,links))
-    if xml[:2]=="b'": xml = xml[2:-1]
-    session.close()
-    return xml
+@app.route('/_get_modules')
+def get_modules():
+    modules = settings.getModules(current_user.UserType)
+    res = []
+    for k in modules:
+        table = modules[k]
+        table['Vars']['Template'] = table['Template']
+        table['Vars']['Name'] = table['Name']
+        table['Vars'] = str(table['Vars'])
+        res.append(table)
+    return jsonify(result=res)
 
 def get_linkto(linkto):
     res = {}
@@ -519,8 +462,6 @@ def utility_processor():
             table['Vars'] = str(table['Vars'])
             res.append(table)
         return res
-    def getRecordFieldsFromPy(args):
-        return get_xml(args)
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
     return dict(sortDict=sortDict \
@@ -538,7 +479,6 @@ def utility_processor():
         ,listLenght=listLenght\
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
-        ,getRecordFieldsFromPy=getRecordFieldsFromPy \
         ,getRecord=getRecord \
         )
 
