@@ -218,6 +218,8 @@ function runSearchBoxOnKey(){
 
 jQuery(document).ready(function($){
 
+	getModulesVue();
+
 	localStorage.clear();
 	$('.list-group-full li').each(function(){
 		$(this).attr('data-search-term', $(this).text().toLowerCase());
@@ -396,4 +398,10 @@ function changePassword(){
 }
 
 
+function getModulesVue(){
 
+	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
+		Vue.set(vue_modules,'values', data.result);
+	});
+
+}
