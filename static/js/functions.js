@@ -131,7 +131,6 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				}else{
 					vue_title.recordName = data.record['id']
 				}
-				autoCompleteInput()
 			})
 		});
 	}
@@ -218,6 +217,8 @@ function runSearchBoxOnKey(){
 }
 
 jQuery(document).ready(function($){
+
+	getModulesVue();
 
 	localStorage.clear();
 	$('.list-group-full li').each(function(){
@@ -397,36 +398,19 @@ function changePassword(){
 }
 
 
+function getModulesVue(){
 
-function autoCompleteInput(){
-	  var availableTags = [
-		"ActionScript",
-		"AppleScript",
-		"Asp",
-		"BASIC",
-		"C",
-		"C++",
-		"Clojure",
-		"COBOL",
-		"ColdFusion",
-		"Erlang",
-		"Fortran",
-		"Groovy",
-		"Haskell",
-		"Java",
-		"JavaScript",
-		"Lisp",
-		"Perl",
-		"PHP",
-		"Python",
-		"Ruby",
-		"Scala",
-		"Scheme"
-	  ];
-	  $( "#CompanyId" ).autocomplete({
-		source: availableTags
-	  });
-	  $( "#tags3" ).autocomplete({
-		source: availableTags
-	  });
+	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
+		Vue.set(vue_modules,'values', data.result);
+	});
+
+}
+
+function getRecordList(table,fields){
+
+	Vue.set(vue_recordlist,'table', table);
+	$.getJSON($SCRIPT_ROOT + '/_record_list', {'Table': table,'Fields': fields },function(data) {
+		console.log(data.result)
+		Vue.set(vue_recordlist,'values', data.result);
+	});
 }
