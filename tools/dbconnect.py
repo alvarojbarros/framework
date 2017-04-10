@@ -4,7 +4,7 @@ settings = getsettings.getSettings()
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 
-engine = create_engine('mysql+pymysql://%s' % settings.mysqldata, pool_recycle=3600)
+engine = create_engine('mysql+pymysql://%s?charset=utf8' % settings.mysqldata, pool_recycle=3600)
 Session = sessionmaker(bind=engine)
 
 def MediumText():
