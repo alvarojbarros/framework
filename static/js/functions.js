@@ -318,6 +318,7 @@ function getTemplate(divName,vars,callback){
 		if (callback){
 			callback();
 		}
+		vue_title2.Title = vars.Name;
     });
 }
 
@@ -410,7 +411,6 @@ function getRecordList(table,fields){
 
 	Vue.set(vue_recordlist,'table', table);
 	$.getJSON($SCRIPT_ROOT + '/_record_list', {'Table': table,'Fields': fields },function(data) {
-		console.log(data.result)
 		Vue.set(vue_recordlist,'values', data.result);
 	});
 }

@@ -407,7 +407,12 @@ def record_list():
     for record in records:
         row = {}
         for field in fields:
-            row[field] = getattr(record,field)
+            value = getattr(record,field)
+            if isinstance(value,date):
+                value = value.strftime("%d/%m/%Y")
+            elif isinstance(value,time):
+                value = value.strftime("%H:%M")
+            row[field] = value
         res.append(row)
     return jsonify(result=res)
 

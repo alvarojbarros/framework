@@ -1,8 +1,8 @@
- <div class="row bg-title">
+ <div class="row bg-title" id="vue_title2">
     <!-- .page title -->
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
        {% block title %}
-       <h4 class="page-title">{{var['Name']}}</h4>
+       <h4 class="page-title">{%raw%}{{Title}}{%endraw%}</h4>
        {% endblock %}
     </div>
     <!-- /.page title -->
@@ -11,7 +11,7 @@
       <ol class="breadcrumb">
           <li><a href="#" onClick="getTamplate('container-fluid',{'Template':'dashboard.html'})" >Dashboard</a></li>
          {% block title2 %}
-          <li class="active">{{var['Name']}}</li>
+          <li class="active">{%raw%}{{Title}}{%endraw%}</li>
          {% endblock %}
        </ol>
     </div>
@@ -53,9 +53,10 @@
 
 <script src="{{ url_for('static', filename='js/vuerecordlist.js') }}"></script>
 
+{% block button_script %}
 <script type=text/javascript>
   refreshList();
   getRecordList('{{var['Table']}}','Name,id');
 </script>
-
+{% endblock %}
 
