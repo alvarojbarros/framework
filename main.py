@@ -298,7 +298,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     if filters:
         record = session.query(TableClass).filter_by(**filters).first()
     if filters and not record:
-        return jsonify(result=False)
+        return {'res':False}
     if not filters:
         record = TableClass()
         record.defaults()
@@ -362,9 +362,6 @@ def get_record():
         if f not in ['TableName','NotFilterFields','_state']:
             filters[f] = request.args[f]
     res = getRecordByFilters(table,filters,NotFilterFields)
-    #record = res['record']
-    #xml = render_template('recordfields.html',record=record,fields=fields,links=links,htmlView=htmlView)
-    #res['xml'] = xml
     return jsonify(result=res)
 
 @app.route('/_get_modules')
@@ -399,21 +396,11 @@ def get_linkto(linkto):
 
 @app.route('/_record_list')
 def record_list():
-    res = []
     table = request.args.get('Table')
     fields = request.args.get('Fields').split(',')
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass)
-    for record in records:
-        row = {}
-        for field in fields:
-            value = getattr(record,field)
-            if isinstance(value,date):
-                value = value.strftime("%d/%m/%Y")
-            elif isinstance(value,time):
-                value = value.strftime("%H:%M")
-            row[field] = value
-        res.append(row)
+    res = fillRecordList(records,fields)
     return jsonify(result=res)
 
 

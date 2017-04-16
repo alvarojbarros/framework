@@ -70,3 +70,17 @@ def importTable(f):
         session.close()
         return Error("Error al importar")
     return "Registros importados %i" % k
+
+def fillRecordList(records,fields):
+    res = []
+    for record in records:
+        row = {}
+        for field in fields:
+            value = getattr(record,field)
+            if isinstance(value,date):
+                value = value.strftime("%d/%m/%Y")
+            elif isinstance(value,time):
+                value = value.strftime("%H:%M")
+            row[field] = value
+        res.append(row)
+    return res
