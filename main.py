@@ -307,10 +307,12 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = {}
+    print("1111111111111111111111111111111111111111")
     for fn in fields:
         field = fields[fn]
         if ('LinkTo' in field):
             links[fn] = get_linkto(field['LinkTo'])
+    print(links)
     if record:
         if not NotFilterFields:
             record.filterFields(fields)
@@ -431,6 +433,10 @@ def utility_processor():
         return canUserCreate(table)
     def getCanUserEdit(table,recordId):
         return canUserEdit(table,recordId)
+    def getCanUserAddRow(table):
+        return canUserAddRow(table)
+    def getCanUserDeleteRow(table):
+        return canUserDeleteRow(table)
     def getCanUserDelete(table):
         return canUserDelete(table)
     def myFunction(function,params=None):
@@ -477,6 +483,8 @@ def utility_processor():
         ,myFunction=myFunction \
         ,getRecordList=getRecordList \
         ,getCanUserCreate=getCanUserCreate \
+        ,getCanUserAddRow=getCanUserAddRow \
+        ,getCanUserDeleteRow=getCanUserDeleteRow \
         ,getCanUserEdit=getCanUserEdit \
         ,getCanUserDelete=getCanUserDelete \
         ,getJsonify=getJsonify \

@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer
 from tools.dbconnect import Session
 from sqlalchemy.orm import sessionmaker
 from tools.Tools import *
+from flask_login import current_user
 
 class Record(object):
     syncVersion = Column(Integer)
@@ -56,6 +57,14 @@ class Record(object):
         return True
 
     @classmethod
+    def canUserAddRow(cls):
+        return True
+
+    @classmethod
+    def canUserDeleteRow(cls):
+        return True
+
+    @classmethod
     def getUserFieldsReadOnly(cls,rocord,fieldname):
         return 0
 
@@ -99,11 +108,18 @@ class Record(object):
     def getHtmlView(cls):
         Tabs = cls.htmlView()
         if not Tabs: return Tabs
+        to_remove = []
+
         for key in Tabs:
-            fields = Tabs[key]['Fields']
+            tab = Tabs[key]
+            if ('Level' in tab) and (current_user.UserType not in tab['Level']):
+                to_remove.append(key)
+            fields = tab['Fields']
             for line in fields:
                 indexnr = fields.index(line)
                 Tabs[key]['Fields'][indexnr][0] = int(12 / len(line[1]))
+        for fn in to_remove:
+            del Tabs[fn]
         return Tabs
 
     @classmethod

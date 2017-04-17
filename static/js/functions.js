@@ -264,7 +264,9 @@ function addNewRow(field){
 
 function getTemplateModule(divName,vars){
 	OpenCloseMenu();
-	getTemplate(divName,vars);
+	getTemplate(divName,vars,function(){
+		vue_title2.Title = vars.Name;
+	});
 }
 
 function AddToLocalStorage(html){
@@ -318,7 +320,7 @@ function getTemplate(divName,vars,callback){
 		if (callback){
 			callback();
 		}
-		vue_title2.Title = vars.Name;
+		//vue_title2.Title = vars.Name;
     });
 }
 
