@@ -398,7 +398,7 @@ def get_modules():
         table = modules[k]
         table['Vars']['Template'] = table['Template']
         table['Vars']['Name'] = table['Name']
-        table['Vars'] = str(table['Vars'])
+        table['Vars'] = table['Vars']
         res.append(table)
     return jsonify(result=res)
 

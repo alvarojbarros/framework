@@ -264,7 +264,8 @@ function addNewRow(field){
 	}
 }
 
-function getTemplateModule(divName,vars){
+function getTemplateModule(divName,index){
+	vars = vue_modules.values[index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
 		vue_title2.Title = vars.Name;
