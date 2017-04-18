@@ -1,6 +1,7 @@
 {% block data %}
 
 <script src="{{ url_for('static', filename='js/vuerecord.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>
 
 <div class="row bg-title" id="vue_title">
   <!-- .page title -->
@@ -128,7 +129,7 @@
 
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['Values']"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
-                    :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
+                    :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
                     <option v-for="(value,key) in values.fields[field]['Values']" :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
@@ -136,7 +137,7 @@
 
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
-                    :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
+                    :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
                     <option v-for="(value,key) in values.links[field]"  :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
@@ -179,11 +180,19 @@
                     || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
                     >
 
+                    <input v-if="values.fields[field].fieldsDefinition[dfield].Input == 'date'"
+                    :detail="field" :id="dfield" :name="dfield"
+                    type="date" class="form-control" v-model="values.record[field][index][dfield]"
+                    :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
+                    || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
+                    >
+
+
                     <select v-if="values.fields[field].fieldsDefinition[dfield].Input == 'combo'
                       && values.fields[field].fieldsDefinition[dfield]['LinkTo'] && values.links[dfield] "
                       :detail="field" :id="dfield" :name="dfield"
                       class="form-control" v-model="values.record[field][index][dfield]"
-                      :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
+                      :disabled="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
                       || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
                       >
                       <option v-for="(value,key) in values.links[dfield]"  :value="key">
@@ -206,6 +215,7 @@
                   </div>
 
 
+                {% if getCanUserDeleteRow(var['Table']) %}
                   <div class="col-lg-1 col-xs-6 col-md-1">
                     <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
                       class="btn btn-danger btn-rounded waves-effect waves-light">
@@ -216,11 +226,14 @@
                     </button>
                   </div>
                 </div>
-                <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
-                  class="btn btn-warning btn-rounded waves-effect waves-light">
-                  Agregar<span clas="btn-label"><i class="fa fa-times"></i>
-                  </span>
-                </button>
+                {% endif %}
+                {% if getCanUserAddRow(var['Table']) %}
+                  <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
+                    class="btn btn-warning btn-rounded waves-effect waves-light">
+                    Agregar<span clas="btn-label"><i class="fa fa-times"></i>
+                    </span>
+                  </button>
+                {% endif %}
 
               </div>
 

@@ -38,6 +38,10 @@
       <![endif]-->
       {% set image_url = getImageURL('User',current_user.id,'ImageProfile') %}
 
+      {% block script_imports1 %}
+      {% endblock %}
+
+
       <!-- Preloader -->
       <div class="preloader">
          <div class="cssload-speeding-wheel"></div>
@@ -78,5 +82,5 @@
         <script src="{{ url_for('static', filename='js/jasny-bootstrap.js') }}"></script>
         <script src="{{ url_for('static', filename='js/mask.js') }}"></script>
 
-        {% block script_imports %}
+        {% block script_imports2 %}
         {% endblock %}

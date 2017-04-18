@@ -374,6 +374,11 @@ def canUserEdit(table,recordId):
 def canUserDelete(table):
     return getTableClass(table).canUserDelete()
 
+def canUserAddRow(table):
+    return getTableClass(table).canUserAddRow()
+
+def canUserDeleteRow(table):
+    return getTableClass(table).canUserDeleteRow()
 
 class Error:
 

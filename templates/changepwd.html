@@ -1,7 +1,5 @@
 
- <script src="{{ url_for('static', filename='js/vuerecord.js') }}"></script>
-
- <div class="row bg-title">
+ <div class="row bg-title" id="vue_title">
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 p-b-20">
        <h4 class="page-title" id="title1">Modificar Password</h4>
     </div>
@@ -36,10 +34,10 @@
         </div>
         <div id='messages'>
           <p class='alert alert-danger' v-if='error_msg'>
-            {{ error_msg }}
+            {%raw%}{{ error_msg }}{%endraw%}
           </p>
           <p class='alert alert-danger' v-if='success_msg'>
-            {{ success_msg }}
+            {%raw%}{{ success_msg }}{%endraw%}
           </p>
         </div>
       </div>
@@ -47,3 +45,4 @@
   </div>
 </form>
 
+ <script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>

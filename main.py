@@ -186,6 +186,28 @@ def save_files():
             f.save(os.path.join(path,fname))
     return jsonify(result={'res': True})
 
+@app.route('/_update_linkto')
+def update_linkto():
+    table = request.args.get('TableName')
+
+    fields = {}
+    for key in request.args:
+        if key not in ['TableName','_state']:
+            fields[key] = request.args.get(key,None)
+            if fields[key]=='null': fields[key] = None
+
+    TableClass = getTableClass(table)
+    record = TableClass()
+    record.defaults()
+    fieldsDef = TableClass.getfieldsDefinition(record)
+    getDetailDict(fieldsDef)
+    for key in fields:
+        value = fields.get(key,None)
+        if value:
+            setValue(record,key,value)
+    links = getLinksTo(fieldsDef,record)
+    return jsonify(result=links)
+
 
 @app.route('/_save_record')
 def save_record():
@@ -198,6 +220,7 @@ def save_record():
             if fields[key]=='null': fields[key] = None
     _id = request.args.get('id')
     _state = int(request.args.get('_state'))
+
     session = Session()
     session.expire_on_commit = False
     if not _state:
@@ -288,6 +311,13 @@ def get_template():
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
 
+def getLinksTo(fields,record):
+    links = {}
+    for fn in fields:
+        field = fields[fn]
+        if ('LinkTo' in field):
+            links[fn] = get_linkto(field['LinkTo'],record)
+    return links
 
 def getRecordByFilters(table,filters,NotFilterFields=False):
     NotFilterFields = False
@@ -298,7 +328,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     if filters:
         record = session.query(TableClass).filter_by(**filters).first()
     if filters and not record:
-        return jsonify(result=False)
+        return {'res':False}
     if not filters:
         record = TableClass()
         record.defaults()
@@ -306,11 +336,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     htmlView = TableClass.getHtmlView()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
-    links = {}
-    for fn in fields:
-        field = fields[fn]
-        if ('LinkTo' in field):
-            links[fn] = get_linkto(field['LinkTo'])
+    links = getLinksTo(fields,record)
     if record:
         if not NotFilterFields:
             record.filterFields(fields)
@@ -362,9 +388,6 @@ def get_record():
         if f not in ['TableName','NotFilterFields','_state']:
             filters[f] = request.args[f]
     res = getRecordByFilters(table,filters,NotFilterFields)
-    #record = res['record']
-    #xml = render_template('recordfields.html',record=record,fields=fields,links=links,htmlView=htmlView)
-    #res['xml'] = xml
     return jsonify(result=res)
 
 @app.route('/_get_modules')
@@ -379,14 +402,17 @@ def get_modules():
         res.append(table)
     return jsonify(result=res)
 
-def get_linkto(linkto):
+def get_linkto(linkto,record=None):
     res = {}
     table = linkto['Table']
     show = linkto['Show']
     method = linkto.get('Method',None)
+    params = linkto.get('Params',None)
     TableClass = getTableClass(table)
     if method:
-        records = settings.getMyFunction(method,{'favorite':False})
+        records = settings.getMyFunction(method,params)
+    elif record:
+        records = record.getLinkToFromRecord(TableClass)
     else:
         records = TableClass.getRecordList(TableClass)
     for record in records:
@@ -396,19 +422,13 @@ def get_linkto(linkto):
         res[record.id] = ' '.join(show_list)
     return res
 
-
 @app.route('/_record_list')
 def record_list():
-    res = []
     table = request.args.get('Table')
     fields = request.args.get('Fields').split(',')
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass)
-    for record in records:
-        row = {}
-        for field in fields:
-            row[field] = getattr(record,field)
-        res.append(row)
+    res = fillRecordList(records,fields)
     return jsonify(result=res)
 
 
@@ -439,6 +459,10 @@ def utility_processor():
         return canUserCreate(table)
     def getCanUserEdit(table,recordId):
         return canUserEdit(table,recordId)
+    def getCanUserAddRow(table):
+        return canUserAddRow(table)
+    def getCanUserDeleteRow(table):
+        return canUserDeleteRow(table)
     def getCanUserDelete(table):
         return canUserDelete(table)
     def myFunction(function,params=None):
@@ -485,6 +509,8 @@ def utility_processor():
         ,myFunction=myFunction \
         ,getRecordList=getRecordList \
         ,getCanUserCreate=getCanUserCreate \
+        ,getCanUserAddRow=getCanUserAddRow \
+        ,getCanUserDeleteRow=getCanUserDeleteRow \
         ,getCanUserEdit=getCanUserEdit \
         ,getCanUserDelete=getCanUserDelete \
         ,getJsonify=getJsonify \
