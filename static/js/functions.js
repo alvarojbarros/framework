@@ -28,9 +28,9 @@ function refreshList() {
 function newRecord(Table,TemplateName) {
     vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate('container-fluid',vars,function(){
-		//createRecordForm(null,Table,null,'recordFields');
 		getRecord(Table,{},function (data){
 			Vue.set(vue_record,'values', data);
+			Vue.set(vue_record,'table', Table);
 			vue_title.recordName = 'Nuevo Registro'
 		})
 	})
@@ -113,6 +113,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 		getTemplate('container-fluid',vars,function(){
 			callback_function();
 			getRecord(Table,id,function (data){
+				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
@@ -125,6 +126,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 	}else{
 	    getTemplate('container-fluid',vars,function (){
 			getRecord(Table,id,function (data){
+				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
@@ -309,8 +311,8 @@ function getTemplate(divName,vars,callback){
 
 
   	$.getJSON($SCRIPT_ROOT + '/_get_template', vars ,function(data) {
+
 		var myNode = document.getElementById(divName);
-		//myNode.innerHTML = data.result.html;
 		$(myNode).html(data.result.html)
 		functions = data.result.functions;
 		if (functions){
@@ -320,7 +322,6 @@ function getTemplate(divName,vars,callback){
 		if (callback){
 			callback();
 		}
-		//vue_title2.Title = vars.Name;
     });
 }
 
@@ -415,4 +416,15 @@ function getRecordList(table,fields){
 	$.getJSON($SCRIPT_ROOT + '/_record_list', {'Table': table,'Fields': fields },function(data) {
 		Vue.set(vue_recordlist,'values', data.result);
 	});
+}
+
+
+function updateLinkTo(){
+	fields = vue_record.values.record;
+	fields['TableName'] = vue_record.table;
+	$.getJSON($SCRIPT_ROOT + '/_update_linkto', fields,function(data) {
+		vue_record.values.links = data.result;
+	});
+
+
 }

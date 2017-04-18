@@ -1,13 +1,5 @@
 Vue.config.devtools = true;
 
-var messages = new  Vue({
-	el: "#messages",
-	data: {
-		error_msg: '',
-		success_msg: '',
-	}
-});
-
 var vue_title = new Vue({
   el: '#vue_title',
   data: {
@@ -20,6 +12,7 @@ var vue_record = new Vue({
   el: '#recordFields',
   data: {
     values: '',
+    table: '',
   },
 
   methods: {

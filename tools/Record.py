@@ -167,6 +167,8 @@ class Record(object):
         session.close()
         return record
 
+    def getLinkToFromRecord(self,TableClass):
+        return TableClass.getRecordList(TableClass)
 
 class DetailRecord(object):
 

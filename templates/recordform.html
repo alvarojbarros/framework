@@ -1,6 +1,7 @@
 {% block data %}
 
 <script src="{{ url_for('static', filename='js/vuerecord.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>
 
 <div class="row bg-title" id="vue_title">
   <!-- .page title -->
@@ -128,7 +129,7 @@
 
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['Values']"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
-                    :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
+                    :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
                     <option v-for="(value,key) in values.fields[field]['Values']" :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
@@ -136,7 +137,7 @@
 
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
-                    :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
+                    :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
                     <option v-for="(value,key) in values.links[field]"  :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
@@ -191,7 +192,7 @@
                       && values.fields[field].fieldsDefinition[dfield]['LinkTo'] && values.links[dfield] "
                       :detail="field" :id="dfield" :name="dfield"
                       class="form-control" v-model="values.record[field][index][dfield]"
-                      :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
+                      :disabled="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
                       || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
                       >
                       <option v-for="(value,key) in values.links[dfield]"  :value="key">
