@@ -253,22 +253,22 @@ function checkFileSize(e){
 }
 
 function addNewRow(field){
-	var row = vue_record.values.record[field][0];
-	var new_row = Object.assign({}, row);
 	fields = vue_record.values.fields[field].fieldsDefinition;
+	new_row = {}
 	for (dfield in fields){
 		if (dfield=='__order__'){
 			continue;
 		}
 		new_row[dfield] = null;
 	}
+	vue_record.values.record[field].push(new_row)
 }
 
 function getTemplateModule(divName,index){
 	vars = vue_modules.values[index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
-		vue_title2.Title = vars.Name;
+		vue_title.Title = vars.Name;
 	});
 }
 
@@ -405,10 +405,12 @@ function changePassword(){
 
 function getModulesVue(){
 
+  var sidemenu = document.getElementById('side-menu');
+  if (sidemenu){
 	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
 		Vue.set(vue_modules,'values', data.result);
 	});
-
+  }
 }
 
 function getRecordList(table,fields){

@@ -9,11 +9,3 @@ var vue_recordlist = new Vue({
   },
 
 })
-
-var vue_title2 = new Vue({
-  el: '#vue_title2',
-  data: {
-    Title: '',
-  },
-
-})
