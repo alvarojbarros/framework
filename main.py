@@ -418,7 +418,7 @@ def get_linkto(linkto,record=None):
     for record in records:
         show_list = []
         for field in show:
-            show_list.append(str(getattr(record,field)))
+            show_list.append(getattr(record,field))
         res[record.id] = ' '.join(show_list)
     return res
 
