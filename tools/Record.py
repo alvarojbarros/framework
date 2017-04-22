@@ -170,6 +170,10 @@ class Record(object):
     def getLinkToFromRecord(self,TableClass):
         return TableClass.getRecordList(TableClass)
 
+    @classmethod
+    def getRecordTitle(self):
+        return ['id']
+
 class DetailRecord(object):
 
     @classmethod

@@ -47,14 +47,14 @@ def login():
         password = request.form['password']
         if username or password:
             if not password or not username:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario y Password',signUp=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Usuario y Password',signUp=False,app_name=settings.app_name)
             user = User.get(username)
             if not user:
-                return render_template(settings.templates['loggin_template'],error='Usuario no Registrado',signUp=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Usuario no Registrado',signUp=False,app_name=settings.app_name)
             if (user.Password == password):
                 login_user(user)
                 return redirect('/')
-        return render_template(settings.templates['loggin_template'],error='Datos Incorrectos',signIn=False,app_name=settings.app_name)
+        return render_template(settings.templates['loggin_template'],error_msg='Datos Incorrectos',signIn=False,app_name=settings.app_name)
     else:
         return render_template(settings.templates['loggin_template'],signUp=False,app_name=settings.app_name)
 
@@ -334,6 +334,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
         record.defaults()
     fields = TableClass.getfieldsDefinition(record)
     htmlView = TableClass.getHtmlView()
+    recordTitle = TableClass.getRecordTitle()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = getLinksTo(fields,record)
@@ -354,7 +355,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     rfields = fields[fname]['fieldsDefinition']
                     rres = {}
                     for rfname in rfields:
-                        if rfname=='__order__':
+                        if rfname[:2]=='__':
                             continue
                         rvalue = getattr(row,rfname)
                         if isinstance(rvalue,time):
@@ -376,7 +377,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     value = ''
                 res[fname] = value
     session.close()
-    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
+    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'recordTitle':recordTitle}
 
 @app.route('/_get_record')
 def get_record():

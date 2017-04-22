@@ -167,7 +167,7 @@
                    :name="field+'Rows'" :rownr="index+1" class="col-xs-12">
 
 
-                  <div class="col-xs-6 col-md-1"
+                  <div :class="'col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__"
                     v-if="!values.fields[field].fieldsDefinition[dfield].Hidde"
                     v-for="dfield in values.fields[field].fieldsDefinition.__order__">
                     <label
@@ -217,7 +217,7 @@
 
 
                 {% if getCanUserDeleteRow(var['Table']) %}
-                  <div class="col-lg-1 col-xs-6 col-md-1">
+                  <div :class="'col-lg-1 col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__">
                     <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
                       class="btn btn-danger btn-rounded waves-effect waves-light">
                       Borrar

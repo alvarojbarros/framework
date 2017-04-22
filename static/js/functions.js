@@ -31,7 +31,7 @@ function newRecord(Table,TemplateName) {
 		getRecord(Table,{},function (data){
 			Vue.set(vue_record,'values', data);
 			Vue.set(vue_record,'table', Table);
-			vue_title.recordName = 'Nuevo Registro'
+			vue_title.Title = 'Nuevo Registro'
 		})
 	})
 }
@@ -256,7 +256,7 @@ function addNewRow(field){
 	fields = vue_record.values.fields[field].fieldsDefinition;
 	new_row = {}
 	for (dfield in fields){
-		if (dfield=='__order__'){
+		if (dfield.substring(0,2)=='__'){
 			continue;
 		}
 		new_row[dfield] = null;
