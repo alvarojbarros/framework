@@ -15,6 +15,9 @@ class Record(object):
         res['id'] = {'Type': 'integer','Hidde': True}
         return res
 
+    def defaults(self):
+        pass
+
     def filterFields(self,fields):
         return fields
 
