@@ -257,12 +257,16 @@ def save_record():
         getDetailDict(fields)
         if not record:
             return jsonify(result={'res': False,'Error':'Registro no Encontrado'})
+        record.setOldFields()
         for key in fields:
             setValue(record,key,fields.get(key,None))
         res = record.check()
         if not res:
             return jsonify(result={'res': False,'Error':str(res)})
         record.syncVersion += 1
+        res = record.afterUpdate()
+        if not res:
+            return jsonify(result={'res': False,'Error':str(res)})
         try:
             session.commit()
             session.close()

@@ -231,6 +231,8 @@ jQuery(document).ready(function($){
 		searchBoxOnKey(this);
 	});
 
+	getMyFunctionReady();
+
 });
 
 

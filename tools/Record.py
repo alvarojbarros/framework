@@ -3,6 +3,7 @@ from tools.dbconnect import Session
 from sqlalchemy.orm import sessionmaker
 from tools.Tools import *
 from flask_login import current_user
+import copy
 
 class Record(object):
     syncVersion = Column(Integer)
@@ -40,9 +41,6 @@ class Record(object):
         if int(version)!=self.syncVersion:
             return False
         return True
-
-    def defaults(self):
-        pass
 
     @classmethod
     def canUserDelete(cls):
@@ -147,6 +145,7 @@ class Record(object):
     def save(self,session):
         if not self.syncVersion:
             self.syncVersion = 1
+            session.add(self)
         else:
             if not self.checkSyncVersion(self.syncVersion):
                 return Error('Otro Usuario ha modoficado el Registro')
@@ -173,6 +172,12 @@ class Record(object):
     @classmethod
     def getRecordTitle(self):
         return ['id']
+
+    def setOldFields(self):
+        self.OldFields = {}
+        for field in self.fieldsDefinition():
+            self.OldFields[field] = copy.copy(getattr(self,field))
+
 
 class DetailRecord(object):
 
