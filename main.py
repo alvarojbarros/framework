@@ -44,6 +44,7 @@ def home():
 def login():
     if request.method == 'POST':
         username = request.form['username']
+        if username: username = username.replace(" ", "")
         password = request.form['password']
         if username or password:
             if not password or not username:
@@ -65,26 +66,28 @@ def signin():
     if request.method == 'POST':
         username1 = request.form['username1']
         username2 = request.form['username2']
+        if username1: username1 = username1.replace(" ", "")
+        if username2: username2 = username2.replace(" ", "")
         password1 = request.form['password1']
         password2 = request.form['password2']
         name = request.form['name']
         if password1 or password2 or username1 or username2:
             if not username1:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Email',signUp=True,app_name=settings.app_name)
             if username1!=username2:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Los Email no coinciden',signUp=True,app_name=settings.app_name)
             user = User.get(username1)
             if user:
-                return render_template(settings.templates['loggin_template'],error='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
             if password1 != password2:
-                return render_template(settings.templates['loggin_template'],error='Los Password no coinciden',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Los Password no coinciden',signUp=True,app_name=settings.app_name)
             new_user = User.addNewUser(username1,password1,name)
             if new_user:
                 login_user(new_user)
                 return redirect('/')
             else:
-                return render_template(settings.templates['loggin_template'],error=new_user,signUp=True,app_name=settings.app_name)
-        return render_template(settings.templates['loggin_template'],error='Datos Incorrectos',signIn=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg=new_user,signUp=True,app_name=settings.app_name)
+        return render_template(settings.templates['loggin_template'],error_msg='Datos Incorrectos',signIn=False,app_name=settings.app_name)
     else:
         return render_template(settings.templates['loggin_template'],signUp=False,app_name=settings.app_name)
 
@@ -275,7 +278,8 @@ def save_record():
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
         record.afterCommitUpdate()
-        return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion})
+        RunJS = record.afterSaveJS()
+        return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion,'RunJS':RunJS})
 
 @app.route('/_delete_record')
 def delete_record():

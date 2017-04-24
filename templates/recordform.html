@@ -13,7 +13,7 @@
   <!-- .breadcrumb -->
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
-        <li><a href="#">Dashboard</a></li>
+        <li><a href="#" onclick="showDashboard()">Dashboard</a></li>
         <li class="active" id="title2">{%raw%}{{Title}}{%endraw%}</li>
      </ol>
   </div>
@@ -164,7 +164,7 @@
                 </label>
 
                 <div v-for="(row,index) in values.record[field]" :id="'row'+(index+1)"
-                   :name="field+'Rows'" :rownr="index+1" class="col-xs-12">
+                   :name="field+'Rows'" :rownr="index+1" class="col-xs-12 p-b-20 schedulerows">
 
 
                   <div :class="'col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__"
@@ -231,7 +231,7 @@
                 {% if getCanUserAddRow(var['Table']) %}
                   <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
                     class="btn btn-warning btn-rounded waves-effect waves-light">
-                    Agregar<span clas="btn-label"><i class="fa fa-times"></i>
+                    Agregar<span clas="btn-label"><i class="fa fa-plus"></i>
                     </span>
                   </button>
                 {% endif %}

@@ -93,6 +93,10 @@ function saveRecord(form_id,table) {
 			}
       		sendFiles(table,data.result['id']);
 			setMessageTimeout('Registro Grabado')
+      		if (data.result.RunJS){
+				var callback_function = new Function(data.result.RunJS);
+				callback_function();
+			}
 	  	}else{
 			messages.error_msg = data.result['Error'];
 		};
@@ -294,6 +298,18 @@ function AddToLocalStorage(html){
 	}*/
 
 }
+
+function fixCalendarStyle(){
+	divs = document.getElementsByClassName('fc-day-grid-container fc-scroller');
+	for (i = 0; i < divs.length; i++) {
+		div = divs[i]
+		if (div){
+			div.setAttribute('class','fc-day-grid-container');
+			div.class = "fc-day-grid-container";
+		}
+	}
+}
+
 
 
 function getTemplate(divName,vars,callback){

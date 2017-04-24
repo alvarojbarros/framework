@@ -179,8 +179,12 @@ class Record(object):
     def setOldFields(self):
         self.OldFields = {}
         for field in self.fieldsDefinition():
-            self.OldFields[field] = copy.copy(getattr(self,field))
+            fieldDef = self.fieldsDefinition()[field]
+            if 'Persistent' not in fieldDef or fieldDef['Persistent']==True:
+                self.OldFields[field] = copy.copy(getattr(self,field))
 
+    def afterSaveJS(self):
+        return ''
 
 class DetailRecord(object):
 
