@@ -435,8 +435,11 @@ def get_linkto(linkto,record=None):
 def record_list():
     table = request.args.get('Table')
     fields = request.args.get('Fields').split(',')
+    order_by = request.args.get('OrderBy',None)
+    desc = request.args.get('Desc',None)
+    limit = request.args.get('Limit',None)
     TableClass = getTableClass(table)
-    records = TableClass.getRecordList(TableClass)
+    records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     res = fillRecordList(records,fields)
     return jsonify(result=res)
 

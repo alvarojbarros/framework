@@ -139,9 +139,12 @@ class Record(object):
         return None
 
     @classmethod
-    def getRecordList(cls,TableClass):
+    def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
         session = Session()
         records = session.query(TableClass)
+        if order_by and desc: records = records.order_by(TableClass.c[order_by].desc())
+        elif order_by: records = records.order_by(TableClass.c[order_by])
+        if limit: records = records.limit(limit)
         session.close()
         return records
 

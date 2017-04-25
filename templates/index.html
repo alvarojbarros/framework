@@ -41,6 +41,11 @@
       {% block script_imports1 %}
       {% endblock %}
 
+      <script type=text/javascript>
+        $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+      </script>
+      <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
 
       <!-- Preloader -->
       <div class="preloader">
@@ -62,15 +67,10 @@
       </div>
       <!-- /#wrapper -->
 
-        <script type=text/javascript>
-          $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-        </script>
-        <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
         <script src="{{ url_for('static', filename='lib/moment.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/fullcalendar.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/fullcalendar.1.js') }}"></script>
 
-        <script src="{{ url_for('static', filename='js/functions.js') }}"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
         <!--slimscroll JavaScript -->

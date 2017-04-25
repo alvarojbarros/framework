@@ -431,10 +431,14 @@ function getModulesVue(){
   }
 }
 
-function getRecordList(table,fields){
+function getRecordList(table,fields,limit,order_by,desc){
 
+	vars = {'Table': table,'Fields': fields }
+	if (limit) {vars['Limit'] = limit;}
+	if (order_by) {vars['OrderBy'] = order_by;}
+	if (desc) {vars['Desc'] = desc;}
 	Vue.set(vue_recordlist,'table', table);
-	$.getJSON($SCRIPT_ROOT + '/_record_list', {'Table': table,'Fields': fields },function(data) {
+	$.getJSON($SCRIPT_ROOT + '/_record_list', vars ,function(data) {
 		Vue.set(vue_recordlist,'values', data.result);
 	});
 }
