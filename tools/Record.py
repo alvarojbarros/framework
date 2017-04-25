@@ -3,6 +3,7 @@ from tools.dbconnect import Session
 from sqlalchemy.orm import sessionmaker
 from tools.Tools import *
 from flask_login import current_user
+import copy
 
 class Record(object):
     syncVersion = Column(Integer)
@@ -13,6 +14,9 @@ class Record(object):
         res['syncVersion'] = {'Type': 'integer','Hidde': True}
         res['id'] = {'Type': 'integer','Hidde': True}
         return res
+
+    def defaults(self):
+        pass
 
     def filterFields(self,fields):
         return fields
@@ -40,9 +44,6 @@ class Record(object):
         if int(version)!=self.syncVersion:
             return False
         return True
-
-    def defaults(self):
-        pass
 
     @classmethod
     def canUserDelete(cls):
@@ -138,15 +139,19 @@ class Record(object):
         return None
 
     @classmethod
-    def getRecordList(cls,TableClass):
+    def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
         session = Session()
         records = session.query(TableClass)
+        if order_by and desc: records = records.order_by(TableClass.c[order_by].desc())
+        elif order_by: records = records.order_by(TableClass.c[order_by])
+        if limit: records = records.limit(limit)
         session.close()
         return records
 
     def save(self,session):
         if not self.syncVersion:
             self.syncVersion = 1
+            session.add(self)
         else:
             if not self.checkSyncVersion(self.syncVersion):
                 return Error('Otro Usuario ha modoficado el Registro')
@@ -169,6 +174,20 @@ class Record(object):
 
     def getLinkToFromRecord(self,TableClass):
         return TableClass.getRecordList(TableClass)
+
+    @classmethod
+    def getRecordTitle(self):
+        return ['id']
+
+    def setOldFields(self):
+        self.OldFields = {}
+        for field in self.fieldsDefinition():
+            fieldDef = self.fieldsDefinition()[field]
+            if 'Persistent' not in fieldDef or fieldDef['Persistent']==True:
+                self.OldFields[field] = copy.copy(getattr(self,field))
+
+    def afterSaveJS(self):
+        return ''
 
 class DetailRecord(object):
 

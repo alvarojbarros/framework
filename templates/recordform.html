@@ -2,8 +2,9 @@
 
 <script src="{{ url_for('static', filename='js/vuerecord.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
 
-<div class="row bg-title" id="vue_title2">
+<div class="row bg-title" id="vue_title">
   <!-- .page title -->
   <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
      <h4 class="page-title" id="title1">{%raw%}{{Title}}{%endraw%}</h4>
@@ -12,7 +13,7 @@
   <!-- .breadcrumb -->
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
-        <li><a href="#">Dashboard</a></li>
+        <li><a href="#" onclick="showDashboard()">Dashboard</a></li>
         <li class="active" id="title2">{%raw%}{{Title}}{%endraw%}</li>
      </ol>
   </div>
@@ -90,7 +91,7 @@
                     >
 
                   <input v-if="values.fields[field]['Input'] == 'datetime'" class="form-control" :id="field"
-                    :name="field" :placeholder="values.fields[field]['Label']" type="datetime" v-model="values.record[field]"
+                    :name="field" :placeholder="values.fields[field]['Label']" type="datetime-local" v-model="values.record[field]"
                     :readOnly="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
                     >
 
@@ -163,10 +164,10 @@
                 </label>
 
                 <div v-for="(row,index) in values.record[field]" :id="'row'+(index+1)"
-                   :name="field+'Rows'" :rownr="index+1" class="col-xs-12">
+                   :name="field+'Rows'" :rownr="index+1" class="col-xs-12 p-b-20 schedulerows">
 
 
-                  <div class="col-xs-6 col-md-1"
+                  <div :class="'col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__"
                     v-if="!values.fields[field].fieldsDefinition[dfield].Hidde"
                     v-for="dfield in values.fields[field].fieldsDefinition.__order__">
                     <label
@@ -216,7 +217,7 @@
 
 
                 {% if getCanUserDeleteRow(var['Table']) %}
-                  <div class="col-lg-1 col-xs-6 col-md-1">
+                  <div :class="'col-lg-1 col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__">
                     <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
                       class="btn btn-danger btn-rounded waves-effect waves-light">
                       Borrar
@@ -230,7 +231,7 @@
                 {% if getCanUserAddRow(var['Table']) %}
                   <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
                     class="btn btn-warning btn-rounded waves-effect waves-light">
-                    Agregar<span clas="btn-label"><i class="fa fa-times"></i>
+                    Agregar<span clas="btn-label"><i class="fa fa-plus"></i>
                     </span>
                   </button>
                 {% endif %}

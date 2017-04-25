@@ -1,4 +1,4 @@
- <div class="row bg-title" id="vue_title2">
+ <div class="row bg-title" id="vue_title">
     <!-- .page title -->
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
        {% block title %}
@@ -9,7 +9,7 @@
     <!-- .breadcrumb -->
     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
-          <li><a href="#" onClick="getTamplate('container-fluid',{'Template':'dashboard.html'})" >Dashboard</a></li>
+          <li><a href="#" onClick="showDashboard()" >Dashboard</a></li>
          {% block title2 %}
           <li class="active">{%raw%}{{Title}}{%endraw%}</li>
          {% endblock %}
@@ -24,7 +24,7 @@
          {% block title3 %}
           <h3 class="box-title">Buscar</h3>
          {% endblock %}
-          <form>
+          <form class="p-b-20">
              <div class="form-group">
                 <div class="input-group">
                    <input type="text" id="example-input1-group2" name="example-input1-group2" class="live-search-box form-control" placeholder="Introducir texto para buscar">
@@ -52,6 +52,7 @@
  </div>
 
 <script src="{{ url_for('static', filename='js/vuerecordlist.js') }}"></script>
+<script src="{{ url_for('static', filename='js/vuetitle.js') }}"></script>
 
 {% block button_script %}
 <script type=text/javascript>

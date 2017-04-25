@@ -1,13 +1,5 @@
 Vue.config.devtools = true;
 
-var vue_title = new Vue({
-  el: '#vue_title',
-  data: {
-    Title: '',
-  },
-
-})
-
 var vue_record = new Vue({
   el: '#recordFields',
   data: {
@@ -25,11 +17,23 @@ var vue_record = new Vue({
     values: {
       handler: function (val, oldVal) {
 		if (val._state==1){
-			if (val.record.Name){
-				vue_title.Title = val.record.Name
-			}else{
-				vue_title.Title = val.record.id
+			res = ''
+			for (k in val.recordTitle){
+				fieldname = val.recordTitle[k];
+				fieldvalue = val.record[fieldname];
+				linkto = val.links[fieldname]
+				if (linkto){
+					linkvalue = linkto[fieldvalue]
+					if (linkvalue){
+						fieldvalue=linkvalue;
+					}
+				}
+				if (fieldvalue){
+					if (res){res = res.concat(' - ')}
+					res = res.concat(fieldvalue);
+				}
 			}
+			vue_title.Title = res;
 		}else{
 			vue_title.Title = 'Nuevo Registro'
 		}

@@ -31,7 +31,7 @@ function newRecord(Table,TemplateName) {
 		getRecord(Table,{},function (data){
 			Vue.set(vue_record,'values', data);
 			Vue.set(vue_record,'table', Table);
-			vue_title.recordName = 'Nuevo Registro'
+			vue_title.Title = 'Nuevo Registro'
 		})
 	})
 }
@@ -93,6 +93,10 @@ function saveRecord(form_id,table) {
 			}
       		sendFiles(table,data.result['id']);
 			setMessageTimeout('Registro Grabado')
+      		if (data.result.RunJS){
+				var callback_function = new Function(data.result.RunJS);
+				callback_function();
+			}
 	  	}else{
 			messages.error_msg = data.result['Error'];
 		};
@@ -231,6 +235,8 @@ jQuery(document).ready(function($){
 		searchBoxOnKey(this);
 	});
 
+	getMyFunctionReady();
+
 });
 
 
@@ -253,21 +259,22 @@ function checkFileSize(e){
 }
 
 function addNewRow(field){
-	var row = vue_record.values.record[field][0];
-	var new_row = Object.assign({}, row);
 	fields = vue_record.values.fields[field].fieldsDefinition;
+	new_row = {}
 	for (dfield in fields){
-		if (dfield=='__order__'){
+		if (dfield.substring(0,2)=='__'){
 			continue;
 		}
 		new_row[dfield] = null;
 	}
+	vue_record.values.record[field].push(new_row)
 }
 
-function getTemplateModule(divName,vars){
+function getTemplateModule(divName,index){
+	vars = vue_modules.values[index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
-		vue_title2.Title = vars.Name;
+		vue_title.Title = vars.Name;
 	});
 }
 
@@ -291,6 +298,18 @@ function AddToLocalStorage(html){
 	}*/
 
 }
+
+function fixCalendarStyle(){
+	divs = document.getElementsByClassName('fc-day-grid-container fc-scroller');
+	for (i = 0; i < divs.length; i++) {
+		div = divs[i]
+		if (div){
+			div.setAttribute('class','fc-day-grid-container');
+			div.class = "fc-day-grid-container";
+		}
+	}
+}
+
 
 
 function getTemplate(divName,vars,callback){
@@ -404,16 +423,22 @@ function changePassword(){
 
 function getModulesVue(){
 
+  var sidemenu = document.getElementById('side-menu');
+  if (sidemenu){
 	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
 		Vue.set(vue_modules,'values', data.result);
 	});
-
+  }
 }
 
-function getRecordList(table,fields){
+function getRecordList(table,fields,limit,order_by,desc){
 
+	vars = {'Table': table,'Fields': fields }
+	if (limit) {vars['Limit'] = limit;}
+	if (order_by) {vars['OrderBy'] = order_by;}
+	if (desc) {vars['Desc'] = desc;}
 	Vue.set(vue_recordlist,'table', table);
-	$.getJSON($SCRIPT_ROOT + '/_record_list', {'Table': table,'Fields': fields },function(data) {
+	$.getJSON($SCRIPT_ROOT + '/_record_list', vars ,function(data) {
 		Vue.set(vue_recordlist,'values', data.result);
 	});
 }

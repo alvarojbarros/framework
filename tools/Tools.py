@@ -320,9 +320,11 @@ def setValue(record,key,val):
                     val = 1
                 else:
                     val = int(val)
-            if field['Type'] in ('time','float'):
+            elif field['Type'] in ('time','float'):
                 if not val or val=='null':
                     val = None
+            if field['Type']=='text' and not val:
+                val = None
             setattr(record,key,val)
 
 def getDetailDict(fields):

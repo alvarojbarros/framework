@@ -44,17 +44,18 @@ def home():
 def login():
     if request.method == 'POST':
         username = request.form['username']
+        if username: username = username.replace(" ", "")
         password = request.form['password']
         if username or password:
             if not password or not username:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario y Password',signUp=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Usuario y Password',signUp=False,app_name=settings.app_name)
             user = User.get(username)
             if not user:
-                return render_template(settings.templates['loggin_template'],error='Usuario no Registrado',signUp=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Usuario no Registrado',signUp=False,app_name=settings.app_name)
             if (user.Password == password):
                 login_user(user)
                 return redirect('/')
-        return render_template(settings.templates['loggin_template'],error='Datos Incorrectos',signIn=False,app_name=settings.app_name)
+        return render_template(settings.templates['loggin_template'],error_msg='Datos Incorrectos',signIn=False,app_name=settings.app_name)
     else:
         return render_template(settings.templates['loggin_template'],signUp=False,app_name=settings.app_name)
 
@@ -65,26 +66,28 @@ def signin():
     if request.method == 'POST':
         username1 = request.form['username1']
         username2 = request.form['username2']
+        if username1: username1 = username1.replace(" ", "")
+        if username2: username2 = username2.replace(" ", "")
         password1 = request.form['password1']
         password2 = request.form['password2']
         name = request.form['name']
         if password1 or password2 or username1 or username2:
             if not username1:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Email',signUp=True,app_name=settings.app_name)
             if username1!=username2:
-                return render_template(settings.templates['loggin_template'],error='Debe Ingresar Usuario',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Los Email no coinciden',signUp=True,app_name=settings.app_name)
             user = User.get(username1)
             if user:
-                return render_template(settings.templates['loggin_template'],error='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
             if password1 != password2:
-                return render_template(settings.templates['loggin_template'],error='Los Password no coinciden',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Los Password no coinciden',signUp=True,app_name=settings.app_name)
             new_user = User.addNewUser(username1,password1,name)
             if new_user:
                 login_user(new_user)
                 return redirect('/')
             else:
-                return render_template(settings.templates['loggin_template'],error=new_user,signUp=True,app_name=settings.app_name)
-        return render_template(settings.templates['loggin_template'],error='Datos Incorrectos',signIn=False,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg=new_user,signUp=True,app_name=settings.app_name)
+        return render_template(settings.templates['loggin_template'],error_msg='Datos Incorrectos',signIn=False,app_name=settings.app_name)
     else:
         return render_template(settings.templates['loggin_template'],signUp=False,app_name=settings.app_name)
 
@@ -257,12 +260,16 @@ def save_record():
         getDetailDict(fields)
         if not record:
             return jsonify(result={'res': False,'Error':'Registro no Encontrado'})
+        record.setOldFields()
         for key in fields:
             setValue(record,key,fields.get(key,None))
         res = record.check()
         if not res:
             return jsonify(result={'res': False,'Error':str(res)})
         record.syncVersion += 1
+        res = record.afterUpdate()
+        if not res:
+            return jsonify(result={'res': False,'Error':str(res)})
         try:
             session.commit()
             session.close()
@@ -271,7 +278,8 @@ def save_record():
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
         record.afterCommitUpdate()
-        return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion})
+        RunJS = record.afterSaveJS()
+        return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion,'RunJS':RunJS})
 
 @app.route('/_delete_record')
 def delete_record():
@@ -334,6 +342,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
         record.defaults()
     fields = TableClass.getfieldsDefinition(record)
     htmlView = TableClass.getHtmlView()
+    recordTitle = TableClass.getRecordTitle()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = getLinksTo(fields,record)
@@ -354,7 +363,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     rfields = fields[fname]['fieldsDefinition']
                     rres = {}
                     for rfname in rfields:
-                        if rfname=='__order__':
+                        if rfname[:2]=='__':
                             continue
                         rvalue = getattr(row,rfname)
                         if isinstance(rvalue,time):
@@ -376,7 +385,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     value = ''
                 res[fname] = value
     session.close()
-    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView}
+    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'recordTitle':recordTitle}
 
 @app.route('/_get_record')
 def get_record():
@@ -398,7 +407,7 @@ def get_modules():
         table = modules[k]
         table['Vars']['Template'] = table['Template']
         table['Vars']['Name'] = table['Name']
-        table['Vars'] = str(table['Vars'])
+        table['Vars'] = table['Vars']
         res.append(table)
     return jsonify(result=res)
 
@@ -418,7 +427,7 @@ def get_linkto(linkto,record=None):
     for record in records:
         show_list = []
         for field in show:
-            show_list.append(str(getattr(record,field)))
+            show_list.append(getattr(record,field))
         res[record.id] = ' '.join(show_list)
     return res
 
@@ -426,8 +435,11 @@ def get_linkto(linkto,record=None):
 def record_list():
     table = request.args.get('Table')
     fields = request.args.get('Fields').split(',')
+    order_by = request.args.get('OrderBy',None)
+    desc = request.args.get('Desc',None)
+    limit = request.args.get('Limit',None)
     TableClass = getTableClass(table)
-    records = TableClass.getRecordList(TableClass)
+    records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     res = fillRecordList(records,fields)
     return jsonify(result=res)
 
