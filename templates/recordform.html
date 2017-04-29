@@ -167,52 +167,55 @@
                    :name="field+'Rows'" :rownr="index+1" class="col-xs-12 p-b-20 schedulerows">
 
 
-                  <div :class="'col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__"
-                    v-if="!values.fields[field].fieldsDefinition[dfield].Hidde"
-                    v-for="dfield in values.fields[field].fieldsDefinition.__order__">
-                    <label
-                    v-if="values.fields[field].fieldsDefinition[dfield].Input!='checkbox'">
-                    {% raw %} {{values.fields[field].fieldsDefinition[dfield].Label}} {% endraw %}</label>
+                  <div class="col-xs-12 p-b-20"
+                    v-for="list,index2 in values.fields[field].htmlView">
 
-                    <input v-if="values.fields[field].fieldsDefinition[dfield].Input=='time'"
-                    :detail="field" :id="dfield" :name="dfield"
-                    type="time" class="form-control" v-model="values.record[field][index][dfield]"
-                    :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
-                    || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
-                    >
+                    <div :class="'col-xs-' + parseInt(12/list.length) +' col-md-' + list.length"
+                      v-if="values.fields[field].fieldsDefinition[fname].Input"
+                      v-for="fname in list">
 
-                    <input v-if="values.fields[field].fieldsDefinition[dfield].Input == 'date'"
-                    :detail="field" :id="dfield" :name="dfield"
-                    type="date" class="form-control" v-model="values.record[field][index][dfield]"
-                    :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
-                    || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
-                    >
+                      <label v-if="values.fields[field].fieldsDefinition[fname].Input!='checkbox'
+                      && values.fields[field].fieldsDefinition[fname].Input!='Hidde'">
+                      {% raw %} {{values.fields[field].fieldsDefinition[fname].Label}} {% endraw %}</label>
 
-
-                    <select v-if="values.fields[field].fieldsDefinition[dfield].Input == 'combo'
-                      && values.fields[field].fieldsDefinition[dfield]['LinkTo'] && values.links[dfield] "
-                      :detail="field" :id="dfield" :name="dfield"
-                      class="form-control" v-model="values.record[field][index][dfield]"
-                      :disabled="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
-                      || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
+                      <input v-if="values.fields[field].fieldsDefinition[fname].Input=='time'"
+                      :detail="field" :id="fname" :name="fname"
+                      type="time" class="form-control" v-model="values.record[field][index][fname]"
+                      :readOnly="(values.fields[field].fieldsDefinition[fname]['Readonly']==1 && values._state==1)
+                      || (values.fields[field].fieldsDefinition[fname]['Readonly']==2)"
                       >
-                      <option v-for="(value,key) in values.links[dfield]"  :value="key">
-                        {% raw %} {{value}} {% endraw %}</option>
-                    </select>
 
-
-                    <div class="col-xs-3 col-md1 checkbox checkbox-primary"
-                      v-if="values.fields[field].fieldsDefinition[dfield].Input=='checkbox'">
-                      <input :detail="field" :id="dfield" :name="field"
-                      type="checkbox" value="0" v-model="values.record[field][index][dfield]" class="form-control"
-                      :readOnly="(values.fields[field].fieldsDefinition[dfield]['Readonly']==1 && values._state==1)
-                      || (values.fields[field].fieldsDefinition[dfield]['Readonly']==2)"
+                      <input v-if="values.fields[field].fieldsDefinition[fname].Input == 'date'"
+                      :detail="field" :id="fname" :name="fname"
+                      type="date" class="form-control" v-model="values.record[field][index][fname]"
+                      :readOnly="(values.fields[field].fieldsDefinition[fname]['Readonly']==1 && values._state==1)
+                      || (values.fields[field].fieldsDefinition[fname]['Readonly']==2)"
                       >
-                      <label v-if="values.fields[field].fieldsDefinition[dfield].Label"
-                      :labelfor="dfield">{% raw %} {{values.fields[field].fieldsDefinition[dfield].Label}} {% endraw %}</label>
+
+
+                      <select v-if="values.fields[field].fieldsDefinition[fname].Input == 'combo'
+                        && values.fields[field].fieldsDefinition[fname]['LinkTo'] && values.links[fname] "
+                        :detail="field" :id="fname" :name="fname"
+                        class="form-control" v-model="values.record[field][index][fname]"
+                        :disabled="(values.fields[field].fieldsDefinition[fname]['Readonly']==1 && values._state==1)
+                        || (values.fields[field].fieldsDefinition[fname]['Readonly']==2)"
+                        >
+                        <option v-for="(value,key) in values.links[fname]"  :value="key">
+                          {% raw %} {{value}} {% endraw %}</option>
+                      </select>
+
+
+                      <div class="col-xs-3 col-md1 checkbox checkbox-primary"
+                        v-if="values.fields[field].fieldsDefinition[fname].Input=='checkbox'">
+                        <input :detail="field" :id="fname" :name="field"
+                        type="checkbox" value="0" v-model="values.record[field][index][fname]" class="form-control"
+                        :readOnly="(values.fields[field].fieldsDefinition[fname]['Readonly']==1 && values._state==1)
+                        || (values.fields[field].fieldsDefinition[fname]['Readonly']==2)"
+                        >
+                        <label v-if="values.fields[field].fieldsDefinition[fname].Label"
+                        :labelfor="fname">{% raw %} {{values.fields[field].fieldsDefinition[fname].Label}} {% endraw %}</label>
+                      </div>
                     </div>
-
-
                   </div>
 
 
@@ -226,8 +229,8 @@
                       </span>
                     </button>
                   </div>
-                </div>
                 {% endif %}
+                </div>
                 {% if getCanUserAddRow(var['Table']) %}
                   <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
                     class="btn btn-warning btn-rounded waves-effect waves-light">
