@@ -93,6 +93,8 @@ class Record(object):
                     dreadonly = DetailClass.getUserFieldsReadOnly(dname)
                     if dreadonly:
                         dres[dname]['Readonly'] = dreadonly
+                if 'htmlView' not in res[fname]:
+                    res[fname]['htmlView'] = DetailClass.htmlView()
         return res
 
     @classmethod
@@ -190,6 +192,12 @@ class Record(object):
         return ''
 
 class DetailRecord(object):
+
+    @classmethod
+    def htmlView(cls):
+        rows = {}
+        Tabs[0] = cls.fieldsDefinition().keys()
+        return rows
 
     @classmethod
     def fieldsDefinition(cls):
