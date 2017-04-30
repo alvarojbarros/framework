@@ -188,8 +188,6 @@ class Record(object):
             if 'Persistent' not in fieldDef or fieldDef['Persistent']==True:
                 self.OldFields[field] = copy.copy(getattr(self,field))
 
-    def afterSaveJS(self):
-        return ''
 
 class DetailRecord(object):
 

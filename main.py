@@ -440,7 +440,8 @@ def record_list():
     limit = request.args.get('Limit',None)
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
-    res = fillRecordList(records,fields)
+    fieldsDef = TableClass.fieldsDefinition()
+    res = fillRecordList(records,fields,fieldsDef)
     return jsonify(result=res)
 
 

@@ -71,7 +71,7 @@ def importTable(f):
         return Error("Error al importar")
     return "Registros importados %i" % k
 
-def fillRecordList(records,fields):
+def fillRecordList(records,fields,fieldsDef=None):
     res = []
     for record in records:
         row = {}
@@ -81,6 +81,10 @@ def fillRecordList(records,fields):
                 value = value.strftime("%d/%m/%Y")
             elif isinstance(value,time):
                 value = value.strftime("%H:%M")
+            elif isinstance(value,int) and fieldsDef:
+                fieldDef = fieldsDef[field]
+                if 'Values' in fieldDef:
+                    value = fieldDef['Values'][value]
             row[field] = value
         res.append(row)
     return res

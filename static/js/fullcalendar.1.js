@@ -14,6 +14,8 @@ function getCalendar() {
 			center: 'title',
 			right: 'month,agendaWeek,agendaDay'
 		},
+		locale: 'es',
+		height: 500,
 		defaultDate: today,
 		editable: true,
 		eventLimit: true, // allow "more" link when too many events

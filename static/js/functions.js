@@ -26,7 +26,7 @@ function refreshList() {
 
 
 function newRecord(Table,TemplateName) {
-    vars = {Template: TemplateName,Table: Table,RecordId: ''}
+    var vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate('container-fluid',vars,function(){
 		getRecord(Table,{},function (data){
 			Vue.set(vue_record,'values', data);
@@ -111,7 +111,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 		var callback_function = new Function(runFunction);
 		callback_function();
 	}
-    vars = {Template: TemplateName,Table: Table, id: id}
+    var vars = {Template: TemplateName,Table: Table, id: id}
 	if (callName){
 		var callback_function = new Function(callName);
 		getTemplate('container-fluid',vars,function(){
@@ -271,7 +271,7 @@ function addNewRow(field){
 }
 
 function getTemplateModule(divName,index){
-	vars = vue_modules.values[index].Vars
+	var vars = vue_modules.values[index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
 		vue_title.Title = vars.Name;
@@ -298,18 +298,6 @@ function AddToLocalStorage(html){
 	}*/
 
 }
-
-function fixCalendarStyle(){
-	divs = document.getElementsByClassName('fc-day-grid-container fc-scroller');
-	for (i = 0; i < divs.length; i++) {
-		div = divs[i]
-		if (div){
-			div.setAttribute('class','fc-day-grid-container');
-			div.class = "fc-day-grid-container";
-		}
-	}
-}
-
 
 
 function getTemplate(divName,vars,callback){
@@ -433,7 +421,7 @@ function getModulesVue(){
 
 function getRecordList(table,fields,limit,order_by,desc){
 
-	vars = {'Table': table,'Fields': fields }
+	var vars = {'Table': table,'Fields': fields }
 	if (limit) {vars['Limit'] = limit;}
 	if (order_by) {vars['OrderBy'] = order_by;}
 	if (desc) {vars['Desc'] = desc;}

@@ -404,3 +404,16 @@ def passwordRamdom():
         next_index = random.randrange(len(alphabet))
         mypw = mypw + alphabet[next_index]
     return mypw
+
+def mapEnum(records,fvalues,fname):
+    l = []
+    for record in records:
+        r = {}
+        for key in record.keys():
+            if key==fname:
+                v = getattr(record,fname)
+                r[fname] = fvalues[v]
+            else:
+                r[key] = getattr(record,key)
+        l.append(r)
+    return l
