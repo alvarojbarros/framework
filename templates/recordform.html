@@ -167,10 +167,10 @@
                    :name="field+'Rows'" :rownr="index+1" class="col-xs-12 p-b-20 schedulerows">
 
 
-                  <div class="col-xs-12 p-b-20"
+                  <div class="col-xs-12 col-sm-12 p-b-20"
                     v-for="list,index2 in values.fields[field].htmlView">
 
-                    <div :class="'col-xs-' + parseInt(12/list.length) +' col-md-' + list.length"
+                    <div :class="values.fields[field].fieldsDefinition[fname].Class"
                       v-if="values.fields[field].fieldsDefinition[fname].Input"
                       v-for="fname in list">
 
@@ -220,7 +220,7 @@
 
 
                 {% if getCanUserDeleteRow(var['Table']) %}
-                  <div :class="'col-lg-1 col-xs-6 col-md-' + values.fields[field].fieldsDefinition.__lenght__">
+                  <div class="col-xs-12">
                     <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
                       class="btn btn-danger btn-rounded waves-effect waves-light">
                       Borrar
