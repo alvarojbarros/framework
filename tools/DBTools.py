@@ -2,6 +2,8 @@ from sqlalchemy.orm import sessionmaker
 from tools.dbconnect import Session
 from flask_login import current_user
 from tools.Tools import *
+import getsettings
+settings = getsettings.getSettings()
 
 FormatTypes = {'str':'String','datetime':'DateTime','integer':'Integer'}
 
@@ -75,16 +77,49 @@ def fillRecordList(records,fields,fieldsDef=None):
     res = []
     for record in records:
         row = {}
+        #links = getLinksTo(fieldsDef,None)
         for field in fields:
             value = getattr(record,field)
             if isinstance(value,date):
                 value = value.strftime("%d/%m/%Y")
             elif isinstance(value,time):
                 value = value.strftime("%H:%M")
-            elif isinstance(value,int) and fieldsDef:
+            elif (isinstance(value,int) or isinstance(value,str)) and fieldsDef:
                 fieldDef = fieldsDef[field]
                 if 'Values' in fieldDef:
                     value = fieldDef['Values'][value]
+                elif 'LinkTo' in fieldDef:
+                    #value = links[field][value]
+                    pass
+
             row[field] = value
         res.append(row)
+    return res
+
+def getLinksTo(fields,record):
+    links = {}
+    for fn in fields:
+        field = fields[fn]
+        if ('LinkTo' in field):
+            links[fn] = get_linkto(field['LinkTo'],record)
+    return links
+
+def get_linkto(linkto,record=None):
+    res = {}
+    table = linkto['Table']
+    show = linkto['Show']
+    method = linkto.get('Method',None)
+    params = linkto.get('Params',None)
+    TableClass = getTableClass(table)
+    if method:
+        records = settings.getMyFunction(method,params)
+    elif record:
+        records = record.getLinkToFromRecord(TableClass)
+    else:
+        records = TableClass.getRecordList(TableClass)
+    for record in records:
+        show_list = []
+        for field in show:
+            show_list.append(getattr(record,field))
+        res[record.id] = ' '.join(show_list)
     return res

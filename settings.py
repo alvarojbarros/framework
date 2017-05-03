@@ -52,6 +52,8 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 "ALTER TABLE usernote MODIFY ProfId VARCHAR(50)", \
 "ALTER TABLE userservice MODIFY UserId VARCHAR(50)", \
 ],\
+14: ["ALTER TABLE notification MODIFY UserId VARCHAR(50)",
+],\
 }
 
 

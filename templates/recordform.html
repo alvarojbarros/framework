@@ -222,21 +222,25 @@
                 {% if getCanUserDeleteRow(var['Table']) %}
                   <div class="col-xs-12">
                     <button :id="'delete'+index" v-on:click="removeRow(field,index)" type="button"
-                      class="btn btn-danger btn-rounded waves-effect waves-light">
-                      Borrar
-                      <span clas="btn-label">
-                        <i class="fa fa-times"></i>
-                      </span>
+                      class="btn btn-danger btn-rounded waves-effect waves-light m-r-10 m-b-10">
+                      <span class="btn-label">
+                        <i class="fa fa-minus">
+                        </i>
+                      </span>Borrar
                     </button>
                   </div>
                 {% endif %}
                 </div>
                 {% if getCanUserAddRow(var['Table']) %}
-                  <button :onclick="'addNewRow(&quot;'+field+'&quot;)'" type="button"
-                    class="btn btn-warning btn-rounded waves-effect waves-light">
-                    Agregar<span clas="btn-label"><i class="fa fa-plus"></i>
-                    </span>
+                  <button :onclick="'addNewRow(&quot;'+field+'&quot;)'"
+                    class="btn btn-warning btn-rounded waves-effect waves-light m-r-10 m-b-10">
+                    <span class="btn-label">
+                      <i class="fa fa-plus">
+                      </i>
+                    </span>Agregar
                   </button>
+
+
                 {% endif %}
 
               </div>

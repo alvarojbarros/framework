@@ -225,6 +225,7 @@ function runSearchBoxOnKey(){
 jQuery(document).ready(function($){
 
 	getModulesVue();
+	getCurrentUser();
 
 	localStorage.clear();
 	$('.list-group-full li').each(function(){
@@ -419,6 +420,19 @@ function getModulesVue(){
   }
 }
 
+function getCurrentUser(callback){
+
+  var usermenu = document.getElementById('user-menu');
+  if (usermenu){
+	$.getJSON($SCRIPT_ROOT + '/_get_current_user_type', {},function(data) {
+		Vue.set(vue_user_menu,'current_user_type', data.result);
+		if (callback){
+			callback();
+		}
+	});
+  }
+}
+
 function getRecordList(table,fields,limit,order_by,desc){
 
 	var vars = {'Table': table,'Fields': fields }
@@ -426,6 +440,7 @@ function getRecordList(table,fields,limit,order_by,desc){
 	if (order_by) {vars['OrderBy'] = order_by;}
 	if (desc) {vars['Desc'] = desc;}
 	Vue.set(vue_recordlist,'table', table);
+	Vue.set(vue_recordlist,'user_type', vue_user_menu.current_user_type);
 	$.getJSON($SCRIPT_ROOT + '/_record_list', vars ,function(data) {
 		Vue.set(vue_recordlist,'values', data.result);
 	});

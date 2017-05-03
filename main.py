@@ -319,14 +319,6 @@ def get_template():
     res = render_template(template,var=var)
     return jsonify(result={'html':res, 'functions': functions})
 
-def getLinksTo(fields,record):
-    links = {}
-    for fn in fields:
-        field = fields[fn]
-        if ('LinkTo' in field):
-            links[fn] = get_linkto(field['LinkTo'],record)
-    return links
-
 def getRecordByFilters(table,filters,NotFilterFields=False):
     NotFilterFields = False
     res = {}
@@ -399,6 +391,11 @@ def get_record():
     res = getRecordByFilters(table,filters,NotFilterFields)
     return jsonify(result=res)
 
+@app.route('/_get_current_user_type')
+def get_current_user_type():
+    return jsonify(result=current_user.UserType)
+
+
 @app.route('/_get_modules')
 def get_modules():
     modules = settings.getModules(current_user.UserType)
@@ -410,26 +407,6 @@ def get_modules():
         table['Vars'] = table['Vars']
         res.append(table)
     return jsonify(result=res)
-
-def get_linkto(linkto,record=None):
-    res = {}
-    table = linkto['Table']
-    show = linkto['Show']
-    method = linkto.get('Method',None)
-    params = linkto.get('Params',None)
-    TableClass = getTableClass(table)
-    if method:
-        records = settings.getMyFunction(method,params)
-    elif record:
-        records = record.getLinkToFromRecord(TableClass)
-    else:
-        records = TableClass.getRecordList(TableClass)
-    for record in records:
-        show_list = []
-        for field in show:
-            show_list.append(getattr(record,field))
-        res[record.id] = ' '.join(show_list)
-    return res
 
 @app.route('/_record_list')
 def record_list():

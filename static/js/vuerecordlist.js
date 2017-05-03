@@ -6,6 +6,7 @@ var vue_recordlist = new Vue({
     values: [],
     table: '',
     user_id: '',
+    user_type: '',
   },
 
 })

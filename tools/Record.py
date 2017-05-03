@@ -95,6 +95,11 @@ class Record(object):
                         dres[dname]['Readonly'] = dreadonly
                 if 'htmlView' not in res[fname]:
                     res[fname]['htmlView'] = DetailClass.htmlView()
+        res = cls.customGetFieldsDefinition(record,res)
+        return res
+
+    @classmethod
+    def customGetFieldsDefinition(cls,record,res):
         return res
 
     @classmethod
@@ -187,6 +192,9 @@ class Record(object):
             fieldDef = self.fieldsDefinition()[field]
             if 'Persistent' not in fieldDef or fieldDef['Persistent']==True:
                 self.OldFields[field] = copy.copy(getattr(self,field))
+
+    def afterSaveJS(self):
+        return ''
 
 
 class DetailRecord(object):
