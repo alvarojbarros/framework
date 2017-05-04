@@ -320,7 +320,7 @@ def get_template():
     return jsonify(result={'html':res, 'functions': functions})
 
 def getRecordByFilters(table,filters,NotFilterFields=False):
-    NotFilterFields = False
+    #NotFilterFields = False
     res = {}
     TableClass = getTableClass(table)
     session = Session()

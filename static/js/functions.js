@@ -28,7 +28,7 @@ function refreshList() {
 function newRecord(Table,TemplateName) {
     var vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate('container-fluid',vars,function(){
-		getRecord(Table,{},function (data){
+		getRecord({TableName: Table},function (data){
 			Vue.set(vue_record,'values', data);
 			Vue.set(vue_record,'table', Table);
 			vue_title.Title = 'Nuevo Registro'
@@ -116,7 +116,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 		var callback_function = new Function(callName);
 		getTemplate('container-fluid',vars,function(){
 			callback_function();
-			getRecord(Table,id,function (data){
+			getRecord({TableName: Table,id: id},function (data){
 				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
 				if (data.record['Name']){
@@ -129,7 +129,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 	    //getTemplate('container-fluid',vars,null);
 	}else{
 	    getTemplate('container-fluid',vars,function (){
-			getRecord(Table,id,function (data){
+			getRecord({TableName: Table,id: id},function (data){
 				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
 				if (data.record['Name']){
@@ -142,8 +142,8 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 	}
 }
 
-function getRecord(Table,id,callbalck){
-  $.getJSON($SCRIPT_ROOT + '/_get_record', {id: id, TableName: Table}, function(data) {
+function getRecord(filters,callbalck){
+  $.getJSON($SCRIPT_ROOT + '/_get_record', filters, function(data) {
     if (data.result.record.id){
     	data.result['_state'] = 1
 	}else{
