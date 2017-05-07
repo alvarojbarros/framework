@@ -1,5 +1,13 @@
 Vue.config.devtools = true;
 
+var vue_buttons = new Vue({
+  el: '#div-buttons',
+  data: {
+    canEdit: '',
+    canDelete: '',
+  },
+})
+
 var vue_record = new Vue({
   el: '#recordFields',
   data: {

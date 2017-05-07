@@ -50,7 +50,7 @@ class Record(object):
         return True
 
     @classmethod
-    def canUserEdit(cls,recordId):
+    def canUserEdit(cls,record):
         return True
 
     @classmethod

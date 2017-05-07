@@ -370,8 +370,8 @@ def getTableClass(table):
 def canUserCreate(table):
     return getTableClass(table).canUserCreate()
 
-def canUserEdit(table,recordId):
-    return getTableClass(table).canUserEdit(recordId)
+def canUserEdit(table,record):
+    return getTableClass(table).canUserEdit(record)
 
 def canUserDelete(table):
     return getTableClass(table).canUserDelete()

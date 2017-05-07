@@ -180,11 +180,13 @@ def save_files():
             table = request.form[key + '-table']
             id = request.form[key + '-id']
             f = request.files[key]
-            if not os.path.exists('static/%s' % settings.images_url):
-                os.mkdir('static/%s' % settings.images_url)
-            if not os.path.exists('static/%s/%s' % (settings.images_url,table)):
-                os.mkdir('static/%s/%s' % (settings.images_url,table))
-            path = 'static/%s/%s' % (settings.images_url,table)
+            if not os.path.exists("%s/%s" %(settings.images_url,settings.images_folder)):
+                cmd = "sudo mkdir %s/%s" %(settings.images_url,settings.images_folder)
+                os.system(cmd)
+            if not os.path.exists('%s/%s/%s' % (settings.images_url,settings.images_folder,table)):
+                cmd = "sudo mkdir %s/%s/%s" % (settings.images_url,settings.images_folder,table)
+                os.system(cmd)
+            path = '%s/%s/%s' % (settings.images_url,settings.images_folder,table)
             fname = '%s.%s' % (key,id)
             f.save(os.path.join(path,fname))
     return jsonify(result={'res': True})
@@ -335,6 +337,8 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
     fields = TableClass.getfieldsDefinition(record)
     htmlView = TableClass.getHtmlView()
     recordTitle = TableClass.getRecordTitle()
+    canEdit = TableClass.canUserEdit(record)
+    canDelete = TableClass.canUserDelete()
     if not NotFilterFields:
         filterFiedlsByUserAccess(fields)
     links = getLinksTo(fields,record)
@@ -377,7 +381,7 @@ def getRecordByFilters(table,filters,NotFilterFields=False):
                     value = ''
                 res[fname] = value
     session.close()
-    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'recordTitle':recordTitle}
+    return {'record': res, 'fields': fields, 'links': links,'htmlView':htmlView,'recordTitle':recordTitle,'canEdit':canEdit,'canDelete':canDelete}
 
 @app.route('/_get_record')
 def get_record():
@@ -447,14 +451,10 @@ def utility_processor():
         return jsonify(f.jsonInfo)
     def getCanUserCreate(table):
         return canUserCreate(table)
-    def getCanUserEdit(table,recordId):
-        return canUserEdit(table,recordId)
     def getCanUserAddRow(table):
         return canUserAddRow(table)
     def getCanUserDeleteRow(table):
         return canUserDeleteRow(table)
-    def getCanUserDelete(table):
-        return canUserDelete(table)
     def myFunction(function,params=None):
         return settings.getMyFunction(function,params)
     def getStaticFolder():
@@ -475,12 +475,13 @@ def utility_processor():
     def getStrfTime(t,f):
         return t.strftime(f)
     def getImageURL(table,id,fieldname):
-        fname = '%s/%s/%s.%s' %(settings.images_url,table,fieldname,id)
-        f = os.path.isfile('static/%s' % fname)
+        fname = '%s/%s.%s' %(table,fieldname,id)
+        f = os.path.isfile("%s/%s/%s" % (settings.images_url,settings.images_folder,fname))
         if not f:
             url = url_for('static',filename='images/user.jpg')
         else:
-            url = url_for('static',filename=fname)
+            fname = "%s/%s" %(settings.images_folder,fname)
+            url = url_for(settings.custom_static,filename=fname)
         return url
     def getModules():
         modules = settings.getModules(current_user.UserType)
@@ -501,8 +502,6 @@ def utility_processor():
         ,getCanUserCreate=getCanUserCreate \
         ,getCanUserAddRow=getCanUserAddRow \
         ,getCanUserDeleteRow=getCanUserDeleteRow \
-        ,getCanUserEdit=getCanUserEdit \
-        ,getCanUserDelete=getCanUserDelete \
         ,getJsonify=getJsonify \
         ,getSorted=getSorted \
         ,getStaticFolder=getStaticFolder \

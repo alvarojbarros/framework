@@ -97,8 +97,8 @@ class User(Base,Record,UserMixin):
             return True
 
     @classmethod
-    def canUserEdit(self,recordId):
-        if current_user.UserType in (0,1) or current_user.id==recordId:
+    def canUserEdit(self,record):
+        if current_user.UserType in (0,1) or current_user.id==record.id:
             return True
 
     @classmethod

@@ -31,6 +31,8 @@ function newRecord(Table,TemplateName) {
 		getRecord({TableName: Table},function (data){
 			Vue.set(vue_record,'values', data);
 			Vue.set(vue_record,'table', Table);
+			Vue.set(vue_buttons,'canEdit', data.canEdit);
+			Vue.set(vue_buttons,'canDelete', data.canDelete);
 			vue_title.Title = 'Nuevo Registro'
 		})
 	})
@@ -119,6 +121,8 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 			getRecord({TableName: Table,id: id},function (data){
 				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
+				Vue.set(vue_buttons,'canEdit', data.canEdit);
+				Vue.set(vue_buttons,'canDelete', data.canDelete);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -132,6 +136,8 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 			getRecord({TableName: Table,id: id},function (data){
 				Vue.set(vue_record,'table', Table);
 				Vue.set(vue_record,'values', data);
+				Vue.set(vue_buttons,'canEdit', data.canEdit);
+				Vue.set(vue_buttons,'canDelete', data.canDelete);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -165,7 +171,7 @@ function deleteRecord(id,table,formId) {
     form = document.getElementById(id);
     var fields = {}
     fields['TableName'] = table;
-	_id = form.elements['id'].value;
+	_id = vue_record.values.record.id;
     if (_id){
 		fields['id'] = _id;
 		$.getJSON($SCRIPT_ROOT + '/_delete_record', fields, function(data) {
@@ -316,7 +322,6 @@ function getTemplate(divName,vars,callback){
 		var callback_function = new Function(runFunction);
 		callback_function();
 	}
-
 
   	$.getJSON($SCRIPT_ROOT + '/_get_template', vars ,function(data) {
 

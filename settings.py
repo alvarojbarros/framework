@@ -16,7 +16,9 @@ templates = {
 'home_template':'home.html'}
 
 app_name = "Donde Fluir"
-images_url = 'dondefluir/files'
+images_url = '/var/www/html/flaskapp/dondefluir/static'
+images_folder = 'files'
+custom_static = 'blue_dondefluir.static'
 SECRET_KEY = 'dondefluir_2017'
 
 versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
@@ -55,6 +57,8 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 14: ["ALTER TABLE notification MODIFY UserId VARCHAR(50)",
 ],\
 15: ["ALTER TABLE service MODIFY Name VARCHAR(100)",
+],\
+16: ["ALTER TABLE notification ADD COLUMN Description MEDIUMTEXT",
 ],\
 }
 
