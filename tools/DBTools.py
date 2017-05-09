@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from sqlalchemy.orm import sessionmaker
 from tools.dbconnect import Session
 from flask_login import current_user

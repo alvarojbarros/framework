@@ -1,9 +1,29 @@
+# -*- coding: utf-8 -*-
+
 from datetime import datetime,timedelta,date,time
 import json
 import copy
 import random
 import getsettings
 db_foder = getsettings.getDbFolder()
+
+WeekName = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo']
+
+meses = {
+    1:'Enero',
+    2:'Febrero',
+    3:'Marzo',
+    4:'Abril',
+    5:'Mayo',
+    6:'Junio',
+    7:'Julio',
+    8:'Agosto',
+    9:'Septiembre',
+    10:'Octubre',
+    11:'Noviembre',
+    12:'Diciembre'
+}
+
 
 def now():
     return datetime.now()

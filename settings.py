@@ -1,3 +1,5 @@
+﻿# -*- coding: utf-8 -*-
+
 mysqldata = 'root:1234@localhost:3306/dondefluir'
 myPort = 5000
 
@@ -16,7 +18,9 @@ templates = {
 'home_template':'home.html'}
 
 app_name = "Donde Fluir"
-images_url = '/var/www/html/flaskapp/dondefluir/static'
+app_folder = '/var/www/html/flaskapp'
+#app_folder = 'C:/Datos/Flask/framework'
+images_url = '%s/%s' % (app_folder,static_folder)
 images_folder = 'files'
 custom_static = 'blue_dondefluir.static'
 SECRET_KEY = 'dondefluir_2017'
@@ -60,11 +64,19 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 ],\
 16: ["ALTER TABLE notification ADD COLUMN Description MEDIUMTEXT",
 ],\
+17: ["ALTER TABLE activity MODIFY CustId VARCHAR(50)", \
+"ALTER TABLE activity MODIFY CustId VARCHAR(50)", \
+"ALTER TABLE activity MODIFY ProfId VARCHAR(50)", \
+],\
+18: ["ALTER TABLE user ADD COLUMN NtfActivityConfirm INTEGER", \
+"ALTER TABLE user ADD COLUMN NtfActivityNewCust INTEGER"], \
+19: ["ALTER TABLE userschedule MODIFY user_id VARCHAR(50)", \
+],\
 }
 
 
 AccountName = 'Donde Fluir'
-Sender = 'soporte@dondefluir.com'
+Sender = 'info@dondefluir.com'
 SMTPServer = 'smtp-relay.gmail.com'
 SMTPPort = 25
 

@@ -52,7 +52,7 @@
   <input id="_state" name="_state" type="hidden" v-model="values._state">
   <input v-if="values.record" id="syncVersion" name="syncVersion" type="hidden" v-model="values.record.syncVersion">
     <div class="row" v-for="tab in values.htmlView"
-      v-if="!tab.ShowIf || tab.ShowIf[1].indexOf(values.record[tab.ShowIf[0]])>-1"
+      v-if="!tab.ShowIf || tab.ShowIf[1].indexOf(values.record[tab.ShowIf[0]].toString())>tab.ShowIf[2]"
       >
       <div class="col-xs-12">
         <div class="white-box">
@@ -61,7 +61,7 @@
               <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-b-20'" v-for="field in tab_fields[1]"
                 v-if="(values.fields[field] && !(values.fields[field]['Type'] instanceof Array))
                   && (!values.fields[field].ShowIf ||
-                  values.fields[field].ShowIf[1].indexOf(values.record[values.fields[field].ShowIf[0]])>-1) ">
+                  values.fields[field].ShowIf[1].indexOf(values.record[values.fields[field].ShowIf[0]].toString())>values.fields[field].ShowIf[2]) ">
                 <label class="col-xs-12" :for="field"
                   v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}

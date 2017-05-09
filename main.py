@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 from flask import Flask
@@ -22,9 +21,13 @@ app.config.update(
     TEMPLATES_AUTO_RELOAD = True,
     SECRET_KEY = settings.SECRET_KEY,
     UPLOAD_FOLDER = './tmp/',
+    MAIL_SERVER = 'smtp-relay.gmail.com',
+    MAIL_PORT = 25,
 )
 
+
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['MAIL_SERVER'] = 'smtp-relay.gmail.com'
 
 app.register_blueprint(settings.custom_app)
 
@@ -514,4 +517,4 @@ def utility_processor():
         )
 
 if __name__ == "__main__":
-    app.run(host= '0.0.0.0',port=settings.myPort,threaded=True)
+    app.run(host= '0.0.0.0')

@@ -1,3 +1,5 @@
+﻿# -*- coding: utf-8 -*-
+
 from sqlalchemy import Column, Integer
 from tools.dbconnect import Session
 from sqlalchemy.orm import sessionmaker
