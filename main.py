@@ -14,7 +14,7 @@ from tools.Tools import *
 from tools.DBTools import *
 from tools import DBVersion
 from tools import DBUpdates
-from smtplib import SMTP
+from flask_mail import Mail
 
 app.config.update(
     DEBUG = True,
@@ -28,6 +28,8 @@ app.config.update(
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['MAIL_SERVER'] = 'smtp-relay.gmail.com'
+
+mail = Mail(app)
 
 app.register_blueprint(settings.custom_app)
 

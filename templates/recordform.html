@@ -63,7 +63,8 @@
                   && (!values.fields[field].ShowIf ||
                   values.fields[field].ShowIf[1].indexOf(values.record[values.fields[field].ShowIf[0]].toString())>values.fields[field].ShowIf[2]) ">
                 <label class="col-xs-12" :for="field"
-                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')"  >
+                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')
+                  && (values.fields[field].Input!='Hidde')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}
                 </label>
                 <div class="col-xs-12">

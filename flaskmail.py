@@ -1,6 +1,4 @@
-from main import app
-from flask_mail import Mail
-mail = Mail(app)
+from main import mail
 from flask_mail import Message
 import getsettings
 settings = getsettings.getSettings()
