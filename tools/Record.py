@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 from sqlalchemy import Column, Integer
 from tools.dbconnect import Session
@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from tools.Tools import *
 from flask_login import current_user
 import copy
+import threading
 
 class Record(object):
     syncVersion = Column(Integer)
@@ -46,6 +47,19 @@ class Record(object):
         if int(version)!=self.syncVersion:
             return False
         return True
+
+    def callAfterCommitInsert(self):
+        try:
+            threading.Thread(target=self.afterCommitInsert()).start()
+        except:
+            pass
+
+    def callAfterCommitUpdate(self):
+        try:
+            threading.Thread(target=self.afterCommitUpdate()).start()
+        except:
+            pass
+
 
     @classmethod
     def canUserDelete(cls):

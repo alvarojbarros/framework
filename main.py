@@ -258,7 +258,7 @@ def save_record():
             session.rollback()
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
-        new_record.afterCommitInsert()
+        new_record.callAfterCommitInsert()
         return jsonify(result={'res':True,'id':new_record.id,'syncVersion':new_record.syncVersion})
     else:
         record = session.query(TableClass).filter_by(id=_id).first()
@@ -284,7 +284,7 @@ def save_record():
             session.rollback()
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
-        record.afterCommitUpdate()
+        record.callAfterCommitUpdate()
         RunJS = record.afterSaveJS()
         return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion,'RunJS':RunJS})
 

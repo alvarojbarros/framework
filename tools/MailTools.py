@@ -1,5 +1,5 @@
-﻿# -*- coding: utf-8 -*-
-from mail import sendMail
+# -*- coding: utf-8 -*-
+from tools.Mail import sendMail
 
 def sendPasswordRecoverMail(email,newpwd,userid):
     msj = "\n"
