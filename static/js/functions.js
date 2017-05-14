@@ -167,8 +167,7 @@ function getRecordBy(Table,filters,callbalck){
 }
 
 
-function deleteRecord(id,table,formId) {
-    form = document.getElementById(id);
+function deleteRecord(table) {
     var fields = {}
     fields['TableName'] = table;
 	_id = vue_record.values.record.id;
