@@ -4,6 +4,8 @@ from sqlalchemy.orm import sessionmaker
 from tools.dbconnect import Session
 from flask_login import current_user
 from tools.Tools import *
+from flask import url_for
+import os
 import getsettings
 settings = getsettings.getSettings()
 
@@ -125,3 +127,13 @@ def get_linkto(linkto,record=None):
             show_list.append(getattr(record,field))
         res[record.id] = ' '.join(show_list)
     return res
+
+def getImageLink(table,id,fieldname):
+    fname = '%s/%s.%s' %(table,fieldname,id)
+    f = os.path.isfile("%s/%s/%s" % (settings.images_url,settings.images_folder,fname))
+    if not f:
+        url = url_for('static',filename='images/user.jpg')
+    else:
+        fname = "%s/%s" %(settings.images_folder,fname)
+        url = url_for(settings.custom_static,filename=fname)
+    return url

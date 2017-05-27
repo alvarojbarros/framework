@@ -464,14 +464,7 @@ def utility_processor():
     def getStrfTime(t,f):
         return t.strftime(f)
     def getImageURL(table,id,fieldname):
-        fname = '%s/%s.%s' %(table,fieldname,id)
-        f = os.path.isfile("%s/%s/%s" % (settings.images_url,settings.images_folder,fname))
-        if not f:
-            url = url_for('static',filename='images/user.jpg')
-        else:
-            fname = "%s/%s" %(settings.images_folder,fname)
-            url = url_for(settings.custom_static,filename=fname)
-        return url
+        return getImageLink(table,id,fieldname)
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
     return dict(sortDict=sortDict \
