@@ -1,7 +1,7 @@
  <div class="row bg-title" id="vue_title">
     <!-- .page title -->
     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-       <h4 class="page-title">Agenda</h4>
+       <h4 class="page-title">{%raw%}{{Title}}{%endraw%}</h4>
     </div>
     <!-- /.page title -->
     <!-- .breadcrumb -->
@@ -19,5 +19,6 @@
 
 <div id='calendar'></div>
 <script>
-getCalendar()
+Vue.set(vue_title,'Title',"Agenda {{var['UserName']}}");
+getCalendar({{var['UserId']}});
 </script>

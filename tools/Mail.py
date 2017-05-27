@@ -2,4 +2,7 @@
 
 def sendMail(email,subject,message):
     from tools.FlaskMail import sendFlaskMail
-    sendFlaskMail(email,subject,message)
+    try:
+        sendFlaskMail(email,subject,message)
+    except:
+        pass

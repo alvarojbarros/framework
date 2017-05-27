@@ -33,6 +33,7 @@ function newRecord(Table,TemplateName) {
 			Vue.set(vue_record,'table', Table);
 			Vue.set(vue_buttons,'canEdit', data.canEdit);
 			Vue.set(vue_buttons,'canDelete', data.canDelete);
+			setCustomVue(Table,data.record);
 			vue_title.Title = 'Nuevo Registro'
 		})
 	})
@@ -83,11 +84,12 @@ function saveRecord(form_id,table) {
     fields['_state'] = _state.value
     $.getJSON($SCRIPT_ROOT + '/_save_record', fields, function(data) {
       	res = data.result['res']
-      	messages.error_msg  = ''
+      	messages.error_msg  = '';
       	if (res){
       		vue_record.values.record.id = data.result['id'];
       		vue_record.values.record.syncVersion = data.result['syncVersion'];
       		vue_record.values._state = 1
+      		setCustomVue(table,data.result)
       		if (data.result['Name']){
 				vue_title.recordName = data.result['Name']
 			}else{
@@ -123,6 +125,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
+				setCustomVue(Table,data.record);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -138,6 +141,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
+				setCustomVue(Table,data.record);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -170,15 +174,14 @@ function getRecordBy(Table,filters,callbalck){
 function deleteRecord(table) {
     var fields = {}
     fields['TableName'] = table;
+    messages.error_msg = '';
 	_id = vue_record.values.record.id;
     if (_id){
 		fields['id'] = _id;
 		$.getJSON($SCRIPT_ROOT + '/_delete_record', fields, function(data) {
 		  if (data.result['res']){
-			  //alert('Registro Borrado')
-			  messages.success_msg = 'Registro Borrado';
+			  setMessageTimeout('Registro Borrado')
 		  }else{
-			  //alert(data.result['Error'])
 			  messages.error_msg = data.result['Error'];
 		  }
 		});
@@ -276,8 +279,8 @@ function addNewRow(field){
 	vue_record.values.record[field].push(new_row)
 }
 
-function getTemplateModule(divName,index){
-	var vars = vue_modules.values[index].Vars
+function getTemplateModule(divName,moduleName,index){
+	var vars = vue_modules.values[moduleName][index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
 		vue_title.Title = vars.Name;
@@ -366,11 +369,12 @@ function recoverPassword(){
 		alert('Debe ingresar Email');
 		return;
 	}
+	messages.error_msg  = '';
   	$.getJSON($SCRIPT_ROOT + '/_recover_password', {'email': e.value},function(data) {
       	res = data.result['res']
       	if (res){
 			//alert('Se ha enviado un correo con su nuevo password');
-			messages.success_msg = 'Se ha enviado un correo con su nuevo password';
+			setMessageTimeout('Se ha enviado un correo con su nuevo password')
 			show_signIn();
 	  	}else{
 			//alert(data.result['Error']);
@@ -396,12 +400,13 @@ function changePassword(){
 	var p = document.getElementById('password');
 	var p1 = document.getElementById('password1');
 	var p2 = document.getElementById('password2');
+	messages.error_msg  = '';
 	if (p1.value==p2.value){
 		$.getJSON($SCRIPT_ROOT + '/_change_password', {'pwd': p.value,'newpwd': p1.value},function(data) {
 			res = data.result['res']
 			if (res){
 				//alert('Se ha modificado el password correctamente');
-				messages.success_msg = 'Se ha modificado el password correctamente';
+				setMessageTimeout('Se ha modificado el password correctamente')
 			}else{
 				//alert(data.result['Error']);
 				messages.error_msg = data.result['Error'];

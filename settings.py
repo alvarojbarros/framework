@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 mysqldata = 'root:1234@localhost:3306/dondefluir'
 myPort = 5000
@@ -19,7 +19,7 @@ templates = {
 
 app_name = "Donde Fluir"
 app_folder = '/var/www/html/flaskapp'
-#app_folder = 'C:/Datos/Flask/framework'
+app_folder = 'C:/Datos/Flask/framework'
 images_url = '%s/%s' % (app_folder,static_folder)
 images_folder = 'files'
 custom_static = 'blue_dondefluir.static'

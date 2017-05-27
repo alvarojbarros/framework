@@ -1,4 +1,4 @@
-function getCalendar() {
+function getCalendar(user_id) {
 
 	var today = new Date();
 	var dd = today.getDate();
@@ -21,6 +21,7 @@ function getCalendar() {
 		eventLimit: true, // allow "more" link when too many events
 		events: {
 			url: 'data',
+			data: {UserId: user_id},
 			error: function() {
 			$('#script-warning').show();
 			}

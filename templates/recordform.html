@@ -63,7 +63,7 @@
                   && (!values.fields[field].ShowIf ||
                   values.fields[field].ShowIf[1].indexOf(values.record[values.fields[field].ShowIf[0]].toString())>values.fields[field].ShowIf[2]) ">
                 <label class="col-xs-12" :for="field"
-                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox')
+                  v-if="(values.fields[field]['Label']) && (values.fields[field]['Input'] != 'checkbox') && (values.fields[field]['Input'] != 'button')
                   && (values.fields[field].Input!='Hidde')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}
                 </label>
@@ -154,6 +154,16 @@
                     <label v-if="values.fields[field]['Label']"
                     :for="field">{% raw %} {{values.fields[field]['Label']}} {% endraw %}</label>
                   </div>
+
+                  <div v-if="values.fields[field]['Input'] == 'button'" >
+                    <button :class="values.fields[field]['Class']" type="button" id="favorite" :onclick="values.fields[field]['onClick']">
+                      <span class="btn-label">
+                        <i class="fa fa-heart">
+                        </i>
+                      </span>{%raw%}{{values.fields[field]['Label']}}{%endraw%}
+                    </button>
+                  </div>
+
 
                 </div>
               </div>

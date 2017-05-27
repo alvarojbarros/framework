@@ -50,6 +50,7 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         if username: username = username.replace(" ", "")
+        username = User.getUserIdByEmail(username)
         password = request.form['password']
         if username or password:
             if not password or not username:
@@ -58,8 +59,8 @@ def login():
             if not user:
                 return render_template(settings.templates['loggin_template'],error_msg='Usuario no Registrado',signUp=False,app_name=settings.app_name)
             if (user.Password == password):
-                login_user(user)
-                return redirect('/')
+                if login_user(user):
+                    return redirect('/')
         return render_template(settings.templates['loggin_template'],error_msg='Datos Incorrectos',signIn=False,app_name=settings.app_name)
     else:
         return render_template(settings.templates['loggin_template'],signUp=False,app_name=settings.app_name)
@@ -81,7 +82,7 @@ def signin():
                 return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Email',signUp=True,app_name=settings.app_name)
             if username1!=username2:
                 return render_template(settings.templates['loggin_template'],error_msg='Los Email no coinciden',signUp=True,app_name=settings.app_name)
-            user = User.get(username1)
+            user = User.getUserIdByEmail(username1)
             if user:
                 return render_template(settings.templates['loggin_template'],error_msg='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
             if password1 != password2:
@@ -253,12 +254,12 @@ def save_record():
             return jsonify(result={'res': False,'Error':str(res)})
         try:
             session.commit()
-            session.close()
         except Exception as e:
             session.rollback()
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
         new_record.callAfterCommitInsert()
+        session.close()
         return jsonify(result={'res':True,'id':new_record.id,'syncVersion':new_record.syncVersion})
     else:
         record = session.query(TableClass).filter_by(id=_id).first()
@@ -279,12 +280,12 @@ def save_record():
             return jsonify(result={'res': False,'Error':str(res)})
         try:
             session.commit()
-            session.close()
         except Exception as e:
             session.rollback()
             session.close()
             return jsonify(result={'res': False,'Error':str(e)})
         record.callAfterCommitUpdate()
+        session.close()
         RunJS = record.afterSaveJS()
         return jsonify(result={'res':True,'id':record.id,'syncVersion':record.syncVersion,'RunJS':RunJS})
 
@@ -408,14 +409,7 @@ def get_current_user_type():
 @app.route('/_get_modules')
 def get_modules():
     modules = settings.getModules(current_user.UserType)
-    res = []
-    for k in modules:
-        table = modules[k]
-        table['Vars']['Template'] = table['Template']
-        table['Vars']['Name'] = table['Name']
-        table['Vars'] = table['Vars']
-        res.append(table)
-    return jsonify(result=res)
+    return jsonify(result=modules)
 
 @app.route('/_record_list')
 def record_list():
@@ -452,8 +446,6 @@ def utility_processor():
         return res
     def sortDict(myDict):
         return sorted(myDict)
-    def getJsonify(f):
-        return jsonify(f.jsonInfo)
     def getCanUserCreate(table):
         return canUserCreate(table)
     def getCanUserAddRow(table):
@@ -462,8 +454,6 @@ def utility_processor():
         return canUserDeleteRow(table)
     def myFunction(function,params=None):
         return settings.getMyFunction(function,params)
-    def getStaticFolder():
-        return settings.static_folder
     def getTemplate(template):
         #if os.path.isfile('%s/%s' % (settings.template_folder,template)):
         #    return '%s/%s' % (settings.template_folder,template)
@@ -471,12 +461,6 @@ def utility_processor():
         if "%s_template" % template in settings.templates:
             return settings.templates["%s_template" % template]
         return "%s.html" % template
-    def getTemplateFolder():
-        return settings.template_folder
-    def getSorted(dic):
-        return sorted(dic)
-    def listLenght(l):
-        return len(l)
     def getStrfTime(t,f):
         return t.strftime(f)
     def getImageURL(table,id,fieldname):
@@ -488,31 +472,15 @@ def utility_processor():
             fname = "%s/%s" %(settings.images_folder,fname)
             url = url_for(settings.custom_static,filename=fname)
         return url
-    def getModules():
-        modules = settings.getModules(current_user.UserType)
-        res = []
-        for k in modules:
-            table = modules[k]
-            table['Vars']['Template'] = table['Template']
-            table['Vars']['Name'] = table['Name']
-            table['Vars'] = str(table['Vars'])
-            res.append(table)
-        return res
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
     return dict(sortDict=sortDict \
-        ,getModules=getModules \
         ,myFunction=myFunction \
         ,getRecordList=getRecordList \
         ,getCanUserCreate=getCanUserCreate \
         ,getCanUserAddRow=getCanUserAddRow \
         ,getCanUserDeleteRow=getCanUserDeleteRow \
-        ,getJsonify=getJsonify \
-        ,getSorted=getSorted \
-        ,getStaticFolder=getStaticFolder \
         ,getTemplate=getTemplate \
-        ,getTemplateFolder=getTemplateFolder \
-        ,listLenght=listLenght\
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
         ,getRecord=getRecord \

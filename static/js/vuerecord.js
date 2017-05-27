@@ -5,6 +5,8 @@ var vue_buttons = new Vue({
   data: {
     canEdit: '',
     canDelete: '',
+    id: '',
+    Status: '',
   },
 })
 

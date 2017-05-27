@@ -1,0 +1,10 @@
+activity,CustId,activity_ibfk_1
+activity,ProfId,activity_ibfk_2
+activityusers,CustId,activityusers_ibfk_2
+notification,UserId,notification_ibfk_1
+userfavorite,UserId,userfavorite_ibfk_1
+userfavorite,FavoriteId,userfavorite_ibfk_2
+usernote,UserId,usernote_ibfk_1
+usernote,ProfId,usernote_ibfk_2
+userschedule,user_id,userschedule_ibfk_1
+userservice,UserId,userservice_ibfk_1

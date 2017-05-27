@@ -49,16 +49,19 @@ class Record(object):
         return True
 
     def callAfterCommitInsert(self):
+        self.afterCommitInsert()
+        '''
         try:
             threading.Thread(target=self.afterCommitInsert()).start()
         except:
-            pass
+            pass '''
 
     def callAfterCommitUpdate(self):
-        try:
+        self.afterCommitUpdate()
+        '''try:
             threading.Thread(target=self.afterCommitUpdate()).start()
         except:
-            pass
+            pass'''
 
 
     @classmethod
