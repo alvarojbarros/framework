@@ -422,6 +422,10 @@ def record_list():
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     fieldsDef = TableClass.fieldsDefinition()
     res = fillRecordList(records,fields,fieldsDef)
+    for fieldname in fields:
+        if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
+            for dic in res:
+                dic[fieldname] = getImageLink(table,dic['id'],fieldname)
     return jsonify(result=res)
 
 

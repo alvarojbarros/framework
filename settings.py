@@ -72,6 +72,15 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 "ALTER TABLE user ADD COLUMN NtfActivityNewCust INTEGER"], \
 19: ["ALTER TABLE userschedule MODIFY user_id VARCHAR(50)", \
 ],\
+23: ["ALTER TABLE company ADD COLUMN ImageProfile VARCHAR(100)", \
+],\
+24: ["ALTER TABLE company MODIFY Comment MEDIUMTEXT", \
+],\
+25: ["ALTER TABLE service ADD COLUMN OnlinePayment INTEGER", \
+"ALTER TABLE activity ADD COLUMN OnlinePayment INTEGER", \
+"ALTER TABLE company ADD COLUMN OnlinePayment INTEGER", \
+"ALTER TABLE company ADD COLUMN KeyPayco VARCHAR(50)"\
+],\
 }
 
 

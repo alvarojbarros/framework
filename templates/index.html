@@ -59,7 +59,10 @@
          {% include getTemplate("sidebar") %}
          <!-- Page Content -->
          <div id="page-wrapper">
-           {% include getTemplate("container") %}
+
+           {% block container %}
+            {% include getTemplate("container") %}
+           {% endblock %}
            {% include getTemplate("footer") %}
             <!-- /.container-fluid -->
          </div>

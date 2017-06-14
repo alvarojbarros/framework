@@ -11,8 +11,9 @@ if not settings.versions:
 else:
     newVersion = max(sorted(settings.versions))
 for k in range(version,newVersion):
-    for sql in settings.versions[k+1]:
-        session.execute(sql)
+    if k+1 in settings.versions:
+        for sql in settings.versions[k+1]:
+            session.execute(sql)
     record.Version = newVersion
     session.commit()
 session.close()
