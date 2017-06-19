@@ -421,7 +421,8 @@ def record_list():
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     fieldsDef = TableClass.fieldsDefinition()
-    res = fillRecordList(records,fields,fieldsDef)
+    links = getLinksTo(fieldsDef,None)
+    res = fillRecordList(records,fields,fieldsDef,links)
     for fieldname in fields:
         if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
             for dic in res:
@@ -444,10 +445,6 @@ def dated_url_for(endpoint, **values):
 
 @app.context_processor
 def utility_processor():
-    def getRecordList(table):
-        TableClass = getTableClass(table)
-        res = TableClass.getRecordList(TableClass)
-        return res
     def sortDict(myDict):
         return sorted(myDict)
     def getCanUserCreate(table):
@@ -473,7 +470,6 @@ def utility_processor():
         return getRecordByFilters(table,{'id': id})
     return dict(sortDict=sortDict \
         ,myFunction=myFunction \
-        ,getRecordList=getRecordList \
         ,getCanUserCreate=getCanUserCreate \
         ,getCanUserAddRow=getCanUserAddRow \
         ,getCanUserDeleteRow=getCanUserDeleteRow \

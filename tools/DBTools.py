@@ -77,13 +77,13 @@ def importTable(f):
         return Error("Error al importar")
     return "Registros importados %i" % k
 
-def fillRecordList(records,fields,fieldsDef=None):
+def fillRecordList(records,fields,fieldsDef=None,links=None):
     res = []
     for record in records:
         row = {}
-        #links = getLinksTo(fieldsDef,None)
         for field in fields:
             value = getattr(record,field)
+            #print(field,value)
             if isinstance(value,date):
                 value = value.strftime("%d/%m/%Y")
             elif isinstance(value,time):
@@ -92,10 +92,8 @@ def fillRecordList(records,fields,fieldsDef=None):
                 fieldDef = fieldsDef[field]
                 if 'Values' in fieldDef:
                     value = fieldDef['Values'][value]
-                elif 'LinkTo' in fieldDef:
-                    #value = links[field][value]
-                    pass
-
+                elif links and 'LinkTo' in fieldDef:
+                    value = links[field][value]
             row[field] = value
         res.append(row)
     return res
@@ -120,7 +118,7 @@ def get_linkto(linkto,record=None):
     elif record:
         records = record.getLinkToFromRecord(TableClass)
     else:
-        records = TableClass.getRecordList(TableClass)
+        records = TableClass.getAllRecordList(TableClass)
     for record in records:
         show_list = []
         for field in show:

@@ -174,6 +174,14 @@ class Record(object):
         session.close()
         return records
 
+    @classmethod
+    def getAllRecordList(cls,TableClass):
+        session = Session()
+        records = session.query(TableClass)
+        session.close()
+        return records
+
+
     def save(self,session):
         if not self.syncVersion:
             self.syncVersion = 1
@@ -199,7 +207,7 @@ class Record(object):
         return record
 
     def getLinkToFromRecord(self,TableClass):
-        return TableClass.getRecordList(TableClass)
+        return TableClass.getAllRecordList(TableClass)
 
     @classmethod
     def getRecordTitle(self):
