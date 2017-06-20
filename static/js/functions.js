@@ -425,6 +425,7 @@ function getModulesVue(){
   if (sidemenu){
 	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
 		Vue.set(vue_modules,'values', data.result);
+		//vue_modules.mounted()
 	});
   }
 }
@@ -462,14 +463,10 @@ function updateLinkTo(fieldname){
 	if (fieldname){
 		fields['FieldName'] = fieldname;
 	}
-	console.log(vue_record.values.record.ProfId)
 	$.getJSON($SCRIPT_ROOT + '/_update_linkto', fields,function(data) {
-		console.log(data.result)
 		if (fieldname){
-			console.log(1)
 			vue_record.values.links[fieldname] = data.result[fieldname];
 		}else{
-			console.log(1)
 			vue_record.values.links = data.result;
 		}
 	});

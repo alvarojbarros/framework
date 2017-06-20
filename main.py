@@ -468,6 +468,8 @@ def utility_processor():
         return getImageLink(table,id,fieldname)
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
+    def getModules():
+        return settings.getModules(current_user.UserType)
     return dict(sortDict=sortDict \
         ,myFunction=myFunction \
         ,getCanUserCreate=getCanUserCreate \
@@ -477,6 +479,7 @@ def utility_processor():
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
         ,getRecord=getRecord \
+        ,getModules=getModules \
         )
 
 if __name__ == "__main__":
