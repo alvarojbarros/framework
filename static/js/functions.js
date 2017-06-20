@@ -456,11 +456,22 @@ function getRecordList(table,fields,limit,order_by,desc){
 }
 
 
-function updateLinkTo(){
+function updateLinkTo(fieldname){
 	fields = vue_record.values.record;
 	fields['TableName'] = vue_record.table;
+	if (fieldname){
+		fields['FieldName'] = fieldname;
+	}
+	console.log(vue_record.values.record.ProfId)
 	$.getJSON($SCRIPT_ROOT + '/_update_linkto', fields,function(data) {
-		vue_record.values.links = data.result;
+		console.log(data.result)
+		if (fieldname){
+			console.log(1)
+			vue_record.values.links[fieldname] = data.result[fieldname];
+		}else{
+			console.log(1)
+			vue_record.values.links = data.result;
+		}
 	});
 
 

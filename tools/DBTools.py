@@ -98,13 +98,31 @@ def fillRecordList(records,fields,fieldsDef=None,links=None):
         res.append(row)
     return res
 
-def getLinksTo(fields,record):
+def getLinksTo(fields,record,fieldname=None):
     links = {}
     for fn in fields:
-        field = fields[fn]
-        if ('LinkTo' in field):
-            links[fn] = get_linkto(field['LinkTo'],record)
+        if not fieldname or fn==fieldname:
+            field = fields[fn]
+            if ('LinkTo' in field):
+                if ('Readonly' in field) and field['Readonly']==2 and record:
+                    links[fn] = get_field_value(field['LinkTo'],record,fn)
+                else:
+                    links[fn] = get_linkto(field['LinkTo'],record)
     return links
+
+def get_field_value(linkto,record,fn):
+    table = linkto['Table']
+    show = linkto['Show']
+    TableClass = getTableClass(table)
+    r = TableClass.getRecordById(getattr(record,fn))
+    if r:
+        show_list = []
+        for field in show:
+            show_list.append(getattr(r,field))
+        if show_list:
+            return {r.id: ' '.join(show_list)}
+    return {getattr(record,fn): getattr(record,fn)}
+
 
 def get_linkto(linkto,record=None):
     res = {}
@@ -112,18 +130,25 @@ def get_linkto(linkto,record=None):
     show = linkto['Show']
     method = linkto.get('Method',None)
     params = linkto.get('Params',None)
+    filters = linkto.get('Filters',None)
     TableClass = getTableClass(table)
     if method:
         records = settings.getMyFunction(method,params)
     elif record:
         records = record.getLinkToFromRecord(TableClass)
     else:
-        records = TableClass.getAllRecordList(TableClass)
+        records = TableClass.getRecordList(TableClass)
     for record in records:
-        show_list = []
-        for field in show:
-            show_list.append(getattr(record,field))
-        res[record.id] = ' '.join(show_list)
+        skip = False
+        if filters:
+            for filter_name in filters:
+                if getattr(record,filter_name) not in filters[filter_name]:
+                    skip = True
+        if not skip:
+            show_list = []
+            for field in show:
+                show_list.append(getattr(record,field))
+            res[record.id] = ' '.join(show_list)
     return res
 
 def getImageLink(table,id,fieldname):

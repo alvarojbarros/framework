@@ -141,6 +141,7 @@
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
                     :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
+                    :onchange="'updateLinkTo()'"
                     >
                     <option v-for="(value,key) in values.links[field]"  :value="key">
                       {% raw %} {{value}} {% endraw %}</option>

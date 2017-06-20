@@ -200,7 +200,7 @@ def save_files():
 @app.route('/_update_linkto')
 def update_linkto():
     table = request.args.get('TableName')
-
+    fieldname = request.args.get('FieldName')
     fields = {}
     for key in request.args:
         if key not in ['TableName','_state']:
@@ -216,7 +216,7 @@ def update_linkto():
         value = fields.get(key,None)
         if value:
             setValue(record,key,value)
-    links = getLinksTo(fieldsDef,record)
+    links = getLinksTo(fieldsDef,record,fieldname)
     return jsonify(result=links)
 
 
