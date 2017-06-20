@@ -408,8 +408,8 @@ def get_current_user_type():
 
 @app.route('/_get_modules')
 def get_modules():
-    modules = settings.getModules(current_user.UserType)
-    return jsonify(result=modules)
+    modules,names = settings.getModules(current_user.UserType)
+    return jsonify(result={'modules':modules,'names': names})
 
 @app.route('/_record_list')
 def record_list():
@@ -468,8 +468,9 @@ def utility_processor():
         return getImageLink(table,id,fieldname)
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
-    def getModules():
-        return settings.getModules(current_user.UserType)
+    def getModulesDir():
+        modules,names = settings.getModules(current_user.UserType)
+        return modules
     return dict(sortDict=sortDict \
         ,myFunction=myFunction \
         ,getCanUserCreate=getCanUserCreate \
@@ -479,7 +480,7 @@ def utility_processor():
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
         ,getRecord=getRecord \
-        ,getModules=getModules \
+        ,getModulesDir=getModulesDir \
         )
 
 if __name__ == "__main__":

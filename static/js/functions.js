@@ -279,8 +279,8 @@ function addNewRow(field){
 	vue_record.values.record[field].push(new_row)
 }
 
-function getTemplateModule(divName,moduleName,index){
-	var vars = vue_modules.values[moduleName][index].Vars
+function getTemplateModule(divName,moduleNr,index){
+	var vars = vue_modules.values[moduleNr][index].Vars
 	OpenCloseMenu();
 	getTemplate(divName,vars,function(){
 		vue_title.Title = vars.Name;
@@ -424,8 +424,8 @@ function getModulesVue(){
   var sidemenu = document.getElementById('side-menu');
   if (sidemenu){
 	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
-		Vue.set(vue_modules,'values', data.result);
-		//vue_modules.mounted()
+		Vue.set(vue_modules,'values', data.result.modules);
+		Vue.set(vue_modules,'names', data.result.names);
 	});
   }
 }
