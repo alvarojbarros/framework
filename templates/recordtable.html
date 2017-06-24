@@ -37,9 +37,9 @@
             <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="newRecord('{{var['Table']}}','recordform.html')" >
               <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
           {% endif %}
-          <!--button class="btn btn-success btn-rounded waves-effect waves-light" type="button">
-            <span class="btn-label"><i class="fa fa-refresh"></i></span>Actualizar</button-->
           {% endblock %}
+            <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="showHideFilters()" >
+            <span class="btn-label"><i class="fa fa-plus"></i></span>Filtros</button>
           <hr>
           <ul class="list-group list-group-full">
             {% block fields_view %}
