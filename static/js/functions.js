@@ -426,6 +426,9 @@ function getModulesVue(){
 	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
 		Vue.set(vue_modules,'values', data.result.modules);
 		Vue.set(vue_modules,'names', data.result.names);
+		for (k in vue_modules.names){
+			$(vue_modules.$refs['module-' + k]).html(vue_modules.names[k])
+		}
 	});
   }
 }
@@ -470,6 +473,7 @@ function updateLinkTo(fieldname){
 			vue_record.values.links = data.result;
 		}
 	});
+}
 
-
+function showHideFilters(){
 }

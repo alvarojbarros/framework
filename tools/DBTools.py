@@ -83,7 +83,6 @@ def fillRecordList(records,fields,fieldsDef=None,links=None):
         row = {}
         for field in fields:
             value = getattr(record,field)
-            #print(field,value)
             if isinstance(value,date):
                 value = value.strftime("%d/%m/%Y")
             elif isinstance(value,time):
