@@ -438,7 +438,8 @@ function getCurrentUser(callback){
   var usermenu = document.getElementById('user-menu');
   if (usermenu){
 	$.getJSON($SCRIPT_ROOT + '/_get_current_user_type', {},function(data) {
-		Vue.set(vue_user_menu,'current_user_type', data.result);
+		Vue.set(vue_user_menu,'current_user_type', data.result.user_type);
+		Vue.set(vue_user_menu,'current_user_id', data.result.user_id);
 		if (callback){
 			callback();
 		}
@@ -454,8 +455,11 @@ function getRecordList(table,fields,limit,order_by,desc){
 	if (desc) {vars['Desc'] = desc;}
 	Vue.set(vue_recordlist,'table', table);
 	Vue.set(vue_recordlist,'user_type', vue_user_menu.current_user_type);
+	Vue.set(vue_recordlist,'user_id', vue_user_menu.current_user_id);
 	$.getJSON($SCRIPT_ROOT + '/_record_list', vars ,function(data) {
-		Vue.set(vue_recordlist,'values', data.result);
+		Vue.set(vue_recordlist,'values', data.result.records);
+		Vue.set(vue_recordlist,'filters', data.result.filters);
+		Vue.set(vue_recordlist,'filtersNames', data.result.filtersNames);
 	});
 }
 
@@ -475,5 +479,16 @@ function updateLinkTo(fieldname){
 	});
 }
 
-function showHideFilters(){
+function updateRecordList(div,Filter){
+    for (i in vue_recordlist.values){
+        if (div.value==Filter){
+            vue_recordlist.values[i]._Skip = false;
+        }else{
+            if (vue_recordlist.values[i][Filter]!=div.value){
+                vue_recordlist.values[i]._Skip = true;
+            }else{
+                vue_recordlist.values[i]._Skip = false;
+            }
+        }
+    }
 }

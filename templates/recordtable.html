@@ -38,12 +38,18 @@
               <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
           {% endif %}
           {% endblock %}
-            <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="showHideFilters()" >
-            <span class="btn-label"><i class="fa fa-plus"></i></span>Filtros</button>
+
+            <div v-for="(field,key) in filters">
+                  <select class="form-control" :id="key" :name="key"
+                    :onchange="'updateRecordList(this,\''+ key + '\')'">
+                    <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
+                    <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
+                  </select>
+            </div>
           <hr>
           <ul class="list-group list-group-full">
             {% block fields_view %}
-              <li v-for="record in values" :data-search-term="record.Name" class="list-group-item">
+              <li v-for="record in values" :data-search-term="record.Name" class="list-group-item" v-if="record._Skip==false">
               <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">{%raw%}{{record.Name}}{%endraw%}</a></li>
             {% endblock %}
           </ul>

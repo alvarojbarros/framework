@@ -403,7 +403,7 @@ def get_record():
 
 @app.route('/_get_current_user_type')
 def get_current_user_type():
-    return jsonify(result=current_user.UserType)
+    return jsonify(result={'user_type':current_user.UserType,'user_id':current_user.id})
 
 
 @app.route('/_get_modules')
@@ -421,13 +421,29 @@ def record_list():
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     fieldsDef = TableClass.fieldsDefinition()
+    filtersKeys = TableClass.recordListFilters()
+    filtersNames = {}
+    for field in filtersKeys:
+        filtersNames[field] = fieldsDef[field]['Label']
+    filters = {}
+
     links = getLinksTo(fieldsDef,None)
     res = fillRecordList(records,fields,fieldsDef,links)
     for fieldname in fields:
         if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
             for dic in res:
                 dic[fieldname] = getImageLink(table,dic['id'],fieldname)
-    return jsonify(result=res)
+
+    for r in res:
+        for key in r.keys():
+            if key in filtersKeys:
+                if key not in filters:
+                    filters[key] = []
+                value = r[key]
+                if value not in filters[key]:
+                    filters[key].append(value)
+        r['_Skip'] = False
+    return jsonify(result={'records': res,'filters': filters, 'filtersNames': filtersNames})
 
 
 @app.context_processor

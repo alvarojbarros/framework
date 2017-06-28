@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f32f0c2c-73d9-4716-8de9-d3c662af9bf1" name="Default" comment="" />
+    <list default="true" id="f32f0c2c-73d9-4716-8de9-d3c662af9bf1" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/functions.js" afterPath="$PROJECT_DIR$/static/js/functions.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/vuerecordlist.js" afterPath="$PROJECT_DIR$/static/js/vuerecordlist.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/js/vueusermenu.js" afterPath="$PROJECT_DIR$/static/js/vueusermenu.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/recordtable.html" afterPath="$PROJECT_DIR$/templates/recordtable.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tools/Record.py" afterPath="$PROJECT_DIR$/tools/Record.py" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,30 +19,43 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Activity.py" pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Activity.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dondefluir/db/Activity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
-              <folding>
-                <marker date="1497996360361" expanded="true" signature="828:24211" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="1975:2303" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="2095:2303" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="2161:2303" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24094:24116" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24164:24211" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24253:24991" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24524:24839" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24883:24914" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="24955:24991" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="25036:26291" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="25330:25860" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="25904:25960" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="26001:26062" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="26127:26291" ph="..." />
-                <marker date="1497996360361" expanded="true" signature="26166:26264" ph="..." />
-              </folding>
+            <state relative-caret-position="202">
+              <caret line="66" column="66" lean-forward="true" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recordtable.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/recordtable.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="91">
+              <caret line="44" column="65" lean-forward="false" selection-start-line="44" selection-start-column="53" selection-end-line="44" selection-end-column="65" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="vuerecordlist.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/vuerecordlist.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="functions.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/js/functions.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="219">
+              <caret line="461" column="71" lean-forward="false" selection-start-line="461" selection-start-column="71" selection-end-line="461" selection-end-column="71" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -42,18 +63,18 @@
       <file leaf-file-name="activity.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dondefluir/templates/activity.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="21" column="2" lean-forward="false" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
+            <state relative-caret-position="51">
+              <caret line="3" column="116" lean-forward="false" selection-start-line="3" selection-start-column="116" selection-end-line="3" selection-end-column="116" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mycontainer.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dondefluir/templates/mycontainer.html">
+      <file leaf-file-name="professional.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dondefluir/templates/professional.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="214">
-              <caret line="63" column="4" lean-forward="false" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+            <state relative-caret-position="255">
+              <caret line="15" column="114" lean-forward="false" selection-start-line="15" selection-start-column="114" selection-end-line="15" selection-end-column="114" />
               <folding />
             </state>
           </provider>
@@ -62,134 +83,38 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="124">
-              <caret line="349" column="12" lean-forward="false" selection-start-line="349" selection-start-column="12" selection-end-line="349" selection-end-column="12" />
-              <folding>
-                <marker date="1497994006569" expanded="true" signature="8011:8670" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="8719:11368" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="8844:8998" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="8890:8998" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="9157:10198" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="9297:9407" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="9907:10031" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="10208:11368" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="11038:11162" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="11420:12184" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="11666:12184" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="11921:12027" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="12058:12184" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="12235:12687" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="12340:12473" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="12749:15153" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13039:13095" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13443:14986" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13583:14986" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13659:13777" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13880:14591" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="13946:14591" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="14083:14547" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="14609:14986" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="15199:15585" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="15391:15494" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="15653:15702" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="15751:15763" ph="..." />
-                <marker date="1497994006569" expanded="true" signature="18623:18635" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dondefluir/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="546" column="0" lean-forward="false" selection-start-line="546" selection-start-column="0" selection-end-line="546" selection-end-column="0" />
-              <folding>
-                <marker date="1497995481126" expanded="true" signature="1321:1404" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="1393:1404" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="5894:5896" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="5933:5998" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="6030:6710" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="6075:6293" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="6303:6671" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="6736:6888" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="6914:7383" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7064:7344" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7408:7484" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7523:8710" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7543:8693" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7610:8693" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7661:8693" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="7761:8225" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="8367:8459" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="8601:8693" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="8786:8975" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="9050:9538" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="9212:9507" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="9259:9507" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="9285:9507" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="9590:12838" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="10534:11392" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="10599:11367" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="11018:11367" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="11507:12264" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="11561:12239" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="11638:12239" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="11820:12239" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="12286:12801" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="12322:12801" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="12543:12799" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="12900:13691" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="13174:13418" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="13720:14210" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="14246:16504" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="15107:16489" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="15402:15946" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="15660:15946" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="16067:16472" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="16584:16873" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="16946:17781" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17126:17709" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17196:17355" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17240:17355" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17377:17489" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17812:18896" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="17922:18880" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="18257:18484" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="18569:18631" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="18662:18723" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="18745:18878" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="18948:19132" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="19212:19669" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="19392:19597" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="19741:20167" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="19993:20117" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="20238:20430" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="20489:20875" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="20943:21825" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="21512:21561" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="21588:21700" ph="..." />
-                <marker date="1497995481126" expanded="true" signature="21899:22021" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DBTools.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/tools/DBTools.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="139" column="32" lean-forward="false" selection-start-line="139" selection-start-column="32" selection-end-line="139" selection-end-column="32" />
+            <state relative-caret-position="479">
+              <caret line="445" column="60" lean-forward="false" selection-start-line="445" selection-start-column="60" selection-end-line="445" selection-end-column="60" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Record.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tools/Record.py">
+      <file leaf-file-name="company.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dondefluir/templates/company.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="208" column="8" lean-forward="false" selection-start-line="208" selection-start-column="8" selection-end-line="208" selection-end-column="8" />
+            <state relative-caret-position="238">
+              <caret line="14" column="113" lean-forward="false" selection-start-line="14" selection-start-column="113" selection-end-line="14" selection-end-column="113" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dondefluir/templates/users.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="116" lean-forward="false" selection-start-line="4" selection-start-column="116" selection-end-line="4" selection-end-column="116" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userservice.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dondefluir/templates/userservice.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="120" lean-forward="false" selection-start-line="6" selection-start-column="120" selection-end-line="6" selection-end-column="120" />
               <folding />
             </state>
           </provider>
@@ -203,6 +128,19 @@
       <find>checSchedules</find>
       <find>getRecordBy</find>
       <find>get_linkto</find>
+      <find>Filtros</find>
+      <find>re</find>
+      <find>record_list</find>
+      <find>vue_recordlist,'values</find>
+      <find>_record_list</find>
+      <find>{% block fields_view %}</find>
+      <find>vue_recordlist</find>
+      <find>&quot;</find>
+      <find>&quot;T</find>
+      <find>&quot;Tipo&quot;</find>
+      <find>'Tipo&quot;</find>
+      <find>'Tipo</find>
+      <find>'Tipo'</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -211,10 +149,22 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/dondefluir/db/Activity.py" />
         <option value="$PROJECT_DIR$/dondefluir/main.py" />
         <option value="$PROJECT_DIR$/tools/DBTools.py" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/showcompany.html" />
+        <option value="$PROJECT_DIR$/tools/Record.py" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/payment.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/customer.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/company.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/users.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/userservice.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/activity.html" />
+        <option value="$PROJECT_DIR$/dondefluir/templates/professional.html" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/templates/recordtable.html" />
+        <option value="$PROJECT_DIR$/static/js/vuerecordlist.js" />
+        <option value="$PROJECT_DIR$/static/js/functions.js" />
+        <option value="$PROJECT_DIR$/dondefluir/db/Activity.py" />
       </list>
     </option>
   </component>
@@ -239,8 +189,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -263,7 +213,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="tools" />
+              <option name="myItemId" value="static" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -277,7 +227,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="dondefluir" />
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -385,21 +339,21 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17057101" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32913387" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -411,17 +365,17 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/static/js/fullcalendar.1.js">
+    <entry file="file://$PROJECT_DIR$/dondefluir/db/Activity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="7378">
+          <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dondefluir/templates/activity.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
+        <state relative-caret-position="357">
           <caret line="21" column="2" lean-forward="false" selection-start-line="21" selection-start-column="2" selection-end-line="21" selection-end-column="2" />
           <folding />
         </state>
@@ -429,7 +383,54 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dondefluir/templates/mycontainer.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="214">
+        <state relative-caret-position="1071">
+          <caret line="63" column="4" lean-forward="false" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5933">
+          <caret line="349" column="12" lean-forward="false" selection-start-line="349" selection-start-column="12" selection-end-line="349" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9282">
+          <caret line="546" column="0" lean-forward="false" selection-start-line="546" selection-start-column="0" selection-end-line="546" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/Record.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3434">
+          <caret line="208" column="8" lean-forward="false" selection-start-line="208" selection-start-column="8" selection-end-line="208" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/DBTools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2363">
+          <caret line="139" column="32" lean-forward="false" selection-start-line="139" selection-start-column="32" selection-end-line="139" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/fullcalendar.1.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/mycontainer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1071">
           <caret line="63" column="4" lean-forward="false" selection-start-line="63" selection-start-column="4" selection-end-line="63" selection-end-column="4" />
           <folding />
         </state>
@@ -437,153 +438,168 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/dondefluir/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="546" column="0" lean-forward="false" selection-start-line="546" selection-start-column="0" selection-end-line="546" selection-end-column="0" />
-          <folding>
-            <marker date="1497995481126" expanded="true" signature="1321:1404" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="1393:1404" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="5894:5896" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="5933:5998" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="6030:6710" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="6075:6293" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="6303:6671" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="6736:6888" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="6914:7383" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7064:7344" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7408:7484" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7523:8710" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7543:8693" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7610:8693" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7661:8693" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="7761:8225" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="8367:8459" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="8601:8693" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="8786:8975" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="9050:9538" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="9212:9507" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="9259:9507" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="9285:9507" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="9590:12838" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="10534:11392" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="10599:11367" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="11018:11367" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="11507:12264" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="11561:12239" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="11638:12239" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="11820:12239" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="12286:12801" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="12322:12801" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="12543:12799" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="12900:13691" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="13174:13418" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="13720:14210" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="14246:16504" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="15107:16489" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="15402:15946" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="15660:15946" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="16067:16472" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="16584:16873" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="16946:17781" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17126:17709" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17196:17355" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17240:17355" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17377:17489" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17812:18896" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="17922:18880" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="18257:18484" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="18569:18631" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="18662:18723" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="18745:18878" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="18948:19132" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="19212:19669" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="19392:19597" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="19741:20167" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="19993:20117" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="20238:20430" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="20489:20875" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="20943:21825" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="21512:21561" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="21588:21700" ph="..." />
-            <marker date="1497995481126" expanded="true" signature="21899:22021" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/tools/Record.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="208" column="8" lean-forward="false" selection-start-line="208" selection-start-column="8" selection-end-line="208" selection-end-column="8" />
+        <state relative-caret-position="9044">
+          <caret line="575" column="0" lean-forward="false" selection-start-line="575" selection-start-column="0" selection-end-line="575" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dondefluir/db/Activity.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="447" column="0" lean-forward="false" selection-start-line="447" selection-start-column="0" selection-end-line="447" selection-end-column="0" />
-          <folding>
-            <marker date="1497996360361" expanded="true" signature="828:24211" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="1975:2303" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="2095:2303" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="2161:2303" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24094:24116" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24164:24211" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24253:24991" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24524:24839" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24883:24914" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="24955:24991" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="25036:26291" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="25330:25860" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="25904:25960" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="26001:26062" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="26127:26291" ph="..." />
-            <marker date="1497996360361" expanded="true" signature="26166:26264" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="124">
-          <caret line="349" column="12" lean-forward="false" selection-start-line="349" selection-start-column="12" selection-end-line="349" selection-end-column="12" />
-          <folding>
-            <marker date="1497994006569" expanded="true" signature="8011:8670" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="8719:11368" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="8844:8998" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="8890:8998" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="9157:10198" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="9297:9407" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="9907:10031" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="10208:11368" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="11038:11162" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="11420:12184" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="11666:12184" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="11921:12027" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="12058:12184" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="12235:12687" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="12340:12473" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="12749:15153" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13039:13095" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13443:14986" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13583:14986" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13659:13777" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13880:14591" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="13946:14591" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="14083:14547" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="14609:14986" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="15199:15585" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="15391:15494" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="15653:15702" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="15751:15763" ph="..." />
-            <marker date="1497994006569" expanded="true" signature="18623:18635" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/tools/DBTools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
-          <caret line="139" column="32" lean-forward="false" selection-start-line="139" selection-start-column="32" selection-end-line="139" selection-end-column="32" />
+          <caret line="138" column="32" lean-forward="false" selection-start-line="138" selection-start-column="32" selection-end-line="138" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/db/Company.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/showcompany.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="53" lean-forward="false" selection-start-line="0" selection-start-column="53" selection-end-line="0" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/static/js/myfunctions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tools/Record.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="214" column="17" lean-forward="false" selection-start-line="214" selection-start-column="17" selection-end-line="214" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/professional_icon.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="428">
+          <caret line="37" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="37" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/recordform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="153" column="34" lean-forward="false" selection-start-line="153" selection-start-column="34" selection-end-line="153" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/events.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/customer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="67" lean-forward="false" selection-start-line="7" selection-start-column="67" selection-end-line="7" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/payment.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="115" lean-forward="false" selection-start-line="4" selection-start-column="115" selection-end-line="4" selection-end-column="115" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/company.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="113" lean-forward="false" selection-start-line="14" selection-start-column="113" selection-end-line="14" selection-end-column="113" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/users.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="116" lean-forward="false" selection-start-line="4" selection-start-column="116" selection-end-line="4" selection-end-column="116" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/professional.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="114" lean-forward="false" selection-start-line="15" selection-start-column="114" selection-end-line="15" selection-end-column="114" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/activity.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="3" column="116" lean-forward="false" selection-start-line="3" selection-start-column="116" selection-end-line="3" selection-end-column="116" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/templates/userservice.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="120" lean-forward="false" selection-start-line="6" selection-start-column="120" selection-end-line="6" selection-end-column="120" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="479">
+          <caret line="445" column="60" lean-forward="false" selection-start-line="445" selection-start-column="60" selection-end-line="445" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/recordtable.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="91">
+          <caret line="44" column="65" lean-forward="false" selection-start-line="44" selection-start-column="53" selection-end-line="44" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/vuerecordlist.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="4" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/functions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="461" column="71" lean-forward="false" selection-start-line="461" selection-start-column="71" selection-end-line="461" selection-end-column="71" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dondefluir/db/Activity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="66" column="66" lean-forward="true" selection-start-line="66" selection-start-column="66" selection-end-line="66" selection-end-column="66" />
           <folding />
         </state>
       </provider>

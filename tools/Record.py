@@ -211,6 +211,10 @@ class Record(object):
         return TableClass.getAllRecordList(TableClass)
 
     @classmethod
+    def recordListFilters(cls):
+        return []
+
+    @classmethod
     def getRecordTitle(self):
         return ['id']
 
