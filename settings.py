@@ -85,6 +85,12 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 ],\
 27: ["UPDATE user SET Closed = 0", \
 ],\
+28: ["ALTER TABLE company ADD COLUMN Closed INTEGER", \
+],\
+29: ["UPDATE company SET Closed = 0",
+],\
+30: ["ALTER TABLE service ADD COLUMN Price DOUBLE", \
+],\
 }
 
 

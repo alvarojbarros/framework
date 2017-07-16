@@ -1,4 +1,4 @@
-{% block data %}
+
 
 <script src="{{ url_for('static', filename='js/vuerecord.js') }}"></script>
 <script src="{{ url_for('static', filename='js/vuemessages.js') }}"></script>
@@ -136,7 +136,8 @@
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['Values']"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
                     :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
-                    >
+                    :onchange="values.fields[field]['OnChange']"
+                  >
                     <option v-for="(value,key) in values.fields[field]['Values']" :value="key">
                       {% raw %} {{value}} {% endraw %}</option>
                   </select>
@@ -144,10 +145,10 @@
                   <select v-if="values.fields[field]['Input'] == 'combo' && values.fields[field]['LinkTo'] && values.links[field]"
                     class="form-control" :id="field" :name="field" v-model="values.record[field]"
                     :disabled="(values.fields[field]['Readonly']==1 && values._state==1) || (values.fields[field]['Readonly']==2)"
-                    :onchange="'updateLinkTo()'"
+                    :onchange="values.fields[field]['OnChange']"
                     >
-                    <option v-for="(value,key) in values.links[field]"  :value="key">
-                      {% raw %} {{value}} {% endraw %}</option>
+                    <option v-for="(value,key) in values.links[field]"  v-if="value[1]==0" :value="key">
+                      {% raw %} {{value[0]}} {% endraw %}</option>
                   </select>
 
                   <div v-if="values.fields[field]['Input'] == 'checkbox'"  class="checkbox checkbox-primary">
@@ -274,6 +275,5 @@
 
 {% endblock %}
 
-{% endblock %}
 
 

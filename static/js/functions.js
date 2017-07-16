@@ -26,6 +26,9 @@ function refreshList() {
 
 
 function newRecord(Table,TemplateName) {
+    if (!TemplateName){
+        TemplateName = 'recordform.html';
+    }
     var vars = {Template: TemplateName,Table: Table,RecordId: ''}
     getTemplate('container-fluid',vars,function(){
 		getRecord({TableName: Table},function (data){
@@ -33,7 +36,7 @@ function newRecord(Table,TemplateName) {
 			Vue.set(vue_record,'table', Table);
 			Vue.set(vue_buttons,'canEdit', data.canEdit);
 			Vue.set(vue_buttons,'canDelete', data.canDelete);
-			setCustomVue(Table,data.record);
+			setCustomVue(TemplateName,data.record);
 			vue_title.Title = 'Nuevo Registro'
 		})
 	})
@@ -89,7 +92,7 @@ function saveRecord(form_id,table) {
       		vue_record.values.record.id = data.result['id'];
       		vue_record.values.record.syncVersion = data.result['syncVersion'];
       		vue_record.values._state = 1
-      		setCustomVue(table,data.result)
+      		//setCustomVue(table,data.result)
       		if (data.result['Name']){
 				vue_title.recordName = data.result['Name']
 			}else{
@@ -125,7 +128,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(Table,data.record);
+				setCustomVue(TemplateName,data.record);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -141,7 +144,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(Table,data.record);
+				setCustomVue(TemplateName,data.record);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -373,12 +376,10 @@ function recoverPassword(){
   	$.getJSON($SCRIPT_ROOT + '/_recover_password', {'email': e.value},function(data) {
       	res = data.result['res']
       	if (res){
-			//alert('Se ha enviado un correo con su nuevo password');
-			setMessageTimeout('Se ha enviado un correo con su nuevo password')
+			alert('Se ha enviado un correo con su nuevo password');
 			show_signIn();
 	  	}else{
-			//alert(data.result['Error']);
-			messages.error_msg = data.result['Error'];
+			alert(data.result['Error']);
 		};
     });
 }
@@ -492,3 +493,4 @@ function updateRecordList(div,Filter){
         }
     }
 }
+

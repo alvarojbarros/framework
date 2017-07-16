@@ -77,8 +77,34 @@ def importTable(f):
         return Error("Error al importar")
     return "Registros importados %i" % k
 
-def fillRecordList(records,fields,fieldsDef=None,links=None):
+def fillRecordList(records,fields,fieldsDef=None):
+    links = {}
     res = []
+    for field in fields:
+        if field in  fieldsDef:
+            fieldDef = fieldsDef[field]
+            if 'LinkTo' in fieldDef:
+                links[field] = {}
+                l = []
+                for record in records:
+                    value = getattr(record, field)
+                    if value not in l:
+                        l.append(value)
+                session = Session()
+                session.expire_on_commit = False
+                if l:
+                    linkto = fieldDef['LinkTo']
+                    show = linkto['Show']
+                    TableClass = getTableClass(linkto['Table'])
+                    records_links = session.query(TableClass).filter(TableClass.id.in_(l))
+                    for record in records_links:
+                        show_list = []
+                        for field_s in show:
+                            show_list.append(getattr(record, field_s))
+                        if show_list:
+                            links[field][record.id] = [' '.join(show_list), 0]
+                        else:
+                            links[field][record.id] = [record.id, 0]
     for record in records:
         row = {}
         for field in fields:
@@ -92,7 +118,7 @@ def fillRecordList(records,fields,fieldsDef=None,links=None):
                 if 'Values' in fieldDef:
                     value = fieldDef['Values'][value]
                 elif links and 'LinkTo' in fieldDef:
-                    value = links[field][value]
+                    value = links[field][value][0]
             row[field] = value
         res.append(row)
     return res
@@ -119,8 +145,8 @@ def get_field_value(linkto,record,fn):
         for field in show:
             show_list.append(getattr(r,field))
         if show_list:
-            return {r.id: ' '.join(show_list)}
-    return {getattr(record,fn): getattr(record,fn)}
+            return {r.id: [' '.join(show_list),0]}
+    return {getattr(record,fn): [getattr(record,fn),0]}
 
 
 def get_linkto(linkto,record=None):
@@ -147,7 +173,8 @@ def get_linkto(linkto,record=None):
             show_list = []
             for field in show:
                 show_list.append(getattr(record,field))
-            res[record.id] = ' '.join(show_list)
+            closed = hasattr(record,'Closed') and record.Closed
+            res[record.id] = [' '.join(show_list),closed]
     return res
 
 def getImageLink(table,id,fieldname):

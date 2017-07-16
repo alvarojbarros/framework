@@ -168,7 +168,6 @@ class Record(object):
     def getRecordList(cls,TableClass,limit=None,order_by=None,desc=None):
         session = Session()
         records = session.query(TableClass)
-        if hasattr(TableClass,'Closed'): records = records.filter(TableClass.Closed!=1)
         if order_by and desc: records = records.order_by(TableClass.c[order_by].desc())
         elif order_by: records = records.order_by(TableClass.c[order_by])
         if limit: records = records.limit(limit)
@@ -208,7 +207,7 @@ class Record(object):
         return record
 
     def getLinkToFromRecord(self,TableClass):
-        return TableClass.getAllRecordList(TableClass)
+        return TableClass.getRecordList(TableClass)
 
     @classmethod
     def recordListFilters(cls):

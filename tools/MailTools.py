@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from tools.Mail import sendMail
 
-def sendPasswordRecoverMail(email,newpwd,userid):
+def sendPasswordRecoverMail(email,newpwd,username):
     msj = "\n"
-    msj += "Su nombre de usuario es: %s\n" % userid
+    msj += "Estimado %s\n" % username
     msj += "Su nuevo password es: %s\n" % newpwd
     msj += "\n"
-    return sendFlankMail(email,'Donde Fluir: Recuperar Password',msj)
+    return sendMail(email,'Donde Fluir: Recuperar Password',msj)
 

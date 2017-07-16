@@ -119,17 +119,18 @@ def load_user(userid):
 
 @app.route('/_recover_password')
 def recover_password():
+    session = Session()
+    session.expire_on_commit = False
     email = request.args['email']
-    record = User.getRecordById(email)
+    record = session.query(User).filter_by(Email=email).first()
     if not record:
-        session.close()
         return jsonify(result={'res': False,'Error':'No hay usuario registrado para este Email'})
     else:
         record.Password = passwordRamdom()
         try:
             session.commit()
             from tools.MailTools import sendPasswordRecoverMail
-            res = sendPasswordRecoverMail(email,record.Password,record.id)
+            res = sendPasswordRecoverMail(email,record.Password,record.Name)
             if res:
                 session.close()
                 return jsonify(result={'res': True})
@@ -321,7 +322,6 @@ def get_template():
         var[key] = request.args.get(key)
         if var[key]=='True': var[key] = True
         if var[key]=='False': var[key] = False
-    funtions = ''
     if request.args.get('Functions'):
         functions = request.args.get('Functions')
     res = render_template(template,var=var)
@@ -426,9 +426,7 @@ def record_list():
     for field in filtersKeys:
         filtersNames[field] = fieldsDef[field]['Label']
     filters = {}
-
-    links = getLinksTo(fieldsDef,None)
-    res = fillRecordList(records,fields,fieldsDef,links)
+    res = fillRecordList(records,fields,fieldsDef)
     for fieldname in fields:
         if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
             for dic in res:

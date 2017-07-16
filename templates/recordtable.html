@@ -24,35 +24,44 @@
          {% block title3 %}
           <h3 class="box-title">Buscar</h3>
          {% endblock %}
-          <form class="p-b-20">
-             <div class="form-group">
-                <div class="input-group">
-                   <input type="text" id="example-input1-group2" name="example-input1-group2" class="live-search-box form-control" placeholder="Introducir texto para buscar">
-                   <span class="input-group-btn"><button type="button" class="btn waves-effect waves-light btn-info"><i class="fa fa-search"></i></button></span>
+           <div class="row">
+              <div class="col-xs-12 col-md-10 p-b-20">
+                   <form class="p-b-20">
+                     <div class="form-group">
+                        <div class="input-group">
+                           <input type="text" id="example-input1-group2" name="example-input1-group2" class="live-search-box form-control" placeholder="Introducir texto para buscar">
+                           <span class="input-group-btn"><button type="button" class="btn waves-effect waves-light btn-info"><i class="fa fa-search"></i></button></span>
+                        </div>
+                     </div>
+                  </form>
+              </div>
+              {% block button_new %}
+              {% if getCanUserCreate(var['Table']) %}
+                <div class="col-xs-12 col-md-2 p-b-20">
+                  <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="newRecord('{{var['Table']}}','{{var['TemplateForm']}}')" >
+                  <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
                 </div>
-             </div>
-          </form>
-          {% block button_new %}
-          {% if getCanUserCreate(var['Table']) %}
-            <button class="btn btn-warning btn-rounded waves-effect waves-light" type="button" onclick="newRecord('{{var['Table']}}','recordform.html')" >
-              <span class="btn-label"><i class="fa fa-plus"></i></span>Crear nuevo</button>
-          {% endif %}
-          {% endblock %}
-
-            <div v-for="(field,key) in filters">
-                  <select class="form-control" :id="key" :name="key"
-                    :onchange="'updateRecordList(this,\''+ key + '\')'">
-                    <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
-                    <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
-                  </select>
+              {% endif %}
+              {% endblock %}
+           </div>
+           <div class="row">
+                <div class="col-xs-12 col-md-4 p-b-20" v-for="(field,key) in filters">
+                      <select class="form-control" :id="key" :name="key"
+                        :onchange="'updateRecordList(this,\''+ key + '\')'">
+                        <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
+                        <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
+                      </select>
+                </div>
+                <hr class="col-xs-12">
+                <div class="col-xs-12">
+                    <ul class="list-group list-group-full">
+                    {% block fields_view %}
+                      <li v-for="record in values" :data-search-term="record.Name" class="list-group-item" >
+                      <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">{%raw%}{{record.Name}}{%endraw%}</a></li>
+                    {% endblock %}
+                    </ul>
+                </div>
             </div>
-          <hr>
-          <ul class="list-group list-group-full">
-            {% block fields_view %}
-              <li v-for="record in values" :data-search-term="record.Name" class="list-group-item" v-if="record._Skip==false">
-              <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">{%raw%}{{record.Name}}{%endraw%}</a></li>
-            {% endblock %}
-          </ul>
        </div>
     </div>
  </div>
