@@ -494,3 +494,23 @@ function updateRecordList(div,Filter){
     }
 }
 
+function SetReport(ReportClass){
+	$.getJSON($SCRIPT_ROOT + '/_get_report', {'Report': ReportClass},function(data) {
+	    vue_report.filters = data.result.filters;
+	    vue_report.htmlView = data.result.htmlView;
+	    vue_report.ReportClass = data.result.ReportClass;
+	});
+}
+
+function RunReport(){
+	report = vue_report.ReportClass;
+	vars = {'Report': report}
+	for (field in vue_report.filters){
+	    vars[field] = vue_report.filters[field].Value;
+	}
+	$.getJSON($SCRIPT_ROOT + '/_run_report', vars ,function(data) {
+	    vue_report_result.Columns = data.result.Columns;
+	    vue_report_result.Rows = data.result.Rows;
+	});
+
+}

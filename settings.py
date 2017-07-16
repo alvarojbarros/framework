@@ -8,6 +8,7 @@ user_file = 'dondefluir.db.User'
 custom_folder = 'dondefluir'
 template_folder = 'dondefluir/templates'
 static_folder = 'dondefluir/static'
+report_folder = 'dondefluir.reports'
 
 templates = {
 'loggin_template':'mylogin.html',
@@ -90,6 +91,10 @@ versions = {2: ["ALTER TABLE company ADD COLUMN City VARCHAR(100)", \
 29: ["UPDATE company SET Closed = 0",
 ],\
 30: ["ALTER TABLE service ADD COLUMN Price DOUBLE", \
+],\
+31: ["ALTER TABLE user ADD COLUMN CreatedDate DATE", \
+],\
+32: ["UPDATE user SET CreatedDate = '2017-07-01'", \
 ],\
 }
 

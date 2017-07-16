@@ -443,6 +443,31 @@ def record_list():
         r['_Skip'] = False
     return jsonify(result={'records': res,'filters': filters, 'filtersNames': filtersNames})
 
+@app.route('/_get_report')
+def get_report():
+    report_foder = settings.report_folder
+    reportclass = request.args.get('Report')
+    var = {}
+    exec('from %s.%s import %s as ReportClass' % (report_foder,reportclass,reportclass),var)
+    Report = var['ReportClass']
+    filters = Report.reportFilters()
+    htmlView = Report.htmlView()
+    return jsonify(result={'filters': filters, 'htmlView': htmlView, 'ReportClass': reportclass})
+
+
+@app.route('/_run_report')
+def run_report():
+    report_foder = settings.report_folder
+    reportclass = request.args.get('Report')
+    var = {}
+    exec('from %s.%s import %s as ReportClass' % (report_foder,reportclass,reportclass),var)
+    Report = var['ReportClass']
+    filters = {}
+    for key in request.args:
+        if key!='Report':
+            filters[key] = request.args.get(key)
+    res = Report.run(filters)
+    return jsonify(result=res)
 
 @app.context_processor
 def override_url_for():
