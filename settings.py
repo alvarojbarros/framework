@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-mysqldata = 'root:1234@localhost:3306/dondefluir'
+mysqldata = 'root:1234@localhost:3306/dondefluir2'
 myPort = 5000
 
 db_folder = 'dondefluir.db'

@@ -4,6 +4,7 @@ import getsettings
 settings = getsettings.getSettings()
 
 def sendFlaskMail(email,subject,message):
+    return
     sender = "%s <%s>" % (settings.AccountName,settings.Sender)
     receivers = [email]
     msg = Message(subject,sender=sender,recipients=receivers)
