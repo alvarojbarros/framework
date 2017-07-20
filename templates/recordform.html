@@ -218,7 +218,7 @@
                         || (values.fields[field].fieldsDefinition[fname]['Readonly']==2)"
                         >
                         <option v-for="(value,key) in values.links[fname]"  :value="key">
-                          {% raw %} {{value}} {% endraw %}</option>
+                          {% raw %} {{value[0]}} {% endraw %}</option>
                       </select>
 
 
