@@ -16,7 +16,7 @@
   <!-- .breadcrumb -->
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
-        <li><a href="#" onclick="showDashboard()">Dashboard</a></li>
+        <li><a href="#" onclick="showDashboard()">Inicio</a></li>
         <li class="active" id="title2">{%raw%}{{Title}}{%endraw%}</li>
      </ol>
   </div>
@@ -70,6 +70,7 @@
                   && (values.fields[field].Input!='Hidde')"  >
                   {% raw %} {{values.fields[field]['Label']}} {% endraw %}
                 </label>
+
                 <div class="col-xs-12">
 
                   <input v-if="values.fields[field]['Input'] == 'Hidde'" class="form-control" :id="field"
@@ -171,6 +172,13 @@
 
 
                 </div>
+
+                <label class="col-xs-12" :for="field"
+                  v-if="(values.fields[field]['SubLabel']) && (values.fields[field]['Input'] != 'checkbox') && (values.fields[field]['Input'] != 'button')
+                  && (values.fields[field].Input!='Hidde')"  >
+                  {% raw %} {{values.fields[field]['SubLabel']}} {% endraw %}
+                </label>
+
               </div>
 
               <div :class="'col-xs-12 col-md-' + tab_fields[0] + ' p-b-20'" v-for="field in tab_fields[1]" :id="field"

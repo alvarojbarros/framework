@@ -4,17 +4,12 @@ from flask import Flask
 app = Flask(__name__)
 from flask import Response, redirect, url_for, request, session, abort,render_template,jsonify
 from flask_login import LoginManager, UserMixin,login_required, login_user, logout_user,current_user
-import os
 import getsettings
 settings = getsettings.getSettings()
 User = getsettings.getUserClass()
-from tools.dbconnect import Session
-from sqlalchemy.orm import sessionmaker
-from tools.Tools import *
 from tools.DBTools import *
-from tools import DBVersion
-from tools import DBUpdates
 from flask_mail import Mail
+import re
 
 app.config.update(
     DEBUG = True,
@@ -79,9 +74,15 @@ def signin():
         name = request.form['name']
         if password1 or password2 or username1 or username2:
             if not username1:
-                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Email',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Debe Ingresar Email',\
+                                       signUp=True,app_name=settings.app_name)
             if username1!=username2:
-                return render_template(settings.templates['loggin_template'],error_msg='Los Email no coinciden',signUp=True,app_name=settings.app_name)
+                return render_template(settings.templates['loggin_template'],error_msg='Los Email no coinciden',\
+                                       signUp=True,app_name=settings.app_name)
+            match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', username1)
+            if not match:
+                return render_template(settings.templates['loggin_template'], error_msg='Debe ingresar un correo válido', \
+                                       signUp=True, app_name=settings.app_name)
             user = User.getUserIdByEmail(username1)
             if user:
                 return render_template(settings.templates['loggin_template'],error_msg='Usuario ya registrado: %s' % username1,signUp=True,app_name=settings.app_name)
@@ -129,14 +130,14 @@ def recover_password():
         record.Password = passwordRamdom()
         try:
             session.commit()
-            from tools.MailTools import sendPasswordRecoverMail
+            from dondefluir.MailTools import sendPasswordRecoverMail
             res = sendPasswordRecoverMail(email,record.Password,record.Name)
             if res:
                 session.close()
                 return jsonify(result={'res': True})
             else:
                 session.close()
-                return jsonify(result={'res': False,'Error': res})
+                return jsonify(result={'res': False,'Error': 'No se pudo enviar el correo'})
         except Exception as e:
             session.rollback()
             session.close()
