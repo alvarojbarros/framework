@@ -5,7 +5,12 @@ var vue_title = new Vue({
   data: {
     Title: '',
     companyName: '',
+    companyId: '',
+    recordName: '',
+    tableName: '',
+    moduleNr: '',
+    indexNr: '',
+    router: []
   },
-
 })
 

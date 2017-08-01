@@ -45,8 +45,8 @@
               {% endblock %}
            </div>
            <div class="row">
-                <div class="col-xs-12 col-md-4 p-b-20" v-for="(field,key) in filters">
-                      <select class="form-control" :id="key" :name="key"
+                <div class="col-xs-12 col-md-4 p-b-20" v-for="(field,key) in filters" >
+                      <select class="form-control" :id="key"  name="select-filter"
                         :onchange="'updateRecordList(this,\''+ key + '\')'">
                         <option :value="key">{% raw %} {{filtersNames[key]}} {% endraw %}</option>
                         <option v-for="value in field"  :value="value">{% raw %} {{value}} {% endraw %}</option>
@@ -54,12 +54,20 @@
                 </div>
                 <hr class="col-xs-12">
                 <div class="col-xs-12">
-                    <ul class="list-group list-group-full">
+                    <table class="table">
+                      <tr v-if="values[0]">
+                          <td v-for="row in values[0].Titles">{%raw%}{{row}}{%endraw%}</td>
+                      </tr>
                     {% block fields_view %}
-                      <li v-for="record in values" :data-search-term="record.Name" class="list-group-item" >
-                      <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">{%raw%}{{record.Name}}{%endraw%}</a></li>
+                      <tr v-for="record in values" v-if="record._Skip==false && record._Skip2==false">
+                          <td v-for="row in record.Columns">
+                              <a href="#" :onClick="'getRecordForm(\''+ table +'\',\'recordform.html\',\'' + record.id + '\')'">
+                                {%raw%}{{row}}{%endraw%}
+                              </a>
+                          </td>
+                      </tr>
                     {% endblock %}
-                    </ul>
+                    </table>
                 </div>
             </div>
        </div>
@@ -72,7 +80,8 @@
 {% block button_script %}
 <script type=text/javascript>
   refreshList();
-  getRecordList('{{var['Table']}}','Name,id');
+  columns = "{0:('Nombre','.Name')}";
+  getRecordList('{{var['Table']}}','Name,id',null,null,false,columns);
 </script>
 {% endblock %}
 

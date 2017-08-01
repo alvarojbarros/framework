@@ -437,3 +437,32 @@ def mapEnum(records,fvalues,fname):
                 r[key] = getattr(record,key)
         l.append(r)
     return l
+
+def setColumns(res,columns,filtersKeys,filters):
+    for r in res:
+        for key in r.keys():
+            if key in filtersKeys:
+                if key not in filters:
+                    filters[key] = []
+                value = r[key]
+                if value not in filters[key]:
+                    filters[key].append(value)
+        r['_Skip'] = False
+        r['_Skip2'] = False
+        if columns:
+            indexs = sorted(columns)
+            r['Columns'] = {}
+            r['Titles'] = {}
+            for k in indexs:
+                value = columns[k][1]
+                column = columns[k][1]
+                column_fields = column.split(' ')
+                for column_field in column_fields:
+                    if '.' in column_field:
+                        fname = column_field.replace('.','')
+                        if r[fname]:
+                            value = value.replace(column_field,r[fname])
+                        else:
+                            value = value.replace(column_field, '')
+                r['Titles'][k] = columns[k][0]
+                r['Columns'][k] = value

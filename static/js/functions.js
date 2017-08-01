@@ -30,7 +30,7 @@ function newRecord(Table,TemplateName) {
         TemplateName = 'recordform.html';
     }
     var vars = {Template: TemplateName,Table: Table,RecordId: ''}
-    getTemplate('container-fluid',vars,function(){
+    getTemplate(vars,function(){
 		getRecord({TableName: Table},function (data){
 			Vue.set(vue_record,'values', data);
 			Vue.set(vue_record,'table', Table);
@@ -113,7 +113,9 @@ function saveRecord(form_id,table) {
 
 
 function getRecordForm(Table,TemplateName,id,callName,runFunction){
-
+	var titleName = vue_title.Title;
+    var moduleNr = vue_title.moduleNr;
+    var index = vue_title.indexNr ;
 	if (runFunction){
 		var callback_function = new Function(runFunction);
 		callback_function();
@@ -121,10 +123,13 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
     var vars = {Template: TemplateName,Table: Table, id: id}
 	if (callName){
 		var callback_function = new Function(callName);
-		getTemplate('container-fluid',vars,function(){
+		getTemplate(vars,function(){
 			callback_function();
 			getRecord({TableName: Table,id: id},function (data){
+                vue_title.moduleNr = moduleNr;
+                vue_title.indexNr = index;
 				Vue.set(vue_record,'table', Table);
+				Vue.set(vue_title,'tableName', titleName);
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
@@ -136,11 +141,14 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				}
 			})
 		})
-	    //getTemplate('container-fluid',vars,null);
+	    //getTemplate(vars,null);
 	}else{
-	    getTemplate('container-fluid',vars,function (){
+	    getTemplate(vars,function (){
 			getRecord({TableName: Table,id: id},function (data){
+                vue_title.moduleNr = moduleNr;
+                vue_title.indexNr = index;
 				Vue.set(vue_record,'table', Table);
+				Vue.set(vue_title,'tableName', titleName);
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
@@ -201,23 +209,28 @@ function sortDict(obj){
 
 function searchBoxOnKey(e){
 	var filter = $(e).val().toLowerCase();
-    li = $('.list-group-full li');
-    for (i = 0; i < li.length; i++) {
-        a = li[i].innerText;
+    for (r in vue_recordlist.values){
+        record = vue_recordlist.values[r]
+        var found = false;
         words = filter.split(' ');
-        var found = true;
         for (j = 0; j < words.length; j++) {
-			var word = words[j];
-			if (word){
-				if (a.toLowerCase().indexOf(word)==-1) {
-					found = false;
-				}
-			}
-		}
+            var word = words[j];
+            if (word){
+                for (k in record.Columns){
+                    a = record.Columns[k].toLowerCase();
+                    if (a.indexOf(word)>-1) {
+                        found = true;
+                    }
+                }
+            }else{
+                found = true;
+            }
+
+        }
 		if (found==true) {
-			li[i].style.display = "";
+			record._Skip2 = false;
 		} else {
-			li[i].style.display = "none";
+			record._Skip2 = true;
 		}
 
     }
@@ -282,11 +295,15 @@ function addNewRow(field){
 	vue_record.values.record[field].push(new_row)
 }
 
-function getTemplateModule(divName,moduleNr,index){
-	var vars = vue_modules.values[moduleNr][index].Vars
+function getTemplateModule(moduleNr,index){
+	var vars = vue_modules.values[moduleNr][index].Vars;
+	vars['Template'] = vue_modules.values[moduleNr][index].Template;
+	vars['Name'] = vue_modules.values[moduleNr][index].Name;
 	OpenCloseMenu();
-	getTemplate(divName,vars,function(){
-		vue_title.Title = vars.Name;
+	getTemplate(vars,function(){
+        vue_title.moduleNr = moduleNr;
+        vue_title.indexNr = index;
+		vue_title.Title = vars['Name'];
 	});
 }
 
@@ -312,10 +329,10 @@ function AddToLocalStorage(html){
 }
 
 
-function getTemplate(divName,vars,callback){
+function getTemplate(vars,callback){
 
 	AddToLocalStorage($('.container-fluid').html())
-	var myNode = document.getElementById(divName);
+	var myNode = document.getElementById('container-fluid');
 	history.pushState("1","","");
 
 	while (myNode.firstChild) {
@@ -329,8 +346,7 @@ function getTemplate(divName,vars,callback){
 	}
 
   	$.getJSON($SCRIPT_ROOT + '/_get_template', vars ,function(data) {
-
-		var myNode = document.getElementById(divName);
+		var myNode = document.getElementById('container-fluid');
 		$(myNode).html(data.result.html)
 		functions = data.result.functions;
 		if (functions){
@@ -448,9 +464,10 @@ function getCurrentUser(callback){
   }
 }
 
-function getRecordList(table,fields,limit,order_by,desc){
+function getRecordList(table,fields,limit,order_by,desc,columns){
 
 	var vars = {'Table': table,'Fields': fields }
+	if (columns) {vars['Columns'] = columns;}
 	if (limit) {vars['Limit'] = limit;}
 	if (order_by) {vars['OrderBy'] = order_by;}
 	if (desc) {vars['Desc'] = desc;}
@@ -459,6 +476,7 @@ function getRecordList(table,fields,limit,order_by,desc){
 	Vue.set(vue_recordlist,'user_id', vue_user_menu.current_user_id);
 	$.getJSON($SCRIPT_ROOT + '/_record_list', vars ,function(data) {
 		Vue.set(vue_recordlist,'values', data.result.records);
+		vue_recordlist.values =  data.result.records;
 		Vue.set(vue_recordlist,'filters', data.result.filters);
 		Vue.set(vue_recordlist,'filtersNames', data.result.filtersNames);
 	});
@@ -481,16 +499,19 @@ function updateLinkTo(fieldname){
 }
 
 function updateRecordList(div,Filter){
+    filters = document.getElementsByName("select-filter")
     for (i in vue_recordlist.values){
-        if (div.value==Filter){
-            vue_recordlist.values[i]._Skip = false;
-        }else{
-            if (vue_recordlist.values[i][Filter]!=div.value){
-                vue_recordlist.values[i]._Skip = true;
-            }else{
-                vue_recordlist.values[i]._Skip = false;
+        skip = false;
+        for (k in filters){
+            div = filters[k];
+            filter_value = div.value;
+            if (filter_value!=div.id){
+                if (vue_recordlist.values[i][div.id]!=div.value){
+                    skip = true;
+                }
             }
         }
+        vue_recordlist.values[i]._Skip = skip;
     }
 }
 
@@ -513,4 +534,8 @@ function RunReport(){
 	    vue_report_result.Rows = data.result.Rows;
 	});
 
+}
+
+function setTableColumns(columns){
+    vue_recordlist.columns = columns;
 }

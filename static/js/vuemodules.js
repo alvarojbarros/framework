@@ -7,15 +7,5 @@ var vue_modules = new Vue({
     values: '',
     names: '',
   },
-	/*mounted: function () {
-		for (k in this.names){
-			$(this.$refs['module-' + k]).html(this.names[k])
-		}
-	},
-	updated: function () {
-		for (k in this.names){
-			$(this.$refs['module-' + k]).html(this.names[k])
-		}
-	},*/
 })
 

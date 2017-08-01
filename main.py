@@ -2,8 +2,8 @@
 
 from flask import Flask
 app = Flask(__name__)
-from flask import Response, redirect, url_for, request, session, abort,render_template,jsonify
-from flask_login import LoginManager, UserMixin,login_required, login_user, logout_user,current_user
+from flask import redirect, url_for, request, render_template,jsonify
+from flask_login import LoginManager, login_required, login_user, logout_user,current_user
 import getsettings
 settings = getsettings.getSettings()
 User = getsettings.getUserClass()
@@ -419,6 +419,8 @@ def record_list():
     order_by = request.args.get('OrderBy',None)
     desc = request.args.get('Desc',None)
     limit = request.args.get('Limit',None)
+    columns = request.args.get('Columns',None)
+    if columns: columns = eval(columns)
     TableClass = getTableClass(table)
     records = TableClass.getRecordList(TableClass,limit=limit,order_by=order_by,desc=desc)
     fieldsDef = TableClass.fieldsDefinition()
@@ -432,16 +434,8 @@ def record_list():
         if fieldname  in fieldsDef and 'Input' in fieldsDef[fieldname] and fieldsDef[fieldname]['Input']=='fileinput':
             for dic in res:
                 dic[fieldname] = getImageLink(table,dic['id'],fieldname)
+    setColumns(res,columns,filtersKeys,filters)
 
-    for r in res:
-        for key in r.keys():
-            if key in filtersKeys:
-                if key not in filters:
-                    filters[key] = []
-                value = r[key]
-                if value not in filters[key]:
-                    filters[key].append(value)
-        r['_Skip'] = False
     return jsonify(result={'records': res,'filters': filters, 'filtersNames': filtersNames})
 
 @app.route('/_get_report')
@@ -511,6 +505,12 @@ def utility_processor():
     def getModulesDir():
         modules,names = settings.getModules(current_user.UserType)
         return modules
+    def getModulesDirIndex():
+        modules,names = settings.getModules(current_user.UserType)
+        return sorted(modules)
+    def getConst(const):
+        if const=='USER_ID': return current_user.id
+        return getattr(settings,const)
     return dict(sortDict=sortDict \
         ,myFunction=myFunction \
         ,getCanUserCreate=getCanUserCreate \
@@ -521,6 +521,8 @@ def utility_processor():
         ,getImageURL=getImageURL \
         ,getRecord=getRecord \
         ,getModulesDir=getModulesDir \
+        ,getModulesDirIndex=getModulesDirIndex \
+        ,getConst=getConst \
         )
 
 if __name__ == "__main__":
