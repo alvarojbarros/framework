@@ -17,7 +17,6 @@
   <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
       <ol class="breadcrumb">
         <li><a href="#" onclick="showDashboard()">Inicio</a></li>
-        <li v-if="indexNr"><a href="#" :onClick="'getTemplateModule('+ moduleNr +','+indexNr+')'">{%raw%}{{tableName}}{%endraw%}</a></li>
         <li class="active" id="title2">{%raw%}{{Title}}{%endraw%}</li>
      </ol>
   </div>
@@ -163,7 +162,7 @@
                   </div>
 
                   <div v-if="values.fields[field]['Input'] == 'button'" >
-                    <button :class="values.fields[field]['Class']" type="button" id="favorite" :onclick="values.fields[field]['onClick']">
+                    <button :class="values.fields[field]['Class']" type="button" :id="field" :onclick="values.fields[field]['onClick']">
                       <span class="btn-label">
                         <i class="fa fa-heart">
                         </i>
