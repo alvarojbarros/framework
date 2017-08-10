@@ -108,38 +108,4 @@ def getMyFunction(function,params):
     from dondefluir.main import getMyFunction as myFunction
     return myFunction(function,params)
 
-def getModules(UserType):
-    from dondefluir.main import getModules as modules
-    return modules(UserType)
-
-COMPANY = 0
-CLIENT = 1
-AGENDA = 2
-ACTIVITY = 3
-NOTIFICATIONS = 4
-FAVORITES = 5
-REPORTS = 6
-CUST_AGENDA = 10
-CUST_FAVORITE = 11
-CUST_NOTIFICATIONS = 12
-CUST_PAYMENTS = 13
-CUST_COMPANIES = 14
-CUST_PROFESSIONAL = 15
-CUST_EVENTS = 16
-IDX_COMPANY = 0
-IDX_PROFESSIONAL = 1
-IDX_SERVICE = 2
-IDX_PROF_SERVICE = 3
-IDX_PAYMENT = 4
-IDX_CUSTOMER = 5
-IDX_COMPANIES = 6
-IDX_USERS = 7
-IDX_ACTIVITY = 0
-IDX_EVENTS = 1
-IDX_PROFESSIONAL = 0
-IDX_CLIENT = 0
-IDX_CALENDAR = 0
-IDX_LIST = 1
-IDX_NOTIFICATIONS = 0
-
 from dondefluir.main import blue_dondefluir as custom_app

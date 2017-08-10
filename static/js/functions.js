@@ -36,7 +36,7 @@ function newRecord(Table,TemplateName) {
 			Vue.set(vue_record,'table', Table);
 			Vue.set(vue_buttons,'canEdit', data.canEdit);
 			Vue.set(vue_buttons,'canDelete', data.canDelete);
-			setCustomVue(TemplateName,data.record);
+			setCustomVue(TemplateName,data.record,Table);
 			vue_title.Title = 'Nuevo Registro'
 		})
 	})
@@ -80,7 +80,6 @@ function sendFiles(table,id){
 }
 
 function saveRecord(form_id,table) {
-
     fields = vue_record.values.record;
     fields['TableName'] = table;
   	var _state = document.getElementById('_state');
@@ -133,7 +132,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(TemplateName,data.record);
+				setCustomVue(TemplateName,data.record,Table);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -152,7 +151,7 @@ function getRecordForm(Table,TemplateName,id,callName,runFunction){
 				Vue.set(vue_record,'values', data);
 				Vue.set(vue_buttons,'canEdit', data.canEdit);
 				Vue.set(vue_buttons,'canDelete', data.canDelete);
-				setCustomVue(TemplateName,data.record);
+				setCustomVue(TemplateName,data.record,Table);
 				if (data.record['Name']){
 					vue_title.recordName = data.record['Name']
 				}else{
@@ -211,19 +210,21 @@ function searchBoxOnKey(e){
 	var filter = $(e).val().toLowerCase();
     for (r in vue_recordlist.values){
         record = vue_recordlist.values[r]
-        var found = false;
+        var found = true;
         words = filter.split(' ');
         for (j = 0; j < words.length; j++) {
             var word = words[j];
+            var word_found = false
             if (word){
                 for (k in record.Columns){
                     a = record.Columns[k].toLowerCase();
                     if (a.indexOf(word)>-1) {
-                        found = true;
+                        word_found = true;
                     }
                 }
-            }else{
-                found = true;
+                if (!word_found){
+                    found = false;
+                }
             }
 
         }
@@ -248,7 +249,6 @@ function runSearchBoxOnKey(){
 
 jQuery(document).ready(function($){
 
-	getModulesVue();
 	getCurrentUser();
 
 	localStorage.clear();
@@ -295,18 +295,6 @@ function addNewRow(field){
 	vue_record.values.record[field].push(new_row)
 }
 
-function getTemplateModule(moduleNr,index){
-	var vars = vue_modules.values[moduleNr][index].Vars;
-	vars['Template'] = vue_modules.values[moduleNr][index].Template;
-	vars['Name'] = vue_modules.values[moduleNr][index].Name;
-	OpenCloseMenu();
-	getTemplate(vars,function(){
-        vue_title.moduleNr = moduleNr;
-        vue_title.indexNr = index;
-		vue_title.Title = vars['Name'];
-	});
-}
-
 function AddToLocalStorage(html){
 
 	var myIndex = localStorage['index'];
@@ -330,7 +318,6 @@ function AddToLocalStorage(html){
 
 
 function getTemplate(vars,callback){
-
 	AddToLocalStorage($('.container-fluid').html())
 	var myNode = document.getElementById('container-fluid');
 	history.pushState("1","","");
@@ -435,20 +422,6 @@ function changePassword(){
 	}
 }
 
-
-function getModulesVue(){
-
-  var sidemenu = document.getElementById('side-menu');
-  if (sidemenu){
-	$.getJSON($SCRIPT_ROOT + '/_get_modules', {},function(data) {
-		Vue.set(vue_modules,'values', data.result.modules);
-		Vue.set(vue_modules,'names', data.result.names);
-		for (k in vue_modules.names){
-			$(vue_modules.$refs['module-' + k]).html(vue_modules.names[k])
-		}
-	});
-  }
-}
 
 function getCurrentUser(callback){
 

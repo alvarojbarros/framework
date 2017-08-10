@@ -406,12 +406,6 @@ def get_record():
 def get_current_user_type():
     return jsonify(result={'user_type':current_user.UserType,'user_id':current_user.id})
 
-
-@app.route('/_get_modules')
-def get_modules():
-    modules,names = settings.getModules(current_user.UserType)
-    return jsonify(result={'modules':modules,'names': names})
-
 @app.route('/_record_list')
 def record_list():
     table = request.args.get('Table')
@@ -490,9 +484,6 @@ def utility_processor():
     def myFunction(function,params=None):
         return settings.getMyFunction(function,params)
     def getTemplate(template):
-        #if os.path.isfile('%s/%s' % (settings.template_folder,template)):
-        #    return '%s/%s' % (settings.template_folder,template)
-        #return template
         if "%s_template" % template in settings.templates:
             return settings.templates["%s_template" % template]
         return "%s.html" % template
@@ -502,12 +493,6 @@ def utility_processor():
         return getImageLink(table,id,fieldname)
     def getRecord(table,id):
         return getRecordByFilters(table,{'id': id})
-    def getModulesDir():
-        modules,names = settings.getModules(current_user.UserType)
-        return modules
-    def getModulesDirIndex():
-        modules,names = settings.getModules(current_user.UserType)
-        return sorted(modules)
     def getConst(const):
         if const=='USER_ID': return current_user.id
         return getattr(settings,const)
@@ -520,8 +505,6 @@ def utility_processor():
         ,getStrfTime=getStrfTime \
         ,getImageURL=getImageURL \
         ,getRecord=getRecord \
-        ,getModulesDir=getModulesDir \
-        ,getModulesDirIndex=getModulesDirIndex \
         ,getConst=getConst \
         )
 

@@ -16,6 +16,8 @@ var vue_record = new Vue({
     values: '',
     table: '',
     oldRecord: '',
+    favorite: '',
+    classname: '',
   },
 
   methods: {
